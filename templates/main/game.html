@@ -29,7 +29,7 @@
 <div class="container">
     <div class="board">
         <table>
-        <tr>
+        <tr id = "row_1">
             <td class="dropzone" id = "tripleword"></td>
             <td class="dropzone"></td>
             <td class="dropzone"></td>
@@ -46,7 +46,7 @@
             <td class="dropzone"></td>
             <td class="dropzone" id = "tripleword"></td>
         </tr>
-        <tr>
+        <tr id = "row_2">
             <td class="dropzone"></td>
             <td class="dropzone" id="doubleword"></td>
             <td class="dropzone"></td>
@@ -63,7 +63,7 @@
             <td class="dropzone" id="doubleword"></td>
             <td class="dropzone"></td>
         </tr>
-        <tr>
+        <tr id = "row_3">
             <td class="dropzone"></td>
             <td class="dropzone"></td>
             <td class="dropzone" id="doubleword"></td>
@@ -80,7 +80,7 @@
             <td class="dropzone"></td>
             <td class="dropzone"></td>
         </tr>
-        <tr>
+        <tr id = "row_4">
             <td class="dropzone" id = "doubleletter"></td>
             <td class="dropzone"></td>
             <td class="dropzone"></td>
@@ -97,7 +97,7 @@
             <td class="dropzone"></td>
             <td class="dropzone" id = "doubleletter"></td>
         </tr>
-        <tr>
+        <tr id = "row_5">
             <td class="dropzone"></td>
             <td class="dropzone"></td>
             <td class="dropzone"></td>
@@ -114,7 +114,7 @@
             <td class="dropzone"></td>
             <td class="dropzone"></td>
         </tr>
-        <tr>
+        <tr id = "row_6">
             <td class="dropzone"></td>
             <td class="dropzone" id = "tripleletter"></td>
             <td class="dropzone"></td>
@@ -131,7 +131,7 @@
             <td class="dropzone" id = "tripleletter"></td>
             <td class="dropzone"></td>
         </tr>
-        <tr>
+        <tr id = "row_7">
             <td class="dropzone"></td>
             <td class="dropzone"></td>
             <td class="dropzone" id = "doubleletter"></td>
@@ -148,7 +148,7 @@
             <td class="dropzone"></td>
             <td class="dropzone"></td>
         </tr>
-        <tr>
+        <tr id  = "row_8">
             <td class="dropzone" id = "tripleword"></td>
             <td class="dropzone"></td>
             <td class="dropzone"></td>
@@ -165,7 +165,7 @@
             <td class="dropzone"></td>
             <td class="dropzone" id = "tripleword"></td>
         </tr>
-        <tr>
+        <tr id = "row_9">
             <td class="dropzone"></td>
             <td class="dropzone"></td>
             <td class="dropzone" id = "doubleletter"></td>
@@ -182,7 +182,7 @@
             <td class="dropzone"></td>
             <td class="dropzone"></td>
         </tr>
-        <tr>
+        <tr id = "row_10">
             <td class="dropzone"></td>
             <td class="dropzone" id = "tripleletter"></td>
             <td class="dropzone"></td>
@@ -199,7 +199,7 @@
             <td class="dropzone" id = "tripleletter"></td>
             <td class="dropzone"></td>
         </tr>
-        <tr>
+        <tr id = "row_11">
             <td class="dropzone"></td>
             <td class="dropzone"></td>
             <td class="dropzone"></td>
@@ -216,7 +216,7 @@
             <td class="dropzone"></td>
             <td class="dropzone"></td>
         </tr>
-        <tr>
+        <tr id = "row_12">
             <td class="dropzone" id = "doubleletter"></td>
             <td class="dropzone"></td>
             <td class="dropzone"></td>
@@ -233,7 +233,7 @@
             <td class="dropzone"></td>
             <td class="dropzone" id = "doubleletter"></td>
         </tr>
-        <tr>
+        <tr id = "row_13">
             <td class="dropzone"></td>
             <td class="dropzone"></td>
             <td class="dropzone" id="doubleword"></td>
@@ -250,7 +250,7 @@
             <td class="dropzone"></td>
             <td class="dropzone"></td>
         </tr>
-        <tr>
+        <tr id = "row_14">
             <td class="dropzone"></td>
             <td class="dropzone" id="doubleword"></td>
             <td class="dropzone"></td>
@@ -267,7 +267,7 @@
             <td class="dropzone" id="doubleword"></td>
             <td class="dropzone"></td>
         </tr>
-        <tr>
+        <tr id = "row_15">
             <td class="dropzone" id = "tripleword"></td>
             <td class="dropzone"></td>
             <td class="dropzone"></td>
@@ -275,11 +275,11 @@
             <td class="dropzone"></td>
             <td class="dropzone"></td>
             <td class="dropzone"></td>
-            <td class = "dropzone" id = "tripleword"></td>
-            <td class = "dropzone"></td>
-            <td class = "dropzone"></td>
-            <td class = "dropzone"></td>
-            <td class = "dropzone" id ="doubleletter"></td>
+            <td class="dropzone" id = "tripleword"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id ="doubleletter"></td>
             <td class="dropzone"></td>
             <td class="dropzone"></td>
             <td class="dropzone" id = "tripleword" ></td>
@@ -295,7 +295,7 @@
                     <div class = "dropzone" id ="letter"></div>
                 </li>
                 <li>
-                    <button class="btn" onclick="fillLetters()">Wykonaj</button>
+                    <button class="btn" onclick="makeMove()">Wykonaj</button>
                 </li>
                 <li>
                     <h6 class="points">Punkty:</h6>
@@ -395,57 +395,73 @@ body{
       var dragged;
 
 /* events fired on the draggable target */
-document.addEventListener("drag", function(event) {
+document.addEventListener("drag", function(event)
+{
 
 }, false);
 
-document.addEventListener("dragstart", function(event) {
+document.addEventListener("dragstart", function(event)
+{
   // store a ref. on the dragged elem
   dragged = event.target;
   // make it half transparent
   event.target.style.opacity = .5;
 }, false);
 
-document.addEventListener("dragend", function(event) {
+document.addEventListener("dragend", function(event)
+{
   // reset the transparency
   event.target.style.opacity = "";
 }, false);
 
 /* events fired on the drop targets */
-document.addEventListener("dragover", function(event) {
+document.addEventListener("dragover", function(event)
+{
   // prevent default to allow drop
   event.preventDefault();
 }, false);
 
-document.addEventListener("dragenter", function(event) {
+document.addEventListener("dragenter", function(event)
+{
   // highlight potential drop target when the draggable element enters it
-  if (event.target.className == "dropzone") {
-    event.target.style.background = "purple";
-  }
-
-}, false);
-
-document.addEventListener("dragleave", function(event) {
-  // reset background of potential drop target when the draggable element leaves it
   if (event.target.className == "dropzone") {
     event.target.style.background = "";
   }
 
-
 }, false);
 
-document.addEventListener("drop", function(event) {
+document.addEventListener("dragleave", function(event)
+{
+  // reset background of potential drop target when the draggable element leaves it
+  if (event.target.className == "dropzone")
+  {
+    event.target.style.background = "";
+  }
+}, false);
+
+document.addEventListener("drop", function(event)
+{
   // prevent default action (open as link for some elements)
   event.preventDefault();
   // move dragged elem to the selected drop target
   if ((event.target.className == "dropzone" && event.target.childNodes.length == 0  )
-      || (event.target.className == "dropzone" && (event.target.id == "letter" || event.target.id =="change"))) {
-    event.target.style.background = "";
-    dragged.parentNode.removeChild( dragged );
-    event.target.appendChild( dragged );
+      || (event.target.className == "dropzone" && (event.target.id == "letter" || event.target.id =="change")))
+  {
+         event.target.style.background = "";
+         dragged.parentNode.removeChild(dragged);
+         event.target.appendChild(dragged);
+         if(!boardStateValidation())
+         {
+             alert("Położony kafelek znajduje nie graniczy z pozostałymi.")
+             {#dragged.style.opacity = 1.0;#}
+             {#var newLetterContainer = document.getElementById("letter").innerHTML + dragged.outerHTML;#}
+             {#document.getElementById("letter").innerHTML = newLetterContainer;#}
+             {#event.target.removeChild(dragged);#}
+         }
   }
 }, false);
-var letters = [
+
+    var letters = [
         'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', String.fromCharCode(260),
         'B', 'B', 'C', 'C', 'C',String.fromCharCode(262), 'D', 'D', 'D', 'E',
         'E', 'E', 'E', 'E', 'E', 'E',  String.fromCharCode(280), 'F', 'G', 'G',
@@ -455,8 +471,17 @@ var letters = [
         'O', 'O', 'O', 'O', 'O', String.fromCharCode(211), 'P', 'P', 'P', 'R',
         'R', 'R', 'R', 'S', 'S', 'S', 'S',  String.fromCharCode(346), 'T', 'T',
         'T', 'U', 'U', 'W', 'W', 'W', 'W', 'Y', 'Y', 'Y',
-        'Y', 'Z', 'Z', 'Z', 'Z', 'Z',  String.fromCharCode(377),  String.fromCharCode(379), '_', '_'
-    ]
+        'Y', 'Z', 'Z', 'Z', 'Z', 'Z',  String.fromCharCode(377),  String.fromCharCode(379), '_', '_'];
+      var boardState = [];
+      var firstMove = true;
+      var wordsInRound = [];
+    var scores = new Map([
+        ["A", 1], [String.fromCharCode(260), 5], ["B", 3], ["C", 2], [String.fromCharCode(262), 6],
+        ["D", 2], ["E", 1], [String.fromCharCode(280), 5], ["F", 5], ["G", 3], ["H", 3], ["I", 1], ["J", 3],
+        ["K", 2], ["L", 2], [String.fromCharCode(321), 3], ["M", 2], ["N", 1], [String.fromCharCode(323), 7],
+        ["O", 1], [String.fromCharCode(211), 5], ["P", 2], ["R", 1], ["S", 1], [String.fromCharCode(346), 5],
+        ["T", 2], ["U", 3], ["W", 1], ["Y", 2], ["Z", 1], [String.fromCharCode(377), 9], [String.fromCharCode(379), 5], ["_", 0]]);
+
 function fillLetters()
 {
     var dropzone_div = document.getElementById("letter");
@@ -474,7 +499,6 @@ function fillLetters()
                     ' ondragstart="event.dataTransfer.setData(\'text/plain\',null)">' +
                     ' '+ letters[temp]+ '</div> ';
                 letters.splice(temp,1);
-
             }
             dropzone_div.innerHTML = letter_string
         }
@@ -489,9 +513,55 @@ function fillLetters()
                     ' ondragstart="event.dataTransfer.setData(\'text/plain\',null)">' +
                     ' '+ letters[temp]+ '</div> ';
                 letters.splice(temp,1);
-
             }
             dropzone_div.innerHTML = letter_string
+        }
+    }
+}
+
+function makeMove()
+{
+    if(document.getElementById("change").children.length == 0)
+    {
+        if(firstMove)
+        {
+            if(boardStateValidation())
+            {
+                boardState = boardStateUpdate();
+                fillLetters();
+                blockLetters();
+                firstMove = false;
+            }
+        }
+else
+    {
+            if (moveValidation())
+            {
+                {#roundScore = wordScore();#}
+                boardState = boardStateUpdate();
+                fillLetters();
+                blockLetters();
+            } else
+                {
+                alert("Nie wszystkie kafelki stykają się z pozostałymi.")
+            }
+    }
+    }
+    else
+    {
+        alert("W polu wymiany znajdują się kafelki! Zdecyduj, czy chcesz wymiany, czy wykonania ruchu.")
+    }
+}
+
+function blockLetters()
+{
+    var board_slots = document.getElementsByClassName("board")[0].getElementsByClassName("dropzone");
+    for(i = 0 ; i < board_slots.length ; i++)
+    {
+        if(board_slots[i].children.length == 1)
+        {
+            board_slots[i].innerHTML = "<div class=\"letter\" " +
+            "id=\"draggable\">" + board_slots[i].innerText + "</div>"
         }
     }
 }
@@ -499,7 +569,7 @@ function fillLetters()
 function replaceLetters()
 {
     var replace_container = document.getElementById("change").children;
-    if(replace_container.length < letters.length )
+    if(replace_container.length <= letters.length && replace_container.length != 0 )
     {
         fillLetters();
         for (i = 0; i < replace_container.length; i++)
@@ -508,11 +578,303 @@ function replaceLetters()
         }
         document.getElementById("change").innerHTML = " ";
     }
-    else
+    else if(replace_container.length > letters.length && replace_container.length != 0)
     {
         alert("Nie ma wystarczająco płytek, by dokonać wymiany.")
     }
+    else if(replace_container.length == 0)
+    {
+        alert("Nie dodano żadnych płytek do wymiany")
+    }
 }
+
+function boardStateUpdate()
+{
+    newBoardState = []
+    for(j = 1; j <16; j++)
+    {
+        for(i = 0; i<15; i++)
+        {
+            newBoardState.push(document.getElementById("row_"+j).children[i].innerText);
+        }
+    }
+    return newBoardState;
+}
+
+function boardStateValidation()
+{
+    newBoardState = boardStateUpdate();
+    var counter = 0;
+    for(i = 0; i < newBoardState.length; i++)
+    {
+        if (newBoardState[i] != "")
+        {
+            counter++;
+        }
+    }
+    if(counter >1)
+    {
+        for (i = 0; i < newBoardState.length; i++)
+        {
+            if (newBoardState[i] != ""
+                && (((newBoardState[i - 1] == "") || ((i - 1) % 15 == 0) || (i - 1 < 0))
+                    && ((newBoardState[i + 1] == "") || ((i + 1) % 15 == 1) || (i + 1 > 254))
+                    && ((newBoardState[i - 15] == "") || (i - 15 < 0))
+                    && ((newBoardState[i + 15] == "") || (i + 15 > 254))))
+            {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+function moveValidation()
+{
+    boardStateToBe = [];
+    listOfNewLetters = [];
+    listOfWords = [];
+    for(j = 1; j < 16; j++)
+    {
+        for(i = 0; i < 15; i++)
+        {
+            boardStateToBe.push(document.getElementById("row_" + j).children[i]);
+            if(document.getElementById("row_" + j).children[i].children.length == 1
+                && document.getElementById("row_" + j).children[i].children.draggable.draggable == true)
+            {
+                listOfNewLetters.push(boardStateToBe.length - 1)
+                alert(boardStateToBe.length - 1)
+            }
+        }
+    }
+    {#tutaj się musze zastanowić, czy true, czy lepiej false, żeby wymusić jakiś ruch#}
+    if (listOfNewLetters.length == 0) return true;
+
+    else if (listOfNewLetters.length == 1)
+    {
+        if (((boardState[listOfNewLetters[0] - 1] == "") || ((listOfNewLetters[0] - 1) % 15 == 0) || (listOfNewLetters[0] - 1 < 0))
+            && ((boardState[listOfNewLetters[0] + 1] == "") || ((listOfNewLetters[0] + 1) % 15 == 1) || (listOfNewLetters[0] + 1 > 254))
+            && ((boardState[listOfNewLetters[0] - 15] == "") || (listOfNewLetters[0] - 15 < 0))
+            && ((boardState[listOfNewLetters[0] + 15] == "") || (i + 15 > 254))) return false;
+        else
+        {
+
+            if(boardState[listOfNewLetters[0] - 1] != "" && boardState[listOfNewLetters[0] + 1] == "")
+            {
+                var check = true;
+                var i = 1;
+                var newWord = new String(boardStateToBe[listOfNewLetters[0]].innerText);
+                while(check)
+                {
+                    newWord = newWord + boardState[listOfNewLetters[0] - i];
+                    i++;
+                    if (boardState[listOfNewLetters[0] - i] == "" || listOfNewLetters[0]-i % 15 == 14)
+                    {
+                        check = false;
+                    }
+                }
+                listOfWords.push(newWord.split('').reverse().join(''));
+            }
+            if(boardState[listOfNewLetters[0] + 1] != "" && boardState[listOfNewLetters[0] - 1] == "")
+            {
+                var check = true;
+                var i = 1;
+                var newWord = new String(boardStateToBe[listOfNewLetters[0]].innerText);
+                while(check)
+                {
+                    newWord = newWord + boardState[listOfNewLetters[0] + i];
+                    i++;
+                    if (boardState[listOfNewLetters[0] + i] == "" || listOfNewLetters[0] + i % 15 == 0)
+                    {
+                        check = false;
+                    }
+                }
+                listOfWords.push(newWord);
+            }
+            if(boardState[listOfNewLetters[0] - 15] != "" && boardState[listOfNewLetters[0] + 15] == "")
+            {
+                var check = true;
+                var i = 15;
+                var newWord = new String(boardStateToBe[listOfNewLetters[0]].innerText);
+                while(check)
+                {
+                    newWord = newWord + boardState[listOfNewLetters[0] - i];
+                    i += 15;
+                    if (boardState[listOfNewLetters[0] - i] == "" || listOfNewLetters[0] - i < 0)
+                    {
+                        check = false;
+                    }
+                }
+                listOfWords.push(newWord.split('').reverse().join(''));
+            }
+            if(boardState[listOfNewLetters[0] + 15] != "" && boardState[listOfNewLetters[0] - 15] == "")
+            {
+                var check = true;
+                var i = 15;
+                var newWord = new String(boardStateToBe[listOfNewLetters[0]].innerText);
+                while(check)
+                {
+                    newWord = newWord + boardState[listOfNewLetters[0] + i];
+                    i += 15;
+                    if (boardState[listOfNewLetters[0] + i] == "" || listOfNewLetters[0] + i > 224)
+                    {
+                        check = false;
+                    }
+                }
+                listOfWords.push(newWord);
+            }
+            if(boardState[listOfNewLetters[0] + 15] != "" && boardState[listOfNewLetters[0] - 15] != "")
+            {
+                var check = true;
+                var i = 1;
+                var newWord = new String(boardStateToBe[listOfNewLetters[0]].innerText);
+                while(check)
+                {
+                    newWord = newWord + boardState[listOfNewLetters[0] - i];
+                    i++;
+                    if (boardState[listOfNewLetters[0] - i] == "" || listOfNewLetters[0]-i % 15 == 14) {
+                        check = false;
+                    }
+                }
+                newWord = newWord.split('').reverse().join('');
+                i = 1;
+                while(!check)
+                {
+                    newWord = newWord + boardState[listOfNewLetters[0] + i];
+                    i++;
+                    if (boardState[listOfNewLetters[0] + i] == "" || listOfNewLetters[0]+i % 15 == 0) {
+                        check = true;
+                    }
+                }
+                listOfWords.push(newWord);
+            }
+
+            return listOfWords;
+        }
+    }
+    else if(listOfNewLetters.length > 1)
+    {
+        if(listOfNewLetters[1] == listOfNewLetters[0] + 1)
+        {
+              for (i = 0; i < listOfNewLetters.length; i++)
+              {
+                  if(listOfNewLetters[i] % 15 == 0 && i > 0) return false;
+              }
+              for (i = 0; i < listOfNewLetters.length; i++)
+              {
+                  if(boardState[listOfNewLetters[0] - 1] != "")
+            {
+                var check = true;
+                var i = 1;
+                var newWord = new String(boardStateToBe[listOfNewLetters[0]].innerText);
+                while(check)
+                {
+                    newWord = newWord + boardState[listOfNewLetters[0] - i];
+                    i++;
+                    if (boardState[listOfNewLetters[0] - i] == "" || listOfNewLetters[0] - i % 15 == 14)
+                    {
+                        check = false;
+                    }
+                }
+                listOfWords.push(newWord.split('').reverse().join(''));
+            }
+            if(boardState[listOfNewLetters[0] + 1] != "")
+            {
+                var check = true;
+                var i = 1;
+                var newWord = new String(boardStateToBe[listOfNewLetters[0]].innerText);
+                while(check)
+                {
+                    newWord = newWord + boardState[listOfNewLetters[0] + i];
+                    i++;
+                    if (boardState[listOfNewLetters[0] + i] == "" || listOfNewLetters[0] + i % 15 == 0)
+                    {
+                        check = false;
+                    }
+                }
+                listOfWords.push(newWord);
+            }
+            if(boardState[listOfNewLetters[0] - 15] != "")
+            {
+                var check = true;
+                var i=15;
+                var newWord = new String(boardStateToBe[listOfNewLetters[0]].innerText);
+                while(check)
+                {
+                    newWord = newWord + boardState[listOfNewLetters[0] - i];
+                    i += 15;
+                    if (boardState[listOfNewLetters[0] - i] == "" || listOfNewLetters[0] - i < 0)
+                    {
+                        check = false;
+                    }
+                }
+                listOfWords.push(newWord.split('').reverse().join(''));
+            }
+            if(boardState[listOfNewLetters[0] + 15] != "")
+            {
+                var check = true;
+                var i = 15;
+                var newWord = new String(boardStateToBe[listOfNewLetters[0]].innerText);
+                while(check)
+                {
+                    newWord = newWord + boardState[listOfNewLetters[0] + i];
+                    i += 15;
+                    if (boardState[listOfNewLetters[0] + i] == "" || listOfNewLetters[0] + i > 224)
+                    {
+                        check = false;
+                    }
+                }
+                listOfWords.push(newWord);
+            }
+            return listOfWords;
+              }
+            return false;
+        }
+        else if(listOfNewLetters[1] == listOfNewLetters[0] + 15)
+        {
+             for (i = 0; i < listOfNewLetters.length; i++)
+              {
+                  if(boardState[listOfNewLetters[i] - 1] != "" || boardState[listOfNewLetters[i] + 1] != ""
+                      || boardState[listOfNewLetters[i] - 15] || boardState[listOfNewLetters[i] + 15])
+                  {
+                      return true;
+                  }
+              }
+            return false;
+        }
+        else
+            {
+                if ((15 - (listOfNewLetters[0] % 15)) >= listOfNewLetters[1] - listOfNewLetters[0])
+                {
+                    for (i = 0; i < listOfNewLetters.length - 1; i++)
+                    {
+                        for (j = listOfNewLetters[i] + 1; j < listOfNewLetters[i + 1]; j++)
+                        {
+                            if (boardState[j] == "" || listOfNewLetters[i + 1] % 15 == 0) return false;
+                        }
+                    }
+                    return true;
+                }
+                else if ((listOfNewLetters[1] - listOfNewLetters[0]) % 15 == 0)
+                {
+                    for (i = 0; i < listOfNewLetters.length - 1; i++)
+                    {
+
+                        for (j = listOfNewLetters[i] + 15; j < listOfNewLetters[i + 1]; j += 15)
+                        {
+                            if (boardState[j] == "") return false;
+                        }
+                    }
+                    return true;
+                }
+                return false;
+            }
+    }
+    return true;
+}
+
+
+
 window.onload = fillLetters;
     </script>
 {#{% endblock %}#}
