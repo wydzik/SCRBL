@@ -649,7 +649,7 @@ function moveValidation()
     }
     {#tutaj się musze zastanowić, czy true, czy lepiej false, żeby wymusić jakiś ruch#}
     if (listOfNewLetters.length == 0) return true;
-
+    {#obsługa ruchu dla pojedynczej płytki#}
     else if (listOfNewLetters.length == 1)
     {
         if (((boardState[listOfNewLetters[0] - 1] == "") || ((listOfNewLetters[0] - 1) % 15 == 0) || (listOfNewLetters[0] - 1 < 0))
@@ -723,7 +723,7 @@ function moveValidation()
                 }
                 listOfWords.push(newWord);
             }
-            if(boardState[listOfNewLetters[0] + 15] != "" && boardState[listOfNewLetters[0] - 15] != "")
+            if(boardState[listOfNewLetters[0] + 1] != "" && boardState[listOfNewLetters[0] - 1] != "")
             {
                 var check = true;
                 var i = 1;
@@ -748,56 +748,10 @@ function moveValidation()
                 }
                 listOfWords.push(newWord);
             }
-
-            return listOfWords;
-        }
-    }
-    else if(listOfNewLetters.length > 1)
-    {
-        if(listOfNewLetters[1] == listOfNewLetters[0] + 1)
-        {
-              for (i = 0; i < listOfNewLetters.length; i++)
-              {
-                  if(listOfNewLetters[i] % 15 == 0 && i > 0) return false;
-              }
-              for (i = 0; i < listOfNewLetters.length; i++)
-              {
-                  if(boardState[listOfNewLetters[0] - 1] != "")
+             if(boardState[listOfNewLetters[0] + 15] != "" && boardState[listOfNewLetters[0] - 15] != "")
             {
                 var check = true;
-                var i = 1;
-                var newWord = new String(boardStateToBe[listOfNewLetters[0]].innerText);
-                while(check)
-                {
-                    newWord = newWord + boardState[listOfNewLetters[0] - i];
-                    i++;
-                    if (boardState[listOfNewLetters[0] - i] == "" || listOfNewLetters[0] - i % 15 == 14)
-                    {
-                        check = false;
-                    }
-                }
-                listOfWords.push(newWord.split('').reverse().join(''));
-            }
-            if(boardState[listOfNewLetters[0] + 1] != "")
-            {
-                var check = true;
-                var i = 1;
-                var newWord = new String(boardStateToBe[listOfNewLetters[0]].innerText);
-                while(check)
-                {
-                    newWord = newWord + boardState[listOfNewLetters[0] + i];
-                    i++;
-                    if (boardState[listOfNewLetters[0] + i] == "" || listOfNewLetters[0] + i % 15 == 0)
-                    {
-                        check = false;
-                    }
-                }
-                listOfWords.push(newWord);
-            }
-            if(boardState[listOfNewLetters[0] - 15] != "")
-            {
-                var check = true;
-                var i=15;
+                var i = 15;
                 var newWord = new String(boardStateToBe[listOfNewLetters[0]].innerText);
                 while(check)
                 {
@@ -808,67 +762,382 @@ function moveValidation()
                         check = false;
                     }
                 }
-                listOfWords.push(newWord.split('').reverse().join(''));
-            }
-            if(boardState[listOfNewLetters[0] + 15] != "")
-            {
-                var check = true;
-                var i = 15;
-                var newWord = new String(boardStateToBe[listOfNewLetters[0]].innerText);
-                while(check)
+                newWord = newWord.split('').reverse().join('');
+                i = 15;
+                while(!check)
                 {
                     newWord = newWord + boardState[listOfNewLetters[0] + i];
                     i += 15;
                     if (boardState[listOfNewLetters[0] + i] == "" || listOfNewLetters[0] + i > 224)
                     {
-                        check = false;
+                        check = true;
                     }
                 }
                 listOfWords.push(newWord);
             }
             return listOfWords;
-              }
-            return false;
         }
-        else if(listOfNewLetters[1] == listOfNewLetters[0] + 15)
+    }
+    {#obsługa ruchu dla ciągu płytek#}
+    else if(listOfNewLetters.length > 1)
+    {
+        var validation = false;
+        for (i = 0; i < listOfNewLetters.length; i++)
         {
-             for (i = 0; i < listOfNewLetters.length; i++)
-              {
-                  if(boardState[listOfNewLetters[i] - 1] != "" || boardState[listOfNewLetters[i] + 1] != ""
-                      || boardState[listOfNewLetters[i] - 15] || boardState[listOfNewLetters[i] + 15])
-                  {
-                      return true;
-                  }
-              }
-            return false;
-        }
-        else
+            if (((boardState[listOfNewLetters[i] - 1] != "")
+                && ((listOfNewLetters[i] - 1) % 15 != 14)
+                && (listOfNewLetters[i] - 1 >= 0))
+                || ((boardState[listOfNewLetters[i] + 1] != "")
+                    && ((listOfNewLetters[i] + 1) % 15 != 0)
+                    && (listOfNewLetters[i] + 1 <= 224))
+                || ((boardState[listOfNewLetters[i] - 15] != "")
+                    && (listOfNewLetters[i] - 15 > 0))
+                || ((boardState[listOfNewLetters[i] + 15] != "")
+                    && (listOfNewLetters[i] + 15 < 224)))
             {
-                if ((15 - (listOfNewLetters[0] % 15)) >= listOfNewLetters[1] - listOfNewLetters[0])
-                {
-                    for (i = 0; i < listOfNewLetters.length - 1; i++)
+                validation = true;
+            }
+            if((listOfNewLetters[i + 1]) % 15 == 0) return false;
+        }
+        if(!validation) return false;
+            {#w poziomie#}
+        if(listOfNewLetters[1] == listOfNewLetters[0] + 1
+            || listOfNewLetters.length == listOfNewLetters[listOfNewLetters.length -1] - listOfNewLetters[0])
+        {
+                  if(boardState[listOfNewLetters[0] - 1] != ""
+                      && boardState[listOfNewLetters[listOfNewLetters.length - 1] + 1] == "")
                     {
-                        for (j = listOfNewLetters[i] + 1; j < listOfNewLetters[i + 1]; j++)
+                        var check = true;
+                        var i = 1;
+                        var newWord = new String(boardStateToBe[listOfNewLetters[0]].innerText);
+                        while(check)
                         {
-                            if (boardState[j] == "" || listOfNewLetters[i + 1] % 15 == 0) return false;
+                            newWord = newWord + boardState[listOfNewLetters[0] - i];
+                            i++;
+                            if (boardState[listOfNewLetters[0] - i] == "" || (listOfNewLetters[0] - i ) % 15 == 14)
+                            {
+                                check = false;
+                            }
                         }
+                        newWord = newWord.split('').reverse().join('');
+                        for(i = 1; i < listOfNewLetters.length; i++)
+                        {
+                            newWord = newWord + boardStateToBe[listOfNewLetters[i]].innerText;
+                        }
+                        listOfWords.push(newWord);
                     }
-                    return true;
-                }
-                else if ((listOfNewLetters[1] - listOfNewLetters[0]) % 15 == 0)
-                {
-                    for (i = 0; i < listOfNewLetters.length - 1; i++)
+                  if(boardState[listOfNewLetters[0] - 1] != ""
+                      &&  boardState[listOfNewLetters[listOfNewLetters.length - 1] + 1] != "")
+                    {
+                        var check = true;
+                        var i = 1;
+                        var newWord = new String(boardStateToBe[listOfNewLetters[0]].innerText);
+                        while(check)
+                        {
+                            newWord = newWord + boardState[listOfNewLetters[0] - i];
+                            i++;
+                            if (boardState[listOfNewLetters[0] - i] == "" || (listOfNewLetters[0] - i) % 15 == 14)
+                            {
+                                check = false;
+                            }
+                        }
+                        newWord = newWord.split('').reverse().join('');
+                        for(i = 1; i < listOfNewLetters.length; i++)
+                        {
+                            newWord = newWord + boardStateToBe[listOfNewLetters[i]].innerText;
+                        }
+                        i = 1;
+                        check = true;
+                        while(check)
+                        {
+                            newWord = newWord + boardState[listOfNewLetters[listOfNewLetters.length - 1] + i];
+                            i++;
+                            if (boardState[listOfNewLetters[0] + i] == "" || (listOfNewLetters[0] + i) % 15 == 0)
+                            {
+                                check = false;
+                            }
+                        }
+                        listOfWords.push(newWord);
+                    }
+                  if(boardState[listOfNewLetters[0] - 1] == ""
+                      &&  boardState[listOfNewLetters[listOfNewLetters.length - 1] + 1] != "")
                     {
 
-                        for (j = listOfNewLetters[i] + 15; j < listOfNewLetters[i + 1]; j += 15)
+                        var newWord = new String(boardStateToBe[listOfNewLetters[0]].innerText);
+                        for(i = 1; i < listOfNewLetters.length; i++)
                         {
-                            if (boardState[j] == "") return false;
+                            newWord = newWord + boardStateToBe[listOfNewLetters[i]].innerText;
                         }
+                        var check = true;
+                        var i = 1;
+                        while(check)
+                        {
+                            newWord = newWord + boardState[listOfNewLetters[listOfNewLetters.length-1] + i];
+                            i++;
+                            if (boardState[listOfNewLetters[0] + i] == "" || (listOfNewLetters[0] + i) % 15 == 0)
+                            {
+                                check = false;
+                            }
+                        }
+                        listOfWords.push(newWord);
                     }
-                    return true;
+                  if (boardState[listOfNewLetters[0] - 1] == ""
+                      && boardState[listOfNewLetters[listOfNewLetters.length - 1] + 1] == "")
+                  {
+                        var newWord = new String(boardStateToBe[listOfNewLetters[0]].innerText);
+                        for(i = 1; i < listOfNewLetters.length; i++)
+                        {
+                            newWord = newWord + boardStateToBe[listOfNewLetters[i]].innerText;
+                        }
+                        listOfWords.push(newWord);
+                  }
+
+            for (j = 0; j < listOfNewLetters.length; j++)
+              {
+                  if(boardState[listOfNewLetters[j] - 15] != "" && boardState[listOfNewLetters[j] + 15] == "")
+                    {
+                        var check = true;
+                        var i = 15;
+                        var newWord = new String(boardStateToBe[listOfNewLetters[j]].innerText);
+                        while(check)
+                        {
+                            newWord = newWord + boardState[listOfNewLetters[j] - i];
+                            i += 15;
+                            if (boardState[listOfNewLetters[j] - i] == "" || listOfNewLetters[j] - i < 0)
+                            {
+                                check = false;
+                            }
+                        }
+                        listOfWords.push(newWord.split('').reverse().join(''));
+                    }
+                  if(boardState[listOfNewLetters[j] - 15] != "" && boardState[listOfNewLetters[j] + 15] != "")
+                    {
+                        var check = true;
+                        var i = 15;
+                        var newWord = new String(boardStateToBe[listOfNewLetters[j]].innerText);
+                        while(check)
+                        {
+                            newWord = newWord + boardState[listOfNewLetters[j] - i];
+                            i += 15;
+                            if (boardState[listOfNewLetters[j] - i] == "" || listOfNewLetters[j] - i < 0)
+                            {
+                                check = false;
+                            }
+                        }
+                        newWord = newWord.split('').reverse().join('');
+                        check = true;
+                        i = 15;
+                        while(check)
+                        {
+                            newWord = newWord + boardState[listOfNewLetters[j] + i];
+                            i += 15;
+                            if (boardState[listOfNewLetters[j] + i] == "" || listOfNewLetters[j] + i > 224)
+                            {
+                                check = false;
+                            }
+                        }
+                        listOfWords.push(newWord);
+                    }
+                  if(boardState[listOfNewLetters[j] - 15] == "" && boardState[listOfNewLetters[j] + 15] != "")
+                    {
+                        var check = true;
+                        var i = 15;
+                        var newWord = new String(boardStateToBe[listOfNewLetters[j]].innerText);
+                        while(check)
+                        {
+                            newWord = newWord + boardState[listOfNewLetters[j] + i];
+                            i += 15;
+                            if (boardState[listOfNewLetters[j] + i] == "" || listOfNewLetters[j] + i > 224)
+                            {
+                                check = false;
+                            }
+                        }
+                        listOfWords.push(newWord);
+                    }
+              }
+            return listOfWords;
+        }
+        {#w pionie#}
+        else if(listOfNewLetters[1] == listOfNewLetters[0] + 15)
+        {
+					if(boardState[listOfNewLetters[0] - 15] != ""
+                      && boardState[listOfNewLetters[listOfNewLetters.length - 1] + 15] == "")
+                    {
+                        var check = true;
+                        var i = 15;
+                        var newWord = new String(boardStateToBe[listOfNewLetters[0]].innerText);
+                        while(check)
+                        {
+                            newWord = newWord + boardState[listOfNewLetters[0] - i];
+                            i += 15;
+                            if (boardState[listOfNewLetters[0] - i] == "" || listOfNewLetters[0] - i < 0)
+                            {
+                                check = false;
+                            }
+                        }
+                        newWord = newWord.split('').reverse().join('');
+                        for(i = 1; i < listOfNewLetters.length; i++)
+                        {
+                            newWord = newWord + boardStateToBe[listOfNewLetters[i]].innerText;
+                        }
+                        listOfWords.push(newWord);
+                    }
+                  if(boardState[listOfNewLetters[0] - 15] != ""
+                      &&  boardState[listOfNewLetters[listOfNewLetters.length - 1] + 15] != "")
+                    {
+                        var check = true;
+                        var i = 15;
+                        var newWord = new String(boardStateToBe[listOfNewLetters[0]].innerText);
+                        while(check)
+                        {
+                            newWord = newWord + boardState[listOfNewLetters[0] - i];
+                            i += 15;
+                            if (boardState[listOfNewLetters[0] - i] == "" || listOfNewLetters[0] - i < 0 )
+                            {
+                                check = false;
+                            }
+                        }
+                        newWord = newWord.split('').reverse().join('');
+                        for(i = 1; i < listOfNewLetters.length; i++)
+                        {
+                            newWord = newWord + boardStateToBe[listOfNewLetters[i]].innerText;
+                        }
+                        i = 15;
+                        check = true;
+                        while(check)
+                        {
+                            newWord = newWord + boardState[listOfNewLetters[listOfNewLetters.length-1] + i];
+                            i += 15;
+                            if (boardState[listOfNewLetters[0] + i] == "" || listOfNewLetters[0] + i > 224)
+                            {
+                                check = false;
+                            }
+                        }
+                        listOfWords.push(newWord);
+                    }
+                  if(boardState[listOfNewLetters[0] - 15] == ""
+                      &&  boardState[listOfNewLetters[listOfNewLetters.length - 1] + 15] != "")
+                    {
+                        var newWord = new String(boardStateToBe[listOfNewLetters[0]].innerText);
+                        for(i = 1; i < listOfNewLetters.length; i++)
+                        {
+                            newWord = newWord + boardStateToBe[listOfNewLetters[i]].innerText;
+                        }
+                        var check = true;
+                        var i = 15;
+                        while(check)
+                        {
+                            newWord = newWord + boardState[listOfNewLetters[listOfNewLetters.length-1] + i];
+                            i += 15;
+                            if (boardState[listOfNewLetters[0] + i] == "" || listOfNewLetters[0] + i > 224)
+                            {
+                                check = false;
+                            }
+                        }
+                        listOfWords.push(newWord);
+                    }
+                  if (boardState[listOfNewLetters[0] - 15] == ""
+                      && boardState[listOfNewLetters[listOfNewLetters.length - 1] + 15] == "")
+                  {
+                        var newWord = new String(boardStateToBe[listOfNewLetters[0]].innerText);
+                        for(i = 1; i < listOfNewLetters.length; i++)
+                        {
+                            newWord = newWord + boardStateToBe[listOfNewLetters[i]].innerText;
+                        }
+                        listOfWords.push(newWord);
+                  }
+
+            for (j = 0; j < listOfNewLetters.length; j++)
+              {
+                  if(boardState[listOfNewLetters[j] - 1] != "" && boardState[listOfNewLetters[j] + 1] == "")
+                    {
+                        var check = true;
+                        var i = 1;
+                        var newWord = new String(boardStateToBe[listOfNewLetters[j]].innerText);
+                        while(check)
+                        {
+                            newWord = newWord + boardState[listOfNewLetters[j] - i];
+                            i++;
+                            if (boardState[listOfNewLetters[j] - i] == "" || listOfNewLetters[j] - i % 15 == 14)
+                            {
+                                check = false;
+                            }
+                        }
+                        listOfWords.push(newWord.split('').reverse().join(''));
+                    }
+                  if(boardState[listOfNewLetters[j] - 1] != "" && boardState[listOfNewLetters[j] + 1] != "")
+                    {
+                        var check = true;
+                        var i = 1;
+                        var newWord = new String(boardStateToBe[listOfNewLetters[j]].innerText);
+                        while(check)
+                        {
+                            newWord = newWord + boardState[listOfNewLetters[j] - i];
+                            i++;
+                            if (boardState[listOfNewLetters[j] - i] == "" || listOfNewLetters[j] - i % 15 == 14)
+                            {
+                                check = false;
+                            }
+                        }
+                        newWord = newWord.split('').reverse().join('');
+                        check = true;
+                        i = 1;
+                        while(check)
+                        {
+                            newWord = newWord + boardState[listOfNewLetters[j] + i];
+                            i++;
+                            if (boardState[listOfNewLetters[j] + i] == "" || listOfNewLetters[j] + i % 15 == 0)
+                            {
+                                check = false;
+                            }
+                        }
+                        listOfWords.push(newWord);
+                    }
+                  if(boardState[listOfNewLetters[j] - 1] == "" && boardState[listOfNewLetters[j] + 1] != "")
+                    {
+                        var check = true;
+                        var i = 1;
+                        var newWord = new String(boardStateToBe[listOfNewLetters[j]].innerText);
+                        while(check)
+                        {
+                            newWord = newWord + boardState[listOfNewLetters[j] + i];
+                            i++;
+                            if (boardState[listOfNewLetters[j] + i] == "" || listOfNewLetters[j] + i % 15 == 0)
+                            {
+                                check = false;
+                            }
+                        }
+                        listOfWords.push(newWord);
+                    }
+              }
+            return listOfWords;
+        }
+        else
+        {
+            if ((15 - (listOfNewLetters[0] % 15)) >= listOfNewLetters[1] - listOfNewLetters[0])
+            {
+                for (i = 0; i < listOfNewLetters.length - 1; i++)
+                {
+                    for (j = listOfNewLetters[i] + 1; j < listOfNewLetters[i + 1]; j++)
+                    {
+                        if (boardState[j] == "" || listOfNewLetters[i + 1] % 15 == 0) return false;
+                    }
                 }
-                return false;
+                return true;
             }
+            else if ((listOfNewLetters[1] - listOfNewLetters[0]) % 15 == 0)
+            {
+                for (i = 0; i < listOfNewLetters.length - 1; i++)
+                {
+                    for (j = listOfNewLetters[i] + 15; j < listOfNewLetters[i + 1]; j += 15)
+                    {
+                        if (boardState[j] == "") return false;
+                    }
+                }
+                return true;
+            }
+            return false;
+        }
     }
     return true;
 }
