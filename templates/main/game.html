@@ -1113,9 +1113,9 @@ function moveValidation()
                         check = true;
                         while(check)
                         {
-                            newWord = newWord + boardState[listOfNewLetters[listOfNewLetters.length-1] + i];
+                            newWord = newWord + boardState[listOfNewLetters[listOfNewLetters.length - 1] + i];
                             i += 15;
-                            if (boardState[listOfNewLetters[0] + i] == "" || listOfNewLetters[0] + i > 224)
+                            if (boardState[listOfNewLetters[listOfNewLetters.length - 1] + i] == "" || listOfNewLetters[listOfNewLetters.length - 1] + i > 224)
                             {
                                 check = false;
                             }
@@ -1137,7 +1137,7 @@ function moveValidation()
                         {
                             newWord = newWord + boardState[listOfNewLetters[listOfNewLetters.length-1] + i];
                             i += 15;
-                            if (boardState[listOfNewLetters[0] + i] == "" || listOfNewLetters[0] + i > 224)
+                            if (boardState[listOfNewLetters[listOfNewLetters - 1] + i] == "" || listOfNewLetters[listOfNewLetters.length - 1] + i > 224)
                             {
                                 check = false;
                             }
@@ -1269,6 +1269,7 @@ function moveValidation()
             {#poziomo z przerwami na stare litery#}
             if ((15 - (listOfNewLetters[0] % 15)) >= listOfNewLetters[1] - listOfNewLetters[0])
             {
+                {#walidacja#}
                 for (i = 0; i < listOfNewLetters.length - 1; i++)
                 {
                     for (j = listOfNewLetters[i] + 1; j < listOfNewLetters[i + 1]; j++)
@@ -1276,10 +1277,233 @@ function moveValidation()
                         if (boardState[j] == "" || listOfNewLetters[i + 1] % 15 == 0) return false;
                     }
                 }
-                return true;
+                {#po lewej są kafelki i po prawej są kafelki#}
+                  if((boardState[listOfNewLetters[0] - 1] != "" && (listOfNewLetters[0] - 1) % 15 != 14)
+                      &&  (boardState[listOfNewLetters[listOfNewLetters.length - 1] + 1] != ""
+                          && (listOfNewLetters[listOfNewLetters.length - 1] + 1) % 15 != 0 ))
+                    {
+                        var check = true;
+                        var i = 1;
+                        var newWord = new String(boardStateToBe[listOfNewLetters[0]].innerText);
+                        while(check)
+                        {
+                            newWord = newWord + boardState[listOfNewLetters[0] - i];
+                            i++;
+                            if (boardState[listOfNewLetters[0] - i] == "" || (listOfNewLetters[0] - i) % 15 == 14)
+                            {
+                                check = false;
+                            }
+                        }
+                        newWord = newWord.split('').reverse().join('');
+                        for(i = listOfNewLetters[0] + 1; i <= listOfNewLetters[listOfNewLetters.length - 1]; i++)
+                        {
+                            newWord = newWord + boardStateToBe[i].innerText;
+                        }
+                        i = 1;
+                        check = true;
+                        while(check)
+                        {
+                            newWord = newWord + boardState[listOfNewLetters[listOfNewLetters.length - 1] + i];
+                            i++;
+                            if (boardState[listOfNewLetters[listOfNewLetters.length - 1] + i] == ""
+                                || (listOfNewLetters[listOfNewLetters.length - 1] + i) % 15 == 0)
+                            {
+                                check = false;
+                            }
+                        }
+                        listOfWords.push(newWord);
+                    }
+                  {#po lewej są kafelki i po prawej ściana#}
+                  if((boardState[listOfNewLetters[0] - 1] != "" && (listOfNewLetters[0] - 1) % 15 != 14)
+                      &&  (boardState[listOfNewLetters[listOfNewLetters.length - 1] + 1] != ""
+                          && (listOfNewLetters[listOfNewLetters.length - 1] + 1) % 15 == 0 ))
+                    {
+                        var check = true;
+                        var i = 1;
+                        var newWord = new String(boardStateToBe[listOfNewLetters[0]].innerText);
+                        while(check)
+                        {
+                            newWord = newWord + boardState[listOfNewLetters[0] - i];
+                            i++;
+                            if (boardState[listOfNewLetters[0] - i] == "" || (listOfNewLetters[0] - i) % 15 == 14)
+                            {
+                                check = false;
+                            }
+                        }
+                        newWord = newWord.split('').reverse().join('');
+                        for(i = listOfNewLetters[0] + 1; i <= listOfNewLetters[listOfNewLetters.length - 1]; i++)
+                        {
+                            newWord = newWord + boardStateToBe[i].innerText;
+                        }
+                        listOfWords.push(newWord);
+                    }
+                  {#po lewej ściana a po prawej są kafelki#}
+                  if((boardState[listOfNewLetters[0] - 1] != "" && (listOfNewLetters[0] - 1) % 15 == 14)
+                      &&  (boardState[listOfNewLetters[listOfNewLetters.length - 1] + 1] != ""
+                          && (listOfNewLetters[listOfNewLetters.length - 1] + 1) % 15 != 0 ))
+                    {
+                        var newWord = new String(boardStateToBe[listOfNewLetters[0]].innerText);
+                        for(i = listOfNewLetters[0] + 1; i <= listOfNewLetters[listOfNewLetters.length - 1]; i++)
+                        {
+                            newWord = newWord + boardStateToBe[i].innerText;
+                        }
+                        var check = true;
+                        var i = 1;
+                        while(check)
+                        {
+                            newWord = newWord + boardState[listOfNewLetters[listOfNewLetters.length - 1] + i];
+                            i++;
+                            if (boardState[listOfNewLetters[listOfNewLetters.length - 1] + i] == ""
+                                || (listOfNewLetters[listOfNewLetters.length - 1] + i) % 15 == 0)
+                            {
+                                check = false;
+                            }
+                        }
+                        listOfWords.push(newWord);
+                    }
+                  {#po lewej nie ma, a po prawej są kafelki#}
+                  if(boardState[listOfNewLetters[0] - 1] == ""
+                      &&  (boardState[listOfNewLetters[listOfNewLetters.length - 1] + 1] != ""
+                          && (listOfNewLetters[listOfNewLetters.length - 1] + 1) % 15 != 0 ))
+                    {
+                        var newWord = new String(boardStateToBe[listOfNewLetters[0]].innerText);
+                        for(i = listOfNewLetters[0] + 1; i <= listOfNewLetters[listOfNewLetters.length - 1]; i++)
+                        {
+                            newWord = newWord + boardStateToBe[i].innerText;
+                        }
+                        var check = true;
+                        var i = 1;
+                        while(check)
+                        {
+                            newWord = newWord + boardState[listOfNewLetters[listOfNewLetters.length - 1] + i];
+                            i++;
+                            if (boardState[listOfNewLetters[listOfNewLetters.length - 1] + i] == ""
+                                || (listOfNewLetters[listOfNewLetters.length - 1] + i) % 15 == 0)
+                            {
+                                check = false;
+                            }
+                        }
+                        listOfWords.push(newWord);
+                    }
+                  {#po lewej są kafelki, a po prawej nie ma#}
+                  if((boardState[listOfNewLetters[0] - 1] != "" && (listOfNewLetters[0] - 1) % 15 != 14)
+                      &&  boardState[listOfNewLetters[listOfNewLetters.length - 1] + 1] == "" )
+                    {
+                        var check = true;
+                        var i = 1;
+                        var newWord = new String(boardStateToBe[listOfNewLetters[0]].innerText);
+                        while(check)
+                        {
+                            newWord = newWord + boardState[listOfNewLetters[0] - i];
+                            i++;
+                            if (boardState[listOfNewLetters[0] - i] == "" || (listOfNewLetters[0] - i) % 15 == 14)
+                            {
+                                check = false;
+                            }
+                        }
+                        newWord = newWord.split('').reverse().join('');
+                        for(i = listOfNewLetters[0] + 1; i <= listOfNewLetters[listOfNewLetters.length - 1]; i++)
+                        {
+                            newWord = newWord + boardStateToBe[i].innerText;
+                        }
+                        listOfWords.push(newWord);
+                    }
+                  {#po lewej i po prawej nie ma kafelkóe#}
+                  if(boardState[listOfNewLetters[0] - 1] == ""
+                      && boardState[listOfNewLetters[listOfNewLetters.length - 1] + 1] == "")
+                    {
+                        var newWord = new String(boardStateToBe[listOfNewLetters[0]].innerText);
+                        for(i = listOfNewLetters[0] + 1; i <= listOfNewLetters[listOfNewLetters.length - 1]; i++)
+                        {
+                            newWord = newWord + boardStateToBe[i].innerText;
+                        }
+                        listOfWords.push(newWord);
+                    }
+                  {#po lewej i po prawej ściana#}
+                  if((boardState[listOfNewLetters[0] - 1] != "" && (listOfNewLetters[0] - 1) % 15 == 14)
+                      &&  (boardState[listOfNewLetters[listOfNewLetters.length - 1] + 1] != ""
+                          && (listOfNewLetters[listOfNewLetters.length - 1] + 1) % 15 == 0 ))
+                    {
+                        var newWord = new String(boardStateToBe[listOfNewLetters[0]].innerText);
+                        for(i = listOfNewLetters[0] + 1; i <= listOfNewLetters[listOfNewLetters.length - 1]; i++)
+                        {
+                            newWord = newWord + boardStateToBe[i].innerText;
+                            alert(boardStateToBe[i].innerText)
+                        }
+                        listOfWords.push(newWord);
+                    }
+                {#sprawdzanie podsłów pionowych dla głównego słowa poziomego#}
+            for (j = 0; j < listOfNewLetters.length; j++)
+              {
+                  {#nad literą są płytki, pod nie ma#}
+                  if(boardState[listOfNewLetters[j] - 15] != "" && boardState[listOfNewLetters[j] + 15] == "")
+                    {
+                        var check = true;
+                        var i = 15;
+                        var newWord = new String(boardStateToBe[listOfNewLetters[j]].innerText);
+                        while(check)
+                        {
+                            newWord = newWord + boardState[listOfNewLetters[j] - i];
+                            i += 15;
+                            if (boardState[listOfNewLetters[j] - i] == "" || listOfNewLetters[j] - i < 0)
+                            {
+                                check = false;
+                            }
+                        }
+                        listOfWords.push(newWord.split('').reverse().join(''));
+                    }
+                  {# i nad i pod literą płytki#}
+                  if(boardState[listOfNewLetters[j] - 15] != "" && boardState[listOfNewLetters[j] + 15] != "")
+                    {
+                        var check = true;
+                        var i = 15;
+                        var newWord = new String(boardStateToBe[listOfNewLetters[j]].innerText);
+                        while(check)
+                        {
+                            newWord = newWord + boardState[listOfNewLetters[j] - i];
+                            i += 15;
+                            if (boardState[listOfNewLetters[j] - i] == "" || listOfNewLetters[j] - i < 0)
+                            {
+                                check = false;
+                            }
+                        }
+                        newWord = newWord.split('').reverse().join('');
+                        check = true;
+                        i = 15;
+                        while(check)
+                        {
+                            newWord = newWord + boardState[listOfNewLetters[j] + i];
+                            i += 15;
+                            if (boardState[listOfNewLetters[j] + i] == "" || listOfNewLetters[j] + i > 224)
+                            {
+                                check = false;
+                            }
+                        }
+                        listOfWords.push(newWord);
+                    }
+                  {#nad nie ma płytek, ale pod są#}
+                  if(boardState[listOfNewLetters[j] - 15] == "" && boardState[listOfNewLetters[j] + 15] != "")
+                    {
+                        var check = true;
+                        var i = 15;
+                        var newWord = new String(boardStateToBe[listOfNewLetters[j]].innerText);
+                        while(check)
+                        {
+                            newWord = newWord + boardState[listOfNewLetters[j] + i];
+                            i += 15;
+                            if (boardState[listOfNewLetters[j] + i] == "" || listOfNewLetters[j] + i > 224)
+                            {
+                                check = false;
+                            }
+                        }
+                        listOfWords.push(newWord);
+                    }
+              }
+                return listOfWords;
             }
             else if ((listOfNewLetters[1] - listOfNewLetters[0]) % 15 == 0)
             {
+                {#walidacja#}
                 for (i = 0; i < listOfNewLetters.length - 1; i++)
                 {
                     for (j = listOfNewLetters[i] + 15; j < listOfNewLetters[i + 1]; j += 15)
@@ -1287,12 +1511,210 @@ function moveValidation()
                         if (boardState[j] == "") return false;
                     }
                 }
-                return true;
+                {#na górze są litery, na dole sa litery#}
+                  if(boardState[listOfNewLetters[0] - 15] != ""
+                      &&  boardState[listOfNewLetters[listOfNewLetters.length - 1] + 15] != "")
+                    {
+                        var check = true;
+                        var i = 15;
+                        var newWord = new String(boardStateToBe[listOfNewLetters[0]].innerText);
+                        while(check)
+                        {
+                            newWord = newWord + boardState[listOfNewLetters[0] - i];
+                            i += 15;
+                            if (boardState[listOfNewLetters[0] - i] == "" || listOfNewLetters[0] - i < 0 )
+                            {
+                                check = false;
+                            }
+                        }
+                        newWord = newWord.split('').reverse().join('');
+                        for(i = listOfNewLetters[0] + 15; i <= listOfNewLetters[listOfNewLetters.length - 1]; i += 15)
+                        {
+                            newWord = newWord + boardStateToBe[i].innerText;
+                        }
+                        i = 15;
+                        check = true;
+                        while(check)
+                        {
+                            newWord = newWord + boardState[listOfNewLetters[listOfNewLetters.length-1] + i];
+                            i += 15;
+                            if (boardState[listOfNewLetters[listOfNewLetters.length - 1] + i] == "" || listOfNewLetters[listOfNewLetters.length - 1] + i > 224)
+                            {
+                                check = false;
+                            }
+                        }
+                        listOfWords.push(newWord);
+                    }
+                {#na górze są litery, na dole brak liter#}
+                  if(boardState[listOfNewLetters[0] - 15] != ""
+                      &&  boardState[listOfNewLetters[listOfNewLetters.length - 1] + 15] == "")
+                    {
+                        var check = true;
+                        var i = 15;
+                        var newWord = new String(boardStateToBe[listOfNewLetters[0]].innerText);
+                        while(check)
+                        {
+                            newWord = newWord + boardState[listOfNewLetters[0] - i];
+                            i += 15;
+                            if (boardState[listOfNewLetters[0] - i] == "" || listOfNewLetters[0] - i < 0 )
+                            {
+                                check = false;
+                            }
+                        }
+                        newWord = newWord.split('').reverse().join('');
+                        for(i = listOfNewLetters[0] + 15; i <= listOfNewLetters[listOfNewLetters.length - 1]; i += 15)
+                        {
+                            newWord = newWord + boardStateToBe[i].innerText;
+                        }
+                        listOfWords.push(newWord);
+                    }
+                {#na górze brak liter, na dole sa litery#}
+                  if(boardState[listOfNewLetters[0] - 15] == ""
+                      &&  boardState[listOfNewLetters[listOfNewLetters.length - 1] + 15] != "")
+                    {
+                        var newWord = new String(boardStateToBe[listOfNewLetters[0]].innerText);
+                        for(i = listOfNewLetters[0] + 15; i <= listOfNewLetters[listOfNewLetters.length - 1]; i += 15)
+                        {
+                            newWord = newWord + boardStateToBe[i].innerText;
+                        }
+                        var i = 15;
+                        var check = true;
+                        while(check)
+                        {
+                            newWord = newWord + boardState[listOfNewLetters[listOfNewLetters.length-1] + i];
+                            i += 15;
+                            if (boardState[listOfNewLetters[listOfNewLetters.length - 1] + i] == "" || listOfNewLetters[listOfNewLetters.length - 1] + i > 224)
+                            {
+                                check = false;
+                            }
+                        }
+                        listOfWords.push(newWord);
+                    }
+                {#na górze i na dole brak liter#}
+                  if(boardState[listOfNewLetters[0] - 15] == ""
+                      &&  boardState[listOfNewLetters[listOfNewLetters.length - 1] + 15] == "")
+                    {
+                        var newWord = new String(boardStateToBe[listOfNewLetters[0]].innerText);
+                        for(i = listOfNewLetters[0] + 15; i <= listOfNewLetters[listOfNewLetters.length - 1]; i += 15)
+                        {
+                            newWord = newWord + boardStateToBe[i].innerText;
+                        }
+                        listOfWords.push(newWord);
+                    }
+                {#sprawdzanie podsłów dla każdej litery#}
+            for (j = 0; j < listOfNewLetters.length; j++)
+              {
+                  {#po lewej są płytki, po prawej nie ma#}
+                  if((boardState[listOfNewLetters[j] - 1] != "" && (listOfNewLetters[j] - 1) % 15 != 14 )
+                      && boardState[listOfNewLetters[j] + 1] == "")
+                    {
+                        var check = true;
+                        var i = 1;
+                        var newWord = new String(boardStateToBe[listOfNewLetters[j]].innerText);
+                        while(check)
+                        {
+                            newWord = newWord + boardState[listOfNewLetters[j] - i];
+                            i++;
+                            if (boardState[listOfNewLetters[j] - i] == "" || (listOfNewLetters[j] - i) % 15 == 14)
+                            {
+                                check = false;
+                            }
+                        }
+                        listOfWords.push(newWord.split('').reverse().join(''));
+                    }
+                  {#po lewej i prawej są płytki#}
+                  if((boardState[listOfNewLetters[j] - 1] != "" && (listOfNewLetters[j] - 1) % 15 != 14)
+                      && (boardState[listOfNewLetters[j] + 1] != "" && (listOfNewLetters[j] + 1) % 15 != 0))
+                    {
+                        var check = true;
+                        var i = 1;
+                        var newWord = new String(boardStateToBe[listOfNewLetters[j]].innerText);
+                        while(check)
+                        {
+                            newWord = newWord + boardState[listOfNewLetters[j] - i];
+                            i++;
+                            if (boardState[listOfNewLetters[j] - i] == "" || (listOfNewLetters[j] - i) % 15 == 14)
+                            {
+                                check = false;
+                            }
+                        }
+                        newWord = newWord.split('').reverse().join('');
+                        check = true;
+                        i = 1;
+                        while(check)
+                        {
+                            newWord = newWord + boardState[listOfNewLetters[j] + i];
+                            i++;
+                            if (boardState[listOfNewLetters[j] + i] == "" || (listOfNewLetters[j] + i) % 15 == 0)
+                            {
+                                check = false;
+                            }
+                        }
+                        listOfWords.push(newWord);
+                    }
+                  {#po lewej ściana a prawej są płytki#}
+                  if((boardState[listOfNewLetters[j] - 1] != "" && (listOfNewLetters[j] - 1) % 15 == 14)
+                      && (boardState[listOfNewLetters[j] + 1] != "" && (listOfNewLetters[j] + 1) % 15 != 0))
+                    {
+                        var check = true;
+                        var i = 1;
+                        var newWord = new String(boardStateToBe[listOfNewLetters[j]].innerText);
+                        while(check)
+                        {
+                            newWord = newWord + boardState[listOfNewLetters[j] + i];
+                            i++;
+                            if (boardState[listOfNewLetters[j] + i] == "" || (listOfNewLetters[j] + i) % 15 == 0)
+                            {
+                                check = false;
+                            }
+                        }
+                        listOfWords.push(newWord);
+                    }
+                  {#po lewej płytki a  po prawej ściana#}
+                  if((boardState[listOfNewLetters[j] - 1] != "" && (listOfNewLetters[j] - 1) % 15 != 14)
+                      && (boardState[listOfNewLetters[j] + 1] != "" && (listOfNewLetters[j] + 1) % 15 == 0))
+                    {
+                        var check = true;
+                        var i = 1;
+                        var newWord = new String(boardStateToBe[listOfNewLetters[j]].innerText);
+                        while(check)
+                        {
+                            newWord = newWord + boardState[listOfNewLetters[j] - i];
+                            i++;
+                            if (boardState[listOfNewLetters[j] - i] == "" || (listOfNewLetters[j] - i) % 15 == 14)
+                            {
+                                check = false;
+                            }
+                        }
+                        newWord = newWord.split('').reverse().join('');
+                        listOfWords.push(newWord);
+                    }
+                  {#po lewej nie ma płytki, po prawej jest#}
+                  if(boardState[listOfNewLetters[j] - 1] == ""
+                      && (boardState[listOfNewLetters[j] + 1] != "" && (listOfNewLetters[j] + 1) % 15 != 0))
+                    {
+                        var check = true;
+                        var i = 1;
+                        var newWord = new String(boardStateToBe[listOfNewLetters[j]].innerText);
+                        while(check)
+                        {
+                            newWord = newWord + boardState[listOfNewLetters[j] + i];
+                            i++;
+                            if (boardState[listOfNewLetters[j] + i] == "" || (listOfNewLetters[j] + i) % 15 == 0)
+                            {
+                                check = false;
+                            }
+                        }
+                        listOfWords.push(newWord);
+                    }
+              }
+                return listOfWords;
             }
             return false;
         }
+        return false;
     }
-    return true;
+    return false;
 }
 
 
