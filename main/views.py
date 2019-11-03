@@ -5,34 +5,54 @@ from django.contrib import messages
 from .froms import *
 import random
 
+letters = [
+    'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', chr(260),
+    'B', 'B', 'C', 'C', 'C', chr(262), 'D', 'D', 'D', 'E',
+    'E', 'E', 'E', 'E', 'E', 'E', chr(280), 'F', 'G', 'G',
+    'H', 'H', 'I', 'I', 'I', 'I', 'I', 'I', 'I', 'I',
+    'J', 'J', 'K', 'K', 'K', 'L', 'L', 'L', chr(321), chr(321),
+    'M', 'M', 'M', 'N', 'N', 'N', 'N', 'N', chr(323), 'O',
+    'O', 'O', 'O', 'O', 'O', chr(211), 'P', 'P', 'P', 'R',
+    'R', 'R', 'R', 'S', 'S', 'S', 'S', chr(346), 'T', 'T',
+    'T', 'U', 'U', 'W', 'W', 'W', 'W', 'Y', 'Y', 'Y',
+    'Y', 'Z', 'Z', 'Z', 'Z', 'Z', chr(377), chr(379), '_', '_'
+]
+
+taken = []
+lastBoardState = []
+
 
 def homepage(request):
     return render(request, "main/home.html")
 
 
 def game(request):
-    letters = [
-        'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', chr(260),
-        'B', 'B', 'C', 'C', 'C', chr(262), 'D', 'D', 'D', 'E',
-        'E', 'E', 'E', 'E', 'E', 'E', chr(280), 'F', 'G', 'G',
-        'H', 'H', 'I', 'I', 'I', 'I', 'I', 'I', 'I', 'I',
-        'J', 'J', 'K', 'K', 'K', 'L', 'L', 'L', chr(321), chr(321),
-        'M', 'M', 'M', 'N', 'N', 'N', 'N', 'N', chr(323), 'O',
-        'O', 'O', 'O', 'O', 'O', chr(211), 'P', 'P', 'P', 'R',
-        'R', 'R', 'R', 'S', 'S', 'S', 'S', chr(346), 'T', 'T',
-        'T', 'U', 'U', 'W', 'W', 'W', 'W', 'Y', 'Y', 'Y',
-        'Y', 'Z', 'Z', 'Z', 'Z', 'Z', chr(377), chr(379), '_', '_'
-    ]
-    chosen = []
-    taken = []
-    while len(chosen) < 7:
-        temp = random.randint(0, 99)
-        if temp not in taken:
-            chosen.append(letters[temp])
-            taken.append(temp)
+    if request.method == "POST":
+        wordList = request.POST['wordsList']
+        boardState = request.POST['boardState']
+        username = request.POST['username']
+        remainingLetters = request.POST['remainingLetters']
 
-    return render(request, "main/game.html", {"letters": chosen})
+        print(wordList)
+        print(boardState)
+        print(username)
+        print(remainingLetters)
 
+        chosen =list(remainingLetters.split(","))
+        while len(chosen) < 7 :
+            temp = random.randint(0, 99)
+            if temp not in taken:
+                chosen.append(letters[temp])
+                taken.append(temp)
+        return render(request, "main/game.html", {"boardState": boardState, "letters" : chosen})
+    else:
+        chosen = []
+        while len(chosen) < 7 :
+            temp = random.randint(0, 99)
+            if temp not in taken:
+                chosen.append(letters[temp])
+                taken.append(temp)
+        return render(request, "main/game.html", {"letters" : chosen})
 
 def login_request(request):
     if request.method == "POST":

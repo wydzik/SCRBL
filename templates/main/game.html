@@ -292,10 +292,22 @@
                     <h2  class="nickname">{{user.username}}</h2>
                 </li>
                 <li>
-                    <div class = "dropzone" id ="letter"></div>
+                    <div class = "dropzone" id ="letter">
+                        {% for letter in letters %}
+                            <div class ="letter" id="draggable" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', null)">{{ letter }}</div>
+                        {% endfor %}
+                    </div>
                 </li>
                 <li>
-                    <button class="btn" onclick="makeMove()">Wykonaj</button>
+                    <form method="post" id="moveForm">
+                        {% csrf_token %}
+                        <input type="hidden" id="remainingLetters" name="remainingLetters" value="">
+                        <input type="hidden" id="wordList" name="wordsList" value="">
+                        <input type="hidden" id="boardState" name="boardState" value="">
+                        <input type="hidden" id="username" name="username" value="{{ user.username }}">
+                    </form>
+                    <button class="btn" value="Wykonaj" onclick="makeMove()">Wykonaj</button>
+
                 </li>
                 <li>
                     <h6 class="points">Punkty:</h6>
@@ -307,6 +319,9 @@
                 <li>
                     <button class="btn" onclick="replaceLetters()">Wymień</button>
                 </li>
+                  <li>
+                      <div hidden id="receivedBoardState">{{ boardState }}</div>
+                  </li>
               </ul>
       </div>
 </div>
@@ -452,7 +467,7 @@ document.addEventListener("drop", function(event)
          event.target.appendChild(dragged);
          if(!boardStateValidation())
          {
-             alert("Położony kafelek znajduje nie graniczy z pozostałymi.")
+             {#alert("Położony kafelek znajduje nie graniczy z pozostałymi.")#}
              {#dragged.style.opacity = 1.0;#}
              {#var newLetterContainer = document.getElementById("letter").innerHTML + dragged.outerHTML;#}
              {#document.getElementById("letter").innerHTML = newLetterContainer;#}
@@ -523,24 +538,46 @@ function makeMove()
 {
     if(document.getElementById("change").children.length == 0)
     {
-        if(firstMove)
+        if(boardState[112] == "")
         {
-            if(boardStateValidation())
+            var validation = boardStateValidation();
+            if(validation)
             {
                 boardState = boardStateUpdate();
-                fillLetters();
+                remainingLetters = [];
+                for (i = 0; i < document.getElementById("letter").children.length; i++)
+                {
+                    remainingLetters.push(document.getElementById("letter").children[i].innerText)
+                }
                 blockLetters();
                 firstMove = false;
+                document.getElementById("wordList").value = validation;
+                document.getElementById("boardState").value = boardState;
+                document.getElementById("remainingLetters").value = remainingLetters;
+                document.getElementById("moveForm").submit();
+            }
+            else
+            {
+             alert("Słowo musi przechodzić przez środek planszy")
             }
         }
 else
     {
-            if (moveValidation())
+        var validation = moveValidation()
+            if (validation)
             {
                 {#roundScore = wordScore();#}
                 boardState = boardStateUpdate();
-                fillLetters();
+                remainingLetters = [];
+                for (i = 0; i < document.getElementById("letter").children.length; i++)
+                {
+                    remainingLetters.push(document.getElementById("letter").children[i].innerText)
+                }
                 blockLetters();
+                document.getElementById("wordList").value = validation;
+                document.getElementById("boardState").value = boardState;
+                document.getElementById("remainingLetters").value = remainingLetters;
+                document.getElementById("moveForm").submit();
             } else
                 {
                 alert("Nie wszystkie kafelki stykają się z pozostałymi.")
@@ -603,7 +640,8 @@ function boardStateUpdate()
 
 function boardStateValidation()
 {
-    newBoardState = boardStateUpdate();
+    var newBoardState = boardStateUpdate();
+    var newWord = new String();
     var counter = 0;
     for(i = 0; i < newBoardState.length; i++)
     {
@@ -625,10 +663,57 @@ function boardStateValidation()
                 return false;
             }
         }
-    }
-    return true;
-}
 
+        if(newBoardState[112] == "") return false;
+        for(i = 0; i < newBoardState.length; i++)
+        {
+            if(newBoardState[i] != "")
+            {
+                newWord = newWord + newBoardState[i]
+            }
+        }
+    return newWord;
+    }
+    return false;
+}
+function applyReceivedData()
+{
+    receivedBoardState = new Array()
+    boardStateAsText = document.getElementById("receivedBoardState").innerText;
+    if(boardStateAsText!="")
+    {
+        for (i = 0 ; i < boardStateAsText.length; i++)
+    {
+        if(boardStateAsText[i] == ",")
+        {
+            if(boardStateAsText[i - 1] ==",") receivedBoardState.push("");
+            else receivedBoardState.push(boardStateAsText[i - 1]);
+        }
+    }
+    var temp = 0;
+        for(j = 1; j <16; j++)
+    {
+        for(i = 0; i<15; i++)
+        {
+            if (receivedBoardState[temp] != "")
+            {
+                if (receivedBoardState[temp] == undefined)
+                {
+                    document.getElementById("row_" + j).children[i].innerHTML = "";
+                }
+                else
+                {
+                    document.getElementById("row_" + j).children[i].innerHTML = '<div class ="letter" id="draggable" draggable="false"' +
+                        ' ondragstart="event.dataTransfer.setData(\'text/plain\',null)">' +
+                        ' ' + receivedBoardState[temp] + '</div> ';
+                }
+            }
+            temp++;
+        }
+    }
+    }
+     boardState=boardStateUpdate();
+}
 function moveValidation()
 {
     boardStateToBe = [];
@@ -643,12 +728,11 @@ function moveValidation()
                 && document.getElementById("row_" + j).children[i].children.draggable.draggable == true)
             {
                 listOfNewLetters.push(boardStateToBe.length - 1)
-                alert(boardStateToBe.length - 1)
             }
         }
     }
     {#tutaj się musze zastanowić, czy true, czy lepiej false, żeby wymusić jakiś ruch#}
-    if (listOfNewLetters.length == 0) return true;
+    if (listOfNewLetters.length == 0) return false;
     {#obsługa ruchu dla pojedynczej płytki#}
     else if (listOfNewLetters.length == 1)
     {
@@ -1719,7 +1803,7 @@ function moveValidation()
 
 
 
-window.onload = fillLetters;
+window.onload = applyReceivedData;
     </script>
 {#{% endblock %}#}
 
