@@ -37,13 +37,30 @@ def game(request):
         print(boardState)
         print(username)
         print(remainingLetters)
-
+        
+        wordList = list(wordList.split(","))
+        print(wordList)
+        print(len(wordList))
+        validWordsFile = open(r"slowa.txt", "r")
+        validWords = validWordsFile.readlines()
+        guard = len(wordList)
+        print(len(validWords[1]))
+        print("no ej, ja tu jestem")
+        for word in wordList:
+            if word.lower() + '\n' in validWords:
+                guard = guard - 1
+        if guard == 0:
+            print("no brawo jasiu")
+        else:
+            print("what is wrong with you")
+        validWordsFile.close()
         chosen =list(remainingLetters.split(","))
         while len(chosen) < 7 :
             temp = random.randint(0, 99)
             if temp not in taken:
                 chosen.append(letters[temp])
                 taken.append(temp)
+
         return render(request, "main/game.html", {"boardState": boardState, "letters" : chosen})
     else:
         chosen = []
@@ -53,6 +70,7 @@ def game(request):
                 chosen.append(letters[temp])
                 taken.append(temp)
         return render(request, "main/game.html", {"letters" : chosen})
+
 
 def login_request(request):
     if request.method == "POST":
