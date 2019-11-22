@@ -19,7 +19,21 @@ letters = [
 ]
 
 taken = []
-lastBoardState = []
+lastBoardState = ",,,,,,,,,,,,,,," \
+                 ",,,,,,,,,,,,,,," \
+                 ",,,,,,,,,,,,,,," \
+                 ",,,,,,,,,,,,,,," \
+                 ",,,,,,,,,,,,,,," \
+                 ",,,,,,,,,,,,,,," \
+                 ",,,,,,,,,,,,,,," \
+                 ",,,,,,,,,,,,,,," \
+                 ",,,,,,,,,,,,,,," \
+                 ",,,,,,,,,,,,,,," \
+                 ",,,,,,,,,,,,,,," \
+                 ",,,,,,,,,,,,,,," \
+                 ",,,,,,,,,,,,,,," \
+                 ",,,,,,,,,,,,,,," \
+                 ",,,,,,,,,,,,,,,"
 
 
 def homepage(request):
@@ -44,13 +58,12 @@ def game(request):
         validWordsFile = open(r"slowa.txt", "r")
         validWords = validWordsFile.readlines()
         guard = len(wordList)
-        print(len(validWords[1]))
-        print("no ej, ja tu jestem")
         for word in wordList:
             if word.lower() + '\n' in validWords:
                 guard = guard - 1
         if guard == 0:
             print("no brawo jasiu")
+            lastBoardState = boardState
         else:
             print("what is wrong with you")
         validWordsFile.close()
@@ -61,7 +74,7 @@ def game(request):
                 chosen.append(letters[temp])
                 taken.append(temp)
 
-        return render(request, "main/game.html", {"boardState": boardState, "letters" : chosen})
+        return render(request, "main/game.html", {"boardState": lastBoardState, "letters" : chosen})
     else:
         chosen = []
         while len(chosen) < 7 :
@@ -69,7 +82,7 @@ def game(request):
             if temp not in taken:
                 chosen.append(letters[temp])
                 taken.append(temp)
-        return render(request, "main/game.html", {"letters" : chosen})
+        return render(request, "main/game.html", {"letters" : chosen, "boardState": lastBoardState})
 
 
 def login_request(request):

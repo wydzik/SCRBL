@@ -17,3 +17,11 @@ class Profile (models.Model):
 			output_size = (300,300)
 			img.thumbnail(output_size)
 			img.save(self.image.path)
+
+class GameRoom (models.Model):
+	board_state = models.CharField(max_length=249)
+	round = models.IntegerField()
+	in_progress = models.BooleanField(default=False)
+
+class Game (models.Model):
+	game_room = models.ForeignKey(GameRoom, on_delete=models.CASCADE)
