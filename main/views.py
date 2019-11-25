@@ -19,7 +19,7 @@ letters = [
 ]
 
 taken = []
-lastBoardState = ",,,,,,,,,,,,,,," \
+lastBoardState = [",,,,,,,,,,,,,,," \
                  ",,,,,,,,,,,,,,," \
                  ",,,,,,,,,,,,,,," \
                  ",,,,,,,,,,,,,,," \
@@ -33,7 +33,7 @@ lastBoardState = ",,,,,,,,,,,,,,," \
                  ",,,,,,,,,,,,,,," \
                  ",,,,,,,,,,,,,,," \
                  ",,,,,,,,,,,,,,," \
-                 ",,,,,,,,,,,,,,,"
+                 ",,,,,,,,,,,,,,,"]
 
 
 def homepage(request):
@@ -63,7 +63,7 @@ def game(request):
                 guard = guard - 1
         if guard == 0:
             print("no brawo jasiu")
-            lastBoardState = boardState
+            lastBoardState[0] = boardState
         else:
             print("what is wrong with you")
         validWordsFile.close()
@@ -77,12 +77,13 @@ def game(request):
         return render(request, "main/game.html", {"boardState": lastBoardState, "letters" : chosen})
     else:
         chosen = []
+
         while len(chosen) < 7 :
             temp = random.randint(0, 99)
             if temp not in taken:
                 chosen.append(letters[temp])
                 taken.append(temp)
-        return render(request, "main/game.html", {"letters" : chosen, "boardState": lastBoardState})
+        return render(request, "main/game.html", {"letters" : chosen, "boardState": lastBoardState[0]})
 
 
 def login_request(request):
