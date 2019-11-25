@@ -25,7 +25,7 @@ SECRET_KEY = 'o+wq8&(tn2&8e)2h(9-e=l15miho)m3%vgu+_7c)n&fv(e18c+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['nameless-mountain-65773.herokuapp.com']
 
 
 # Application definition
