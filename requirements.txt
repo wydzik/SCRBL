@@ -1,5 +1,5 @@
 django
 gunicorn
-django-channels
+channels
 django-heroku
 redis

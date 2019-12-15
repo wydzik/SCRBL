@@ -130,3 +130,4 @@ def register(request):
     form = NewUserForm  # do zmiennej form przypisujemy domyślny formularz
     # w uproszczeniu render do danego requesta przypisuje url wraz z kontekstem (w tym wypadku, w register.html form będzie przypisany do zmiennej form
     return render(request, "main/register.html", context={"form": form})
+

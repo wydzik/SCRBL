@@ -18,10 +18,10 @@ class Profile (models.Model):
 			img.thumbnail(output_size)
 			img.save(self.image.path)
 
-class GameRoom (models.Model):
+class GameRooms (models.Model):
 	board_state = models.CharField(max_length=249)
 	round = models.IntegerField()
 	in_progress = models.BooleanField(default=False)
 
 class Game (models.Model):
-	game_room = models.ForeignKey(GameRoom, on_delete=models.CASCADE)
+	game_room = models.ForeignKey(GameRooms, on_delete=models.CASCADE)

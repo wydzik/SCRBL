@@ -25,7 +25,7 @@ SECRET_KEY = 'o+wq8&(tn2&8e)2h(9-e=l15miho)m3%vgu+_7c)n&fv(e18c+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['nameless-mountain-65773.herokuapp.com']
+ALLOWED_HOSTS = ['nameless-mountain-65773.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'channels'
 ]
 
 MIDDLEWARE = [
@@ -69,6 +70,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'betterScrabble.wsgi.application'
+ASGI_APPLICATION = "betterScrabble.routing.application"
 
 
 # Database
