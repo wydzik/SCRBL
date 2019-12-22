@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ['nameless-mountain-65773.herokuapp.com', '127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
+    'main.apps.MainConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -72,7 +73,14 @@ TEMPLATES = [
 WSGI_APPLICATION = 'betterScrabble.wsgi.application'
 ASGI_APPLICATION = "betterScrabble.routing.application"
 
-
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [os.environ.get('REDIS_URL', 'redis://localhost:6379')],
+        },
+    },
+}
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 

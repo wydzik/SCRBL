@@ -1,9 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
+from django.utils.safestring import mark_safe
 from django.contrib import messages
-from .froms import *
+from .models import GameRooms
+from .forms import *
 import random
+import json
 
 letters = [
     'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', chr(260),
@@ -19,28 +22,28 @@ letters = [
 ]
 
 taken = []
-lastBoardState = [",,,,,,,,,,,,,,," \
-                 ",,,,,,,,,,,,,,," \
-                 ",,,,,,,,,,,,,,," \
-                 ",,,,,,,,,,,,,,," \
-                 ",,,,,,,,,,,,,,," \
-                 ",,,,,,,,,,,,,,," \
-                 ",,,,,,,,,,,,,,," \
-                 ",,,,,,,,,,,,,,," \
-                 ",,,,,,,,,,,,,,," \
-                 ",,,,,,,,,,,,,,," \
-                 ",,,,,,,,,,,,,,," \
-                 ",,,,,,,,,,,,,,," \
-                 ",,,,,,,,,,,,,,," \
-                 ",,,,,,,,,,,,,,," \
-                 ",,,,,,,,,,,,,,,"]
+lastBoardState = [  ",,,,,,,,,,,,,,," \
+                    ",,,,,,,,,,,,,,," \
+                    ",,,,,,,,,,,,,,," \
+                    ",,,,,,,,,,,,,,," \
+                    ",,,,,,,,,,,,,,," \
+                    ",,,,,,,,,,,,,,," \
+                    ",,,,,,,,,,,,,,," \
+                    ",,,,,,,,,,,,,,," \
+                    ",,,,,,,,,,,,,,," \
+                    ",,,,,,,,,,,,,,," \
+                    ",,,,,,,,,,,,,,," \
+                    ",,,,,,,,,,,,,,," \
+                    ",,,,,,,,,,,,,,," \
+                    ",,,,,,,,,,,,,,," \
+                    ",,,,,,,,,,,,,,,"]
 
 
 def homepage(request):
     return render(request, "main/home.html")
 
 
-def game(request):
+def game(request,gameroom_name):
     if request.method == "POST":
         wordList = request.POST['wordsList']
         boardState = request.POST['boardState']
@@ -74,7 +77,9 @@ def game(request):
                 chosen.append(letters[temp])
                 taken.append(temp)
 
-        return render(request, "main/game.html", {"boardState": lastBoardState, "letters" : chosen})
+        return render(request, "main/game.html", {"boardState": lastBoardState,
+                                                  "letters" : chosen,
+                                                  'gameroom_name_json': mark_safe(json.dumps(gameroom_name))})
     else:
         chosen = []
 
@@ -83,7 +88,8 @@ def game(request):
             if temp not in taken:
                 chosen.append(letters[temp])
                 taken.append(temp)
-        return render(request, "main/game.html", {"letters" : chosen, "boardState": lastBoardState[0]})
+        return render(request, "main/game.html", {"letters" : chosen, "boardState": lastBoardState[0],
+                                                  'gameroom_name_json': mark_safe(json.dumps(gameroom_name))})
 
 
 def login_request(request):
@@ -130,4 +136,7 @@ def register(request):
     form = NewUserForm  # do zmiennej form przypisujemy domyślny formularz
     # w uproszczeniu render do danego requesta przypisuje url wraz z kontekstem (w tym wypadku, w register.html form będzie przypisany do zmiennej form
     return render(request, "main/register.html", context={"form": form})
+
+def gameroom(request):
+    return render(request,"main/gameroom.html",context = {"gamerooms": GameRooms.objects.all})
 

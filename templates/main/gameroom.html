@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+{% for gameroom in gamerooms %}
+    {{  gameroom.id }}
+    <a href="{% url 'main:game' gameroom.id %}">{{ gameroom.name }}</a>
+    {{ gameroom.in_progress }}
+{% endfor %}
+
+</body>
+</html>
