@@ -3,3 +3,4 @@ gunicorn
 channels
 django-heroku
 redis
+channels_redis
