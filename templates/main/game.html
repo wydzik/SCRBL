@@ -502,10 +502,10 @@ document.addEventListener("drop", function(event)
       var tripleLetterStates = [20,24,76,80,84,88,136,140,144,148,200,204]
 
 
-function applyReceivedData(boardState)
+function applyReceivedData(board_state)
 {
     receivedBoardState = new Array()
-    boardStateAsText = boardState;
+    boardStateAsText = board_state;
     if(boardStateAsText!="")
     {
         for (i = 0 ; i < boardStateAsText.length; i++)
@@ -537,7 +537,7 @@ function applyReceivedData(boardState)
             }
         }
     }
-    boardState=boardStateUpdate();
+    boardState = boardStateUpdate();
 }
 function blockLetters()
 {
