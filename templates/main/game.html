@@ -2067,7 +2067,7 @@ function replaceLetters()
         gameSocket.send(JSON.stringify({
             'points' : countValue(wordList, wordListAsBoardStates),
             'boardState': boardState,
-            'player' : {{user.username}},
+            'player' : 'admin',
             'gameroom' : roomName
         }));
     };
