@@ -509,35 +509,35 @@ function applyReceivedData(boardState)
     if(boardStateAsText!="")
     {
         for (i = 0 ; i < boardStateAsText.length; i++)
-    {
-        if(boardStateAsText[i] == ",")
         {
-            if(boardStateAsText[i - 1] ==",") receivedBoardState.push('');
-            else receivedBoardState.push(boardStateAsText[i - 1]);
-        }
-    }
-    var temp = 0;
-        for(j = 1; j <16; j++)
-    {
-        for(i = 0; i<15; i++)
-        {
-            if (receivedBoardState[temp] != "")
+            if(boardStateAsText[i] == ",")
             {
-                if (receivedBoardState[temp] == undefined)
-                {
-                    document.getElementById("row_" + j).children[i].innerHTML = '';
-                }
-                else
-                {
-                    document.getElementById("row_" + j).children[i].innerHTML = '<div class ="letter" id="draggable" draggable="false"' +
-                        ' ondragstart="event.dataTransfer.setData(\'text/plain\',null)"> ' + receivedBoardState[temp] + '</div> ';
-                }
+                if(boardStateAsText[i - 1] ==",") receivedBoardState.push('');
+                else receivedBoardState.push(boardStateAsText[i - 1]);
             }
-            temp++;
+        }
+        var temp = 0;
+            for(j = 1; j <16; j++)
+        {
+            for(i = 0; i<15; i++)
+            {
+                if (receivedBoardState[temp] != "")
+                {
+                    if (receivedBoardState[temp] == undefined)
+                    {
+                        document.getElementById("row_" + j).children[i].innerHTML = '';
+                    }
+                    else
+                    {
+                        document.getElementById("row_" + j).children[i].innerHTML = '<div class ="letter" id="draggable" draggable="false"' +
+                            ' ondragstart="event.dataTransfer.setData(\'text/plain\',null)"> ' + receivedBoardState[temp] + '</div> ';
+                    }
+                }
+                temp++;
+            }
         }
     }
-    }
-     boardState=boardStateUpdate();
+    boardState=boardStateUpdate();
 }
 function blockLetters()
 {
@@ -2041,10 +2041,21 @@ function replaceLetters()
         'ws://' + window.location.host +
         '/ws/game/' + roomName + '/');
 
-    gameSocket.onmessage = function(e) {
+    gameSocket.onmessage = function(e)
+    {
         var data = JSON.parse(e.data);
         var boardState = data['boardState'];
-        applyReceivedData(boardState);
+        if(boardState == "NOT YET")
+        {
+            alert("Oczekiwanie na ruch pozostałych graczy.");
+        }
+        else
+        {
+            var remainingLetters = data['remainingLetters'];
+            applyReceivedData(boardState);
+            {#obsługa podmianki pozostalych liter, albo zmiana fillLetters, na wersję z argumentem#}
+            fillLetters()
+        }
     };
 
     gameSocket.onclose = function(e) {
