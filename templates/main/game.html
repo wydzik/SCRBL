@@ -697,7 +697,7 @@ function makeMove()
 {
     if(document.getElementById("change").children.length == 0)
     {
-        if(boardState[112] == "")
+        if(boardState.length == 0)
         {
             var wordList, wordListAsBoardState = boardStateValidation();
             if(wordList)
