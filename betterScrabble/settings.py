@@ -75,10 +75,11 @@ ASGI_APPLICATION = "betterScrabble.routing.application"
 
 CHANNEL_LAYERS = {
     "default": {
-        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "BACKEND": "asgi_redis.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [('nameless-mountain-65773.herokuapp.com', 6379)],
+            "hosts": [os.environ.get('REDIS_URL', 'redis://localhost:6379')],
         },
+        "ROUTING": "chat.routing.channel_routing",
     },
 }
 # Database

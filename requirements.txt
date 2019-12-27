@@ -4,3 +4,4 @@ channels
 django-heroku
 redis
 channels_redis
+asgi_redis
