@@ -599,7 +599,7 @@ function boardStateValidation()
                 wordBoardState.push(i);
             }
         }
-    return [newWord, wordBoardState];
+    return {newWord : newWord, wordBoardState : wordBoardState};
     }
     return false;
 }
@@ -699,7 +699,9 @@ function makeMove()
     {
         if(boardState.length == 0)
         {
-            var wordList, wordListAsBoardState = boardStateValidation();
+            var result = boardStateValidation();
+            var wordList = result.newWord;
+            var wordListAsBoardState = result.wordBoardState;
             if(wordList)
             {
                 boardState = boardStateUpdate();
