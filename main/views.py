@@ -89,7 +89,7 @@ def game(request,gameroom_id):
                 chosen.append(letters[temp])
                 taken.append(temp)
         return render(request, "main/game.html", {"letters" : chosen, "boardState": lastBoardState[0],
-                                                  'gameroom_name_json': mark_safe(json.dumps(gameroom_name))})
+                                                  'gameroom_id_json': mark_safe(json.dumps(gameroom_id))})
 
 
 def login_request(request):
