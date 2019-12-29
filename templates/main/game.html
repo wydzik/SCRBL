@@ -2049,49 +2049,51 @@ function replaceLetters()
     }
 }
 
-    var roomName = {{ gameroom_id_json }};
+var roomName = {{ gameroom_id_json }};
 
-    var gameSocket = new WebSocket(
-        'ws://' + window.location.host +
+var gameSocket = new WebSocket(
+        'wss://' + window.location.host +
         '/ws/game/' + roomName + '/');
 
-    gameSocket.onmessage = function(e)
+gameSocket.onmessage = function(e)
+{
+    var data = JSON.parse(e.data);
+    var boardState = data['boardState'];
+    if(boardState == "NOT YET")
     {
-        var data = JSON.parse(e.data);
-        var boardState = data['boardState'];
-        if(boardState == "NOT YET")
-        {
-            alert("Oczekiwanie na ruch pozostałych graczy.");
-        }
-        else
-        {
-            var remainingLetters = data['remainingLetters'];
-            applyReceivedData(boardState);
-            {#obsługa podmianki pozostalych liter, albo zmiana fillLetters, na wersję z argumentem#}
-            fillLetters()
-        }
-    };
+        alert("Oczekiwanie na ruch pozostałych graczy.");
+    }
+    else
+    {
+        var remainingLetters = data['remainingLetters'];
+        applyReceivedData(boardState);
+        {#obsługa podmianki pozostalych liter, albo zmiana fillLetters, na wersję z argumentem#}
+        fillLetters()
+    }
+};
 
-    gameSocket.onclose = function(e) {
-        console.error('Chat socket closed unexpectedly');
-    };
+gameSocket.onclose = function(e) {
+    console.error('Chat socket closed unexpectedly');
+};
 
-    document.querySelector('#btn').onclick = function(e) {
-        alert("co sie dzieje")
+document.querySelector('#btn').focus();
 
-        var result = makeMove();
-        var wordList = result.wordList;
-        var remainingLetters = result.remainingLetters;
-        var wordListAsBoardState = result.wordListAsBoardState;
-        alert("Jeszcze przed wysłaniem")
-        gameSocket.send(JSON.stringify({
-            'points' : countValue(wordList, wordListAsBoardState),
-            'boardState': boardState,
-            'player' : 'admin',
-            'gameroom' : roomName
-        }));
-        alert("chyba się wysłało")
-    };
+document.querySelector('#btn').onclick = function(e) {
+    alert("co sie dzieje")
+
+    var result = makeMove();
+    var wordList = result.wordList;
+    var remainingLetters = result.remainingLetters;
+    var wordListAsBoardState = result.wordListAsBoardState;
+    alert("Jeszcze przed wysłaniem")
+    gameSocket.send(JSON.stringify({
+        'points' : countValue(wordList, wordListAsBoardState),
+        'boardState': boardState,
+        'player' : 'admin',
+        'gameroom' : roomName
+    }));
+    alert("chyba się wysłało")
+};
 
 
 window.onload = applyReceivedData;
