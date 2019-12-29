@@ -695,66 +695,65 @@ function fillLetters()
 }
 function makeMove()
 {
-    if(document.getElementById("change").children.length == 0)
-    {
-        if(boardState.length == 0)
-        {
+    if(document.getElementById("change").children.length == 0) {
+        if (boardState.length == 0) {
             var result = boardStateValidation();
-            var wordList = result.newWord;
-            var wordListAsBoardState = result.wordBoardState;
-            if(wordList)
-            {
-                boardState = boardStateUpdate();
-                var remainingLetters = [];
-                for (i = 0; i < document.getElementById("letter").children.length; i++)
-                {
-                    remainingLetters.push(document.getElementById("letter").children[i].innerText)
+            if (result == false) {
+                alert("Coś się zesrało")
+            } else {
+                var wordList = result.newWord;
+                var wordListAsBoardState = result.wordBoardState;
+                if (wordList) {
+                    boardState = boardStateUpdate();
+                    var remainingLetters = [];
+                    for (i = 0; i < document.getElementById("letter").children.length; i++) {
+                        remainingLetters.push(document.getElementById("letter").children[i].innerText)
+                    }
+                    blockLetters();
+                    firstMove = false;
+                    document.getElementById("wordList").value = wordList;
+                    document.getElementById("boardState").value = boardState;
+                    document.getElementById("remainingLetters").value = remainingLetters;
+                    alert("to powinno pojsc")
+                    return {
+                        wordList: wordList,
+                        remainingLetters: remainingLetters,
+                        wordListAsBoardState: wordListAsBoardState
+                    };
+                } else {
+                    alert("Słowo musi przechodzić przez środek planszy")
                 }
-                blockLetters();
-                firstMove = false;
-                document.getElementById("wordList").value = wordList;
-                document.getElementById("boardState").value = boardState;
-                document.getElementById("remainingLetters").value = remainingLetters;
-                alert("to powinno pojsc")
-                return {wordList : wordList,
-                        remainingLetters : remainingLetters,
-                        wordListAsBoardState : wordListAsBoardState};
             }
-            else
-            {
-             alert("Słowo musi przechodzić przez środek planszy")
+        } else {
+            var result = moveValidation();
+            if (result == false) {
+                alert("Tu też coś się zesrało")
+            } else {
+                var wordList = result.wordList;
+                var wordListAsBoardState = result.wordListAsBoardState;
+                if (wordList) {
+                    {#roundScore = wordScore();#}
+                    boardState = boardStateUpdate();
+                    remainingLetters = [];
+                    for (i = 0; i < document.getElementById("letter").children.length; i++) {
+                        remainingLetters.push(document.getElementById("letter").children[i].innerText)
+                    }
+                    blockLetters();
+                    document.getElementById("wordList").value = wordList;
+                    document.getElementById("boardState").value = boardState;
+                    document.getElementById("remainingLetters").value = remainingLetters;
+                    {#document.getElementById("moveForm").submit();#}
+                    return {
+                        wordList: wordList,
+                        remainingLetters: remainingLetters,
+                        wordListAsBoardState: wordListAsBoardState
+                    };
+                } else {
+                    alert("Nie wszystkie kafelki stykają się z pozostałymi.")
+                }
             }
         }
-else
-    {
-        var result = moveValidation();
-        var wordList = result.wordList;
-        var wordListAsBoardState = result.wordListAsBoardState;
-            if (wordList)
-            {
-                {#roundScore = wordScore();#}
-                boardState = boardStateUpdate();
-                remainingLetters = [];
-                for (i = 0; i < document.getElementById("letter").children.length; i++)
-                {
-                    remainingLetters.push(document.getElementById("letter").children[i].innerText)
-                }
-                blockLetters();
-                document.getElementById("wordList").value = wordList;
-                document.getElementById("boardState").value = boardState;
-                document.getElementById("remainingLetters").value = remainingLetters;
-                {#document.getElementById("moveForm").submit();#}
-                return {wordList : wordList,
-                        remainingLetters : remainingLetters,
-                        wordListAsBoardState : wordListAsBoardState};
-            } else
-                {
-                alert("Nie wszystkie kafelki stykają się z pozostałymi.")
-            }
-    }
-    }
-    else
-    {
+    } else {
         alert("W polu wymiany znajdują się kafelki! Zdecyduj, czy chcesz wymiany, czy wykonania ruchu.")
     }
 }
@@ -2075,8 +2074,6 @@ gameSocket.onmessage = function(e)
 gameSocket.onclose = function(e) {
     console.error('Chat socket closed unexpectedly');
 };
-
-document.querySelector('#btn').focus();
 
 document.querySelector('#btn').onclick = function(e) {
     alert("co sie dzieje")
