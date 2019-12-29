@@ -306,7 +306,7 @@
                         <input type="hidden" id="boardState" name="boardState" value="">
                         <input type="hidden" id="username" name="username" value="{{ user.username }}">
                     </form>
-                    <button class="btn" value="Wykonaj">Wykonaj</button>
+                    <input id="btn" type="button" value="Wykonaj" />
 
                 </li>
                 <li>
@@ -2077,6 +2077,7 @@ function replaceLetters()
     };
 
     document.querySelector('#btn').onclick = function(e) {
+
         var result = makeMove();
         var wordList = result.wordList;
         var remainingLetters = result.remainingLetters;
