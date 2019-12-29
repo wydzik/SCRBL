@@ -43,7 +43,7 @@ def homepage(request):
     return render(request, "main/home.html")
 
 
-def game(request,gameroom_name):
+def game(request,gameroom_id):
     if request.method == "POST":
         wordList = request.POST['wordsList']
         boardState = request.POST['boardState']
@@ -79,7 +79,7 @@ def game(request,gameroom_name):
 
         return render(request, "main/game.html", {"boardState": lastBoardState,
                                                   "letters" : chosen,
-                                                  'gameroom_name_json': mark_safe(json.dumps(gameroom_name))})
+                                                  'gameroom_id_json': mark_safe(json.dumps(gameroom_id))})
     else:
         chosen = []
 
