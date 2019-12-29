@@ -4,6 +4,5 @@ channels==2.3.1
 django-heroku
 redis
 channels_redis
-asgi_redis
-asgiref==2.3.2
+asgiref==3.2.3
 daphne==2.4.0
