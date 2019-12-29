@@ -306,7 +306,7 @@
                         <input type="hidden" id="boardState" name="boardState" value="">
                         <input type="hidden" id="username" name="username" value="{{ user.username }}">
                     </form>
-                    <button class="btn" value="Wykonaj" onclick="makeMove()">Wykonaj</button>
+                    <button class="btn" value="Wykonaj">Wykonaj</button>
 
                 </li>
                 <li>
@@ -705,7 +705,7 @@ function makeMove()
             if(wordList)
             {
                 boardState = boardStateUpdate();
-                remainingLetters = [];
+                var remainingLetters = [];
                 for (i = 0; i < document.getElementById("letter").children.length; i++)
                 {
                     remainingLetters.push(document.getElementById("letter").children[i].innerText)
@@ -715,7 +715,9 @@ function makeMove()
                 document.getElementById("wordList").value = wordList;
                 document.getElementById("boardState").value = boardState;
                 document.getElementById("remainingLetters").value = remainingLetters;
-                return wordList, remainingLetters, wordListAsBoardState;
+                return {wordList : wordList,
+                        remainingLetters : remainingLetters,
+                        wordListAsBoardState : wordListAsBoardState};
             }
             else
             {
@@ -724,7 +726,9 @@ function makeMove()
         }
 else
     {
-        var wordList, wordListAsBoardState = moveValidation()
+        var result = moveValidation();
+        var wordList = result.wordList;
+        var wordListAsBoardState = result.wordListAsBoardState;
             if (wordList)
             {
                 {#roundScore = wordScore();#}
@@ -739,7 +743,9 @@ else
                 document.getElementById("boardState").value = boardState;
                 document.getElementById("remainingLetters").value = remainingLetters;
                 {#document.getElementById("moveForm").submit();#}
-                return wordList, boardState, remainingLetters, wordListAsBoardState;
+                return {wordList : wordList,
+                        remainingLetters : remainingLetters,
+                        wordListAsBoardState : wordListAsBoardState};
             } else
                 {
                 alert("Nie wszystkie kafelki stykają się z pozostałymi.")
@@ -968,7 +974,8 @@ function moveValidation()
                 listOfWordsAsBoardStates.push(wordBoardState.sort());
 
             }
-            return listOfWords, listOfWordsAsBoardStates;
+            return {listOfWords : listOfWords,
+                    listOfWordsAsBoardStates: listOfWordsAsBoardStates};
         }
     }
     {#obsługa ruchu dla ciągu płytek#}
@@ -1251,7 +1258,8 @@ function moveValidation()
                         listOfWordsAsBoardStates.push(wordBoardState.sort());
                     }
               }
-            return listOfWords, listOfWordsAsBoardStates;
+            return {listOfWords : listOfWords,
+                    listOfWordsAsBoardStates : listOfWordsAsBoardStates};
         }
         {#w pionie  w ciągu#}
         else if(listOfNewLetters[1] == listOfNewLetters[0] + 15
@@ -1488,7 +1496,8 @@ function moveValidation()
                         listOfWordsAsBoardStates.push(wordBoardState.sort());
                     }
               }
-            return listOfWords, listOfWordsAsBoardStates;
+            return {listOfWords : listOfWords,
+                    listOfWordsAsBoardStates : listOfWordsAsBoardStates};
         }
         else
         {
@@ -1765,7 +1774,8 @@ function moveValidation()
                         listOfWordsAsBoardStates.push(wordBoardState.sort());
                     }
               }
-                return listOfWords, listOfWordsAsBoardStates;
+                return {listOfWords : listOfWords,
+                        listOfWordsAsBoardStates : listOfWordsAsBoardStates};
             }
             else if ((listOfNewLetters[1] - listOfNewLetters[0]) % 15 == 0)
             {
@@ -2007,7 +2017,8 @@ function moveValidation()
                         listOfWordsAsBoardStates.push(wordBoardState.sort());
                     }
               }
-                return listOfWords, listOfWordsAsBoardStates;
+                return {listOfWords : listOfWords,
+                        listOfWordsAsBoardStates : listOfWordsAsBoardStates};
             }
             return false;
         }
@@ -2065,9 +2076,13 @@ function replaceLetters()
     };
 
     document.querySelector('#btn').onclick = function(e) {
-        var wordList, remainingLetters, wordListAsBoardStates = makeMove();
+        var result = makeMove();
+        var wordList = result.wordList;
+        var remainingLetters = result.remainingLetters;
+        var wordListAsBoardState = result.wordListAsBoardState;
+        alert("Jeszcze przed wysłaniem")
         gameSocket.send(JSON.stringify({
-            'points' : countValue(wordList, wordListAsBoardStates),
+            'points' : countValue(wordList, wordListAsBoardState),
             'boardState': boardState,
             'player' : 'admin',
             'gameroom' : roomName
