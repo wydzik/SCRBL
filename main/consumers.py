@@ -23,5 +23,6 @@ class GameConsumer(WebsocketConsumer):
         # tutaj trzeba zrobić jakieś casy w zależności od tego, czy wszyscy zrobili ruch, czy nie, bo nie wyobrażam sobie tego inaczej
         # trzeba by chyba też jakiś mechanizm dołączania do gry zrobić i wtedy by się ten model Game nadał
         self.send(text_data=json.dumps({
-            'boardState': 'NOT YET'
+            'boardState': 'NOT YET',
+            'points' : points
         }))

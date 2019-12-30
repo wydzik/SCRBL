@@ -2061,6 +2061,7 @@ gameSocket.onmessage = function(e)
     if(boardState == "NOT YET")
     {
         alert("Oczekiwanie na ruch pozostałych graczy.");
+        document.getElementsByClassName("points")[0].innerText = "Punkty: " + data['points']
     }
     else
     {
