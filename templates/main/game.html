@@ -698,7 +698,7 @@ function makeMove()
     if(document.getElementById("change").children.length == 0) {
         if (boardState.length == 0) {
             var result = boardStateValidation();
-            if (result == false) {
+            if (result == false || result == undefined) {
                 alert("Coś się zesrało")
             } else {
                 var wordList = result.newWord;
@@ -726,7 +726,7 @@ function makeMove()
             }
         } else {
             var result = moveValidation();
-            if (result == false) {
+            if (result == false || result == undefined) {
                 alert("Tu też coś się zesrało")
             } else {
                 var wordList = result.wordList;
