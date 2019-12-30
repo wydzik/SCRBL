@@ -714,7 +714,6 @@ function makeMove()
                     document.getElementById("wordList").value = wordList;
                     document.getElementById("boardState").value = boardState;
                     document.getElementById("remainingLetters").value = remainingLetters;
-                    alert("to powinno pojsc")
                     return {
                         wordList: wordList,
                         remainingLetters: remainingLetters,
@@ -739,11 +738,6 @@ function makeMove()
                         remainingLetters.push(document.getElementById("letter").children[i].innerText)
                     }
                     blockLetters();
-                    document.getElementById("wordList").value = wordList;
-                    document.getElementById("boardState").value = boardState;
-                    document.getElementById("remainingLetters").value = remainingLetters;
-                    alert(wordListAsBoardState);
-                    {#document.getElementById("moveForm").submit();#}
                     return {
                         wordList: wordList,
                         remainingLetters: remainingLetters,
@@ -975,8 +969,6 @@ function moveValidation()
                 listOfWordsAsBoardStates.push(wordBoardState.sort());
 
             }
-             alert(listOfWords)
-            alert(listOfWordsAsBoardStates)
             return {listOfWords : listOfWords,
                     listOfWordsAsBoardStates: listOfWordsAsBoardStates};
         }
@@ -1261,8 +1253,6 @@ function moveValidation()
                         listOfWordsAsBoardStates.push(wordBoardState.sort());
                     }
               }
-             alert(listOfWords)
-            alert(listOfWordsAsBoardStates)
             return {listOfWords : listOfWords,
                     listOfWordsAsBoardStates : listOfWordsAsBoardStates};
         }
@@ -1501,8 +1491,6 @@ function moveValidation()
                         listOfWordsAsBoardStates.push(wordBoardState.sort());
                     }
               }
-             alert(listOfWords)
-            alert(listOfWordsAsBoardStates)
             return {listOfWords : listOfWords,
                     listOfWordsAsBoardStates : listOfWordsAsBoardStates};
         }
@@ -1781,8 +1769,6 @@ function moveValidation()
                         listOfWordsAsBoardStates.push(wordBoardState.sort());
                     }
               }
-                 alert(listOfWords)
-            alert(listOfWordsAsBoardStates)
                 return {listOfWords : listOfWords,
                         listOfWordsAsBoardStates : listOfWordsAsBoardStates};
             }
@@ -2026,8 +2012,6 @@ function moveValidation()
                         listOfWordsAsBoardStates.push(wordBoardState.sort());
                     }
               }
-                 alert(listOfWords)
-            alert(listOfWordsAsBoardStates)
                 return {listOfWords : listOfWords,
                         listOfWordsAsBoardStates : listOfWordsAsBoardStates};
             }
@@ -2076,7 +2060,6 @@ gameSocket.onmessage = function(e)
     }
     else
     {
-        alert("eeeeelo");
         {#var remainingLetters = data['remainingLetters'];#}
         applyReceivedData(boardState);
         {#obsługa podmianki pozostalych liter, albo zmiana fillLetters, na wersję z argumentem#}
@@ -2095,8 +2078,6 @@ document.querySelector('#btn').onclick = function(e) {
     var wordList = result.wordList;
     var remainingLetters = result.remainingLetters;
     var wordListAsBoardState = result.wordListAsBoardState;
-    alert(wordListAsBoardState)
-    alert("Jeszcze przed wysłaniem")
     gameSocket.send(JSON.stringify({
         'points' : countValue(wordList, wordListAsBoardState),
         'boardState': boardState,
