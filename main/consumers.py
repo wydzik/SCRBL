@@ -1,5 +1,6 @@
 from channels.generic.websocket import WebsocketConsumer
-from .models import Move, GameRooms
+from .models import Move, GameRooms, Profile
+from django.contrib.auth.models import User
 import json
 
 
@@ -15,9 +16,11 @@ class GameConsumer(WebsocketConsumer):
         text_data_json = json.loads(text_data)
         board_state = text_data_json['boardState']
         points = text_data_json['points']
-        player = text_data_json['player']
+        player_name = text_data_json['player']
         gameroom = text_data_json['gameroom']
         game_room = GameRooms.objects.get(pk = gameroom)
+        user = User.objects.get(username = player_name)
+        player = Profile.objects.get(user = user)
         Move.objects.create(game_room = game_room, player = player, points = points, board_state = board_state)
         # tutaj trzeba zrobić jakieś casy w zależności od tego, czy wszyscy zrobili ruch, czy nie, bo nie wyobrażam sobie tego inaczej
         # trzeba by chyba też jakiś mechanizm dołączania do gry zrobić i wtedy by się ten model Game nadał
