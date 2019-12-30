@@ -730,9 +730,8 @@ function makeMove()
                 alert("Tu też coś się zesrało")
             } else {
                 alert("obecny")
-                alert(result.wordList)
                 var wordList = result.listOfWords;
-                var wordListAsBoardState = result.wordListAsBoardState;
+                var wordListAsBoardState = result.wordListAsBoardStates;
                 if (wordList) {
                     {#roundScore = wordScore();#}
                     boardState = boardStateUpdate();
