@@ -2087,7 +2087,7 @@ document.querySelector('#btn').onclick = function(e) {
     gameSocket.send(JSON.stringify({
         'points' : countValue(wordList, wordListAsBoardState),
         'boardState': boardState,
-        'player' : 'admin',
+        'player' : {{user.username}},
         'gameroom' : roomName
     }));
     alert("chyba się wysłało");
