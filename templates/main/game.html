@@ -731,7 +731,7 @@ function makeMove()
             } else {
                 alert("obecny")
                 alert(result.wordList)
-                var wordList = result.wordList;
+                var wordList = result.listOfWords;
                 var wordListAsBoardState = result.wordListAsBoardState;
                 if (wordList) {
                     {#roundScore = wordScore();#}
@@ -2093,8 +2093,8 @@ document.querySelector('#btn').onclick = function(e) {
     alert("co sie dzieje")
 
     var result = makeMove();
-    var wordList = result.listOfWords;
-    {#var remainingLetters = result.remainingLetters;#}
+    var wordList = result.wordList;
+    var remainingLetters = result.remainingLetters;
     var wordListAsBoardState = result.wordListAsBoardState;
     alert("Jeszcze przed wysłaniem")
     gameSocket.send(JSON.stringify({
