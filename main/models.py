@@ -43,7 +43,7 @@ class GameRooms(models.Model):
 
 class Move(models.Model):
     game_room = models.ForeignKey(GameRooms, on_delete=models.CASCADE)
-    player = models.CharField(default=None)
+    player = models.CharField(max_length= 500, default=None)
     board_state = models.CharField(max_length=450, default=",,,,,,,,,,,,,,," \
                                                            ",,,,,,,,,,,,,,," \
                                                            ",,,,,,,,,,,,,,," \
