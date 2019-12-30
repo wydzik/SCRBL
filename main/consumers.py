@@ -36,7 +36,7 @@ class GameConsumer(WebsocketConsumer):
             'boardState': 'NOT YET',
             'points': points
         }))
-        if Move.objects.get(game_room=game_room).__sizeof__ == 2 :
+        if len(Move.objects.filter(game_room=2)) == 2 :
 
             async_to_sync(self.channel_layer.group_send)(
                 self.room_group_name,
