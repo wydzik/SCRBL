@@ -504,18 +504,18 @@ document.addEventListener("drop", function(event)
 
 function applyReceivedData(board_state)
 {
-    receivedBoardState = new Array()
-    boardStateAsText = board_state;
-    if(boardStateAsText!="")
-    {
-        for (i = 0 ; i < boardStateAsText.length; i++)
-        {
-            if(boardStateAsText[i] == ",")
-            {
-                if(boardStateAsText[i - 1] ==",") receivedBoardState.push('');
-                else receivedBoardState.push(boardStateAsText[i - 1]);
-            }
-        }
+    receivedBoardState = board_state;
+    {#boardStateAsText = board_state;#}
+    {#if(boardStateAsText!="")#}
+    {#{#}
+    {#    for (i = 0 ; i < boardStateAsText.length; i++)#}
+    {#    {#}
+    {#        if(boardStateAsText[i] == ",")#}
+    {#        {#}
+    {#            if(boardStateAsText[i - 1] ==",") receivedBoardState.push('');#}
+    {#            else receivedBoardState.push(boardStateAsText[i - 1]);#}
+    {#        }#}
+    {#    }#}
         var temp = 0;
             for(j = 1; j <16; j++)
         {
@@ -2066,7 +2066,7 @@ gameSocket.onmessage = function(e)
     else
     {
         alert("eeeeelo");
-        var remainingLetters = data['remainingLetters'];
+        {#var remainingLetters = data['remainingLetters'];#}
         applyReceivedData(boardState);
         {#obsługa podmianki pozostalych liter, albo zmiana fillLetters, na wersję z argumentem#}
         fillLetters()
