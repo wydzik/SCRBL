@@ -36,14 +36,15 @@ class GameConsumer(WebsocketConsumer):
             'boardState': 'NOT YET',
             'points': points
         }))
+        if Move.objects.get(game_room=game_room).__sizeof__ == 2 :
 
-        async_to_sync(self.channel_layer.group_send)(
-            self.room_group_name,
-            {
-                'type': 'move_info',
-                'boardState': board_state
-            }
-        )
+            async_to_sync(self.channel_layer.group_send)(
+                self.room_group_name,
+                {
+                    'type': 'move_info',
+                    'boardState': board_state
+                }
+            )
 
     def move_info(self, event):
         board_state = event['boardState']
