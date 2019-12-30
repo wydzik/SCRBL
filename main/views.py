@@ -44,6 +44,7 @@ def homepage(request):
 
 
 def game(request,gameroom_id):
+
     if request.method == "POST":
         wordList = request.POST['wordsList']
         boardState = request.POST['boardState']

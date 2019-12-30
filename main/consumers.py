@@ -17,7 +17,10 @@ class GameConsumer(WebsocketConsumer):
         self.accept()
 
     def disconnect(self, close_code):
-        pass
+        async_to_sync(self.channel_layer.group_discard)(
+            self.room_group_name,
+            self.channel_name
+        )
 
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
@@ -29,7 +32,23 @@ class GameConsumer(WebsocketConsumer):
         Move.objects.create(game_room=game_room, player=player, points=points, board_state=board_state)
         # tutaj trzeba zrobić jakieś casy w zależności od tego, czy wszyscy zrobili ruch, czy nie, bo nie wyobrażam sobie tego inaczej
         # trzeba by chyba też jakiś mechanizm dołączania do gry zrobić i wtedy by się ten model Game nadał
+        async_to_sync(self.channel_layer.group_send)(
+            self.room_group_name,
+            {
+                'type': 'move_info',
+                'boardState': board_state
+            }
+        )
+
+    def move_info(self, event):
+        board_state = event['boardState']
+
+        # Send message to WebSocket
         self.send(text_data=json.dumps({
-            'boardState': 'NOT YET',
-            'points': points
+            'boardState': board_state
         }))
+
+        # self.send(text_data=json.dumps({
+        #     'boardState': board_state,
+        #     'points': points
+        # }))
