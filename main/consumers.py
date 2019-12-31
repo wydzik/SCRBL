@@ -99,7 +99,8 @@ class GameConsumer(WebsocketConsumer):
                             'boardState': board_state,
                             'round': (round+1),
                             'Winner': round_winner,
-                            'points': points
+                            'points': points,
+                            'winnerPoints': winner.points
                         }
                     )
 
@@ -108,12 +109,14 @@ class GameConsumer(WebsocketConsumer):
         round = event['round']
         round_winner = event['Winner']
         points = event['points']
+        winner_points = event['winnerPoints']
         # Send message to WebSocket
         self.send(text_data=json.dumps({
             'boardState': board_state,
             'round': round,
             'Winner': round_winner,
-            'points': points
+            'points': points,
+            'winnerPoints': winner_points
         }))
 
     def start_info(self, event):
