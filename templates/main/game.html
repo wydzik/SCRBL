@@ -2086,7 +2086,9 @@ gameSocket.onmessage = function(e)
         gameSocket.send(JSON.stringify({
             'boardState': 'LETTERS',
             'lettersGiven': lettersGiven,
-            'lettersRemaining': letters
+            'lettersRemaining': letters,
+            'gameroom' : roomName,
+            'round' : round
         }))
     }
     else
