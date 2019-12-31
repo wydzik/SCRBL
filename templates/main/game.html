@@ -2069,8 +2069,8 @@ gameSocket.onmessage = function(e)
         applyReceivedData(boardState);
         document.getElementById("btn").hidden = false;
         round = data['round'];
-        var roundWinner = data['roundWinner'];
-        if ({{ user.username }} == roundWinner)
+        var winner = data['Winner'];
+        if ({{ user.username }} == winner)
         {
             document.getElementsByClassName("points")[0].innerText = "Miał więcej";
         }
