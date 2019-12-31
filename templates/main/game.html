@@ -679,7 +679,8 @@ function fillLetters()
                     ' '+ letters[temp]+ '</div> ';
                 letters.splice(temp,1);
             }
-            dropzone_div.innerHTML = letter_string
+            dropzone_div.innerHTML = letter_string;
+
         }
         else
         {
@@ -696,6 +697,7 @@ function fillLetters()
             dropzone_div.innerHTML = letter_string
         }
     }
+    return letter_string;
 }
 function makeMove()
 {
@@ -2074,6 +2076,14 @@ gameSocket.onmessage = function(e)
 
 
     }
+    else if(boardState == "LETTERS")
+    {
+        letters=data['lettersRemaining']
+        var lettersGiven = data['lettersGiven']
+        var dropzone_div = document.getElementById("letter");
+        dropzone_div.innerHTML = lettersGiven;
+
+    }
     else
     {
         {#var remainingLetters = data['remainingLetters'];#}
@@ -2084,10 +2094,18 @@ gameSocket.onmessage = function(e)
         if ('{{ user.username }}' == winner)
         {
             document.getElementsByClassName("points")[0].innerText = "Miał więcej";
+            var lettersGiven = fillLetters();
+            gameSocket.send(JSON.stringify({
+                'boardState': 'LETTERS',
+                'lettersGiven': lettersGiven,
+                'lettersRemaining': letters,
+                'gameroom' : roomName,
+                'round' : round
+            }));
         }
         document.getElementById("round").innerText = "Runda: " + round;
         {#obsługa podmianki pozostalych liter, albo zmiana fillLetters, na wersję z argumentem#}
-        fillLetters()
+
     }
 };
 
@@ -2109,7 +2127,6 @@ document.querySelector('#btn').onclick = function(e) {
         'gameroom' : roomName,
         'round' : round
     }));
-    alert("chyba się wysłało");
 };
 
 document.querySelector('#start').onclick = function(e) {
@@ -2119,7 +2136,6 @@ document.querySelector('#start').onclick = function(e) {
         'gameroom' : roomName,
         'round': round
     }));
-    alert("Start wysłany");
 };
 
 

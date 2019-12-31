@@ -27,12 +27,25 @@ class GameConsumer(WebsocketConsumer):
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
         board_state = text_data_json['boardState']
-        player = text_data_json['player']
         gameroom = text_data_json['gameroom']
+        round = text_data_json['round']
+        if board_state == "LETTERS":
+            letters_remaining = text_data_json['lettersRemaining']
+            letters_given = text_data_json['lettersGiven']
+            async_to_sync(self.channel_layer.group_send)(
+                self.room_group_name,
+                {
+                    'type': 'letters_info',
+                    'boardState': 'LETTERS',
+                    'lettersRemaining': letters_remaining,
+                    'lettersGiven': letters_given
+                }
+            )
+
+        player = text_data_json['player']
         game_room = GameRooms.objects.get(pk=gameroom)
 
         if board_state == 'READY':
-            round = text_data_json['round']
             user = User.objects.get(username=player)
             Game.objects.create(game_room=game_room,user=user)
             self.send(text_data=json.dumps({
@@ -48,10 +61,8 @@ class GameConsumer(WebsocketConsumer):
                         'round': (round + 1)
                     }
                 )
-
         else:
             points = text_data_json['points']
-            round = text_data_json['round']
             Move.objects.create(game_room=game_room, player=player, points=points, board_state=board_state, round=round)
             # tutaj trzeba zrobić jakieś casy w zależności od tego, czy wszyscy zrobili ruch, czy nie, bo nie wyobrażam sobie tego inaczej
             # trzeba by chyba też jakiś mechanizm dołączania do gry zrobić i wtedy by się ten model Game nadał
@@ -92,4 +103,14 @@ class GameConsumer(WebsocketConsumer):
         self.send(text_data=json.dumps({
             'boardState': board_state,
             'round': round
+        }))
+
+    def letters_info(self, event):
+        board_state = event['boardState']
+        letters_remaining = event['lettersRemaining']
+        letters_given = event['lettersGiven']
+        self.send(text_data=json.dumps({
+            'boardState': board_state,
+            'lettersRemaining': letters_remaining,
+            'lettersGiven': letters_given
         }))
