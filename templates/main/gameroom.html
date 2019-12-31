@@ -2,12 +2,24 @@
 {% block content %}
 <main role="main" class="grid-container">
     <div>
-{% for gameroom in gamerooms %}
-    ID: {{  gameroom.id }}
-    Nazwa: <a href="{% url 'main:game' gameroom.id %}">{{ gameroom.name }}</a>
-    W trakcie: {{ gameroom.in_progress }}
-    Miejsc przy stole: {{ gameroom.seats }}
+        <table>
+            <tr id="header">
+                <td>ID Pokoju</td>
+                <td>Nazwa pokoju</td>
+                <td>W Trakcie</td>
+                <td>Miejsc przy stole</td>
+            </tr>
+            {% for gameroom in gamerooms %}
+            <tr>
+                <td>{{ gameroom.id }}</td>
+                <td><a href="{% url 'main:game' gameroom.id %}">{{ gameroom.name }}</a></td>
+                <td>{{ gameroom.in_progress }}</td>
+                <td>{{ gameroom.seats }}</td>
+            </tr>
 {% endfor %}
+        </table>
+    </div>
+
 </div>
 </main>
 {% endblock %}

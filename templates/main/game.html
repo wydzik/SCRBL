@@ -694,59 +694,55 @@ function fillLetters()
 }
 function makeMove()
 {
-    if(document.getElementById("change").children.length == 0) {
-        if (boardState.length == 0) {
-            var result = boardStateValidation();
-            if (result == false || result == undefined) {
+    if (boardState.length == 0) {
+        var result = boardStateValidation();
+        if (result == false || result == undefined) {
 
-            }
-            else {
-                var wordList = result.newWord;
-                var wordListAsBoardState = result.wordBoardState;
-                if (wordList) {
-                    boardState = boardStateUpdate();
-                    var remainingLetters = [];
-                    for (i = 0; i < document.getElementById("letter").children.length; i++) {
-                        remainingLetters.push(document.getElementById("letter").children[i].innerText)
-                    }
-                    blockLetters();
-                    firstMove = false;
-                    return {
-                        wordList: wordList,
-                        remainingLetters: remainingLetters,
-                        wordListAsBoardState: wordListAsBoardState
-                    };
-                } else {
-                    alert("Słowo musi przechodzić przez środek planszy")
+        }
+        else {
+            var wordList = result.newWord;
+            var wordListAsBoardState = result.wordBoardState;
+            if (wordList) {
+                boardState = boardStateUpdate();
+                var remainingLetters = [];
+                for (i = 0; i < document.getElementById("letter").children.length; i++) {
+                    remainingLetters.push(document.getElementById("letter").children[i].innerText)
                 }
-            }
-        } else {
-            var result = moveValidation();
-            if (result == false || result == undefined) {
-
+                blockLetters();
+                firstMove = false;
+                return {
+                    wordList: wordList,
+                    remainingLetters: remainingLetters,
+                    wordListAsBoardState: wordListAsBoardState
+                };
             } else {
-                var wordList = result.listOfWords;
-                var wordListAsBoardState = result.listOfWordsAsBoardStates;
-                if (wordList) {
-                    {#roundScore = wordScore();#}
-                    boardState = boardStateUpdate();
-                    remainingLetters = [];
-                    for (i = 0; i < document.getElementById("letter").children.length; i++) {
-                        remainingLetters.push(document.getElementById("letter").children[i].innerText)
-                    }
-                    blockLetters();
-                    return {
-                        wordList: wordList,
-                        remainingLetters: remainingLetters,
-                        wordListAsBoardState: wordListAsBoardState
-                    };
-                } else {
-                    alert("Nie wszystkie kafelki stykają się z pozostałymi.")
-                }
+                alert("Słowo musi przechodzić przez środek planszy")
             }
         }
     } else {
-        alert("W polu wymiany znajdują się kafelki! Zdecyduj, czy chcesz wymiany, czy wykonania ruchu.")
+        var result = moveValidation();
+        if (result == false || result == undefined) {
+
+        } else {
+            var wordList = result.listOfWords;
+            var wordListAsBoardState = result.listOfWordsAsBoardStates;
+            if (wordList) {
+                {#roundScore = wordScore();#}
+                boardState = boardStateUpdate();
+                remainingLetters = [];
+                for (i = 0; i < document.getElementById("letter").children.length; i++) {
+                    remainingLetters.push(document.getElementById("letter").children[i].innerText)
+                }
+                blockLetters();
+                return {
+                    wordList: wordList,
+                    remainingLetters: remainingLetters,
+                    wordListAsBoardState: wordListAsBoardState
+                };
+            } else {
+                alert("Nie wszystkie kafelki stykają się z pozostałymi.")
+            }
+        }
     }
 }
 function moveValidation()
