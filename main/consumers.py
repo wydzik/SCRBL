@@ -49,14 +49,15 @@ class GameConsumer(WebsocketConsumer):
 
         else:
             points = text_data_json['points']
-            Move.objects.create(game_room=game_room, player=player, points=points, board_state=board_state)
+            round = text_data_json['round']
+            Move.objects.create(game_room=game_room, player=player, points=points, board_state=board_state, round=round)
             # tutaj trzeba zrobić jakieś casy w zależności od tego, czy wszyscy zrobili ruch, czy nie, bo nie wyobrażam sobie tego inaczej
             # trzeba by chyba też jakiś mechanizm dołączania do gry zrobić i wtedy by się ten model Game nadał
             self.send(text_data=json.dumps({
                 'boardState': 'NOT YET',
                 'points': points
             }))
-            if len(Move.objects.filter(game_room=game_room)) == 2 :
+            if len(Move.objects.filter(game_room=game_room, round=round)) == game_room.seats :
 
                 async_to_sync(self.channel_layer.group_send)(
                     self.room_group_name,

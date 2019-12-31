@@ -306,7 +306,7 @@
                     <h6 class="points">Punkty:</h6>
                 </li>
                 <li>
-                    <h6 class="points">Wymiana:</h6>
+                    <h6 class="points" id = "round">Runda: </h6>
                     <div class="dropzone" id ="change"></div>
                 </li>
                 <li>
@@ -2034,7 +2034,7 @@ function replaceLetters()
 }
 
 var roomName = {{ gameroom_id_json }};
-
+var round = 0;
 var gameSocket = new WebSocket(
         'wss://' + window.location.host +
         '/ws/game/' + roomName + '/');
@@ -2046,7 +2046,8 @@ gameSocket.onmessage = function(e)
     if(boardState == "NOT YET")
     {
         alert("Oczekiwanie na ruch pozostałych graczy.");
-        document.getElementsByClassName("points")[0].innerText = "Punkty: " + data['points']
+        document.getElementsByClassName("points")[0].innerText = "Punkty: " + data['points'];
+        document.getElementById("btn").hidden = true;
     }
     else if(boardState=="WAITING_FOR_START")
     {
@@ -2057,11 +2058,15 @@ gameSocket.onmessage = function(e)
     {
         alert("Runda się rozpoczęła");
         document.getElementById("btn").hidden = false;
+        document.getElementById("round").innerText = "Runda: " + round;
+
+
     }
     else
     {
         {#var remainingLetters = data['remainingLetters'];#}
         applyReceivedData(boardState);
+        document.getElementById("btn").hidden = false;
         {#obsługa podmianki pozostalych liter, albo zmiana fillLetters, na wersję z argumentem#}
         fillLetters()
     }
@@ -2082,7 +2087,8 @@ document.querySelector('#btn').onclick = function(e) {
         'points' : countValue(wordList, wordListAsBoardState),
         'boardState': boardState,
         'player' : '{{user.username}}',
-        'gameroom' : roomName
+        'gameroom' : roomName,
+        'round' : round
     }));
     alert("chyba się wysłało");
 };
@@ -2092,7 +2098,7 @@ document.querySelector('#start').onclick = function(e) {
         'boardState' : 'READY',
         'player' : '{{user.username}}',
         'gameroom' : roomName,
-        'round': 0
+        'round': round
     }));
     alert("Start wysłany");
 };

@@ -63,4 +63,5 @@ class Move(models.Model):
                                                            ",,,,,,,,,,,,,,," \
                                                            ",,,,,,,,,,,,,,,")
     points = models.IntegerField(default=0)
+    round = models.IntegerField(default=0)
     # points trzeba liczyć po stronie usera, bo on ma te pdwójne, potrójne pola i najwyżej zerować jak nie ma w słowniku i tyle
