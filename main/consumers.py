@@ -60,7 +60,7 @@ class GameConsumer(WebsocketConsumer):
                 }))
 
                 if len(Game.objects.filter(game_room=game_room)) == game_room.seats:
-                    self.send(text_data_json=json.dumps({
+                    self.send(text_data=json.dumps({
                         'boardState': 'LETTERS_PROVIDER'
                     }))
                     temp = GameRooms.objects.get(pk=gameroom)
