@@ -43,7 +43,7 @@ class GameConsumer(WebsocketConsumer):
                 async_to_sync(self.channel_layer.group_send)(
                     self.room_group_name,
                     {
-                        'type': 'move_info',
+                        'type': 'start_info',
                         'boardState': 'START',
                         'round': (round + 1)
                     }
@@ -78,16 +78,18 @@ class GameConsumer(WebsocketConsumer):
     def move_info(self, event):
         board_state = event['boardState']
         round = event['round']
-        if event['Winner']:
-            round_winner = event['Winner']
-            # Send message to WebSocket
-            self.send(text_data=json.dumps({
-                'boardState': board_state,
-                'round': round,
-                'Winner': round_winner
-            }))
-        else:
-            self.send(text_data=json.dumps({
-                'boardState': board_state,
-                'round': round
-            }))
+        round_winner = event['Winner']
+        # Send message to WebSocket
+        self.send(text_data=json.dumps({
+            'boardState': board_state,
+            'round': round,
+            'Winner': round_winner
+        }))
+
+    def start_info(self, event):
+        board_state = event['boardState']
+        round = event['round']
+        self.send(text_data=json.dumps({
+            'boardState': board_state,
+            'round': round
+        }))
