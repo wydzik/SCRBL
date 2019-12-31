@@ -63,6 +63,7 @@ class GameConsumer(WebsocketConsumer):
             if len(moves) == game_room.seats:
                 winner = moves.order_by('points')[-1]
                 board_state = winner.board_state
+                round_winner = winner.player
 
                 async_to_sync(self.channel_layer.group_send)(
                     self.room_group_name,
@@ -70,7 +71,7 @@ class GameConsumer(WebsocketConsumer):
                         'type': 'move_info',
                         'boardState': board_state,
                         'round': (round+1),
-                        'roundWinner': winner.player
+                        'roundWinner': round_winner
                     }
                 )
 
