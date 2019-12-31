@@ -9,6 +9,7 @@
     {{  gameroom.id }}
     <a href="{% url 'main:game' gameroom.id %}">{{ gameroom.name }}</a>
     {{ gameroom.in_progress }}
+    {{ gameroom.seats }}
 {% endfor %}
 
 </body>

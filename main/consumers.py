@@ -53,6 +53,7 @@ class GameConsumer(WebsocketConsumer):
                 }))
 
                 if len(Game.objects.filter(game_room=game_room)) == game_room.seats:
+                    GameRooms.objects.get(pk=game_room).in_progress = True
                     async_to_sync(self.channel_layer.group_send)(
                         self.room_group_name,
                         {
