@@ -132,7 +132,7 @@ class GameConsumer(WebsocketConsumer):
             'winnerPoints': winner_points
         }))
 
-    def move_info(self, event):
+    def winner_info(self, event):
         board_state = event['boardState']
         round = event['round']
         game_winner = event['winner']
