@@ -503,10 +503,16 @@ function applyReceivedData(board_state)
     {
         for (i = 0 ; i < boardStateAsText.length; i++)
         {
-            if(boardStateAsText[i] == ",")
+            if(boardStateAsText[i] == "\'")
             {
-                if(boardStateAsText[i - 1] ==",") receivedBoardState.push('');
-                else receivedBoardState.push(boardStateAsText[i - 1]);
+                if(boardStateAsText[i - 1] =="'")
+                {
+                    receivedBoardState.push('');
+                }
+                else if(boardStateAsText[i - 1] != " "&& boardStateAsText[i-1] != "\," )
+                {
+                    receivedBoardState.push(boardStateAsText[i - 1]);
+                }
             }
          }
         var temp = 0;
