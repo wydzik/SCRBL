@@ -317,7 +317,7 @@
                     <div class="dropzone" id ="change"></div>
                 </li>
                 <li>
-                    <button class="btn" onclick="replaceLetters()">Wymień</button>
+                    <input id="start" type="button" value="START"/>
                 </li>
                   <li>
                       <div hidden id="receivedBoardState">{{ boardState }}</div>
@@ -2058,6 +2058,11 @@ gameSocket.onmessage = function(e)
         alert("Oczekiwanie na ruch pozostałych graczy.");
         document.getElementsByClassName("points")[0].innerText = "Punkty: " + data['points']
     }
+    else if(boardState=="WAITING_FOR_START")
+    {
+        alert("Oczekiwanie na Start");
+        document.getElementsById("start").hidden = true;
+    }
     else
     {
         {#var remainingLetters = data['remainingLetters'];#}
@@ -2085,6 +2090,15 @@ document.querySelector('#btn').onclick = function(e) {
         'gameroom' : roomName
     }));
     alert("chyba się wysłało");
+};
+
+document.querySelector('#start').onclick = function(e) {
+    gameSocket.send(JSON.stringify({
+        'boardState' : 'READY',
+        'player' : '{{user.username}}',
+        'gameroom' : roomName
+    }));
+    alert("Start wysłany");
 };
 
 
