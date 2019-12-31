@@ -531,8 +531,11 @@ function applyReceivedData(board_state)
                         {
                             document.getElementById("row_" + j).children[i].innerHTML = '';
                         }
+                        else
+                        {
                         document.getElementById("row_" + j).children[i].innerHTML = '<div class ="letter" id="draggable" draggable="false"' +
                             ' ondragstart="event.dataTransfer.setData(\'text/plain\',null)"> ' + receivedBoardState[temp] + '</div> ';
+                        }
                     }
                 temp++;
             }
