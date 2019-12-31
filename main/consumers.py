@@ -78,15 +78,16 @@ class GameConsumer(WebsocketConsumer):
     def move_info(self, event):
         board_state = event['boardState']
         round = event['round']
-        round_winner = event['Winner']
-        # Send message to WebSocket
-        self.send(text_data=json.dumps({
-            'boardState': board_state,
-            'round': round,
-            'Winner': round_winner
-        }))
-
-        # self.send(text_data=json.dumps({
-        #     'boardState': board_state,
-        #     'points': points
-        # }))
+        if event['Winner']:
+            round_winner = event['Winner']
+            # Send message to WebSocket
+            self.send(text_data=json.dumps({
+                'boardState': board_state,
+                'round': round,
+                'Winner': round_winner
+            }))
+        else:
+            self.send(text_data=json.dumps({
+                'boardState': board_state,
+                'round': round
+            }))
