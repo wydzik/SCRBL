@@ -509,7 +509,7 @@ function applyReceivedData(board_state)
                 {
                     receivedBoardState.push('');
                 }
-                else if(boardStateAsText[i - 1] != " "&& boardStateAsText[i-1] != "\," )
+                else if(boardStateAsText[i - 1] != " "&& boardStateAsText[i-1] != "\," && boardStateAsText[i-1] != "[")
                 {
                     receivedBoardState.push(boardStateAsText[i - 1]);
                 }
@@ -633,6 +633,8 @@ function countValue(listOfWords, listOfBoardStates)
                     wordScore = wordScore + scores.get(listOfWords[i][j]);
                 }
                 else {
+                    alert(listOfWords[i][j]);
+                    alert(scores.get(listOfWords[i][j]));
                     wordScore = wordScore + scores.get(listOfWords[i][j]);
                 }
             }
