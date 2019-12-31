@@ -19,6 +19,10 @@ class GameConsumer(WebsocketConsumer):
         self.accept()
 
     def disconnect(self, close_code):
+        self.room_name = self.scope['url_route']['kwargs']['gameroom_name']
+        temp = GameRooms.objects.get(pk=self.room_name)
+        temp.in_progress = False
+        temp.save()
         async_to_sync(self.channel_layer.group_discard)(
             self.room_group_name,
             self.channel_name
@@ -53,7 +57,9 @@ class GameConsumer(WebsocketConsumer):
                 }))
 
                 if len(Game.objects.filter(game_room=game_room)) == game_room.seats:
-                    GameRooms.objects.get(pk=gameroom).in_progress = True
+                    temp = GameRooms.objects.get(pk=gameroom)
+                    temp.in_progress = True
+                    temp.save()
                     async_to_sync(self.channel_layer.group_send)(
                         self.room_group_name,
                         {
