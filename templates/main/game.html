@@ -520,18 +520,20 @@ function applyReceivedData(board_state)
         {
             for(i = 0; i<15; i++)
             {
-                if (receivedBoardState[temp] != "")
-                {
+
                     if (receivedBoardState[temp] == undefined)
                     {
                         document.getElementById("row_" + j).children[i].innerHTML = '';
                     }
                     else
                     {
+                        if(receivedBoardState[temp]=='')
+                        {
+                            document.getElementById("row_" + j).children[i].innerHTML = '';
+                        }
                         document.getElementById("row_" + j).children[i].innerHTML = '<div class ="letter" id="draggable" draggable="false"' +
                             ' ondragstart="event.dataTransfer.setData(\'text/plain\',null)"> ' + receivedBoardState[temp] + '</div> ';
                     }
-                }
                 temp++;
             }
         }
@@ -633,8 +635,6 @@ function countValue(listOfWords, listOfBoardStates)
                     wordScore = wordScore + scores.get(listOfWords[i][j]);
                 }
                 else {
-                    alert(listOfWords[i][j]);
-                    alert(scores.get(listOfWords[i][j]));
                     wordScore = wordScore + scores.get(listOfWords[i][j]);
                 }
             }
