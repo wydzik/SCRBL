@@ -33,6 +33,7 @@ class GameConsumer(WebsocketConsumer):
         board_state = text_data_json['boardState']
         gameroom = text_data_json['gameroom']
         round = text_data_json['round']
+
         if board_state == "LETTERS":
             letters_remaining = text_data_json['lettersRemaining']
             letters_given = text_data_json['lettersGiven']
