@@ -497,18 +497,18 @@ document.addEventListener("drop", function(event)
 
 function applyReceivedData(board_state)
 {
-    receivedBoardState = board_state;
+    receivedBoardState =  new Array();
     boardStateAsText = board_state;
     if(boardStateAsText!="")
     {
-        {#for (i = 0 ; i < boardStateAsText.length; i++)#}
-        {#{#}
-        {#    if(boardStateAsText[i] == ",")#}
-        {#    {#}
-        {#        if(boardStateAsText[i - 1] ==",") receivedBoardState.push('');#}
-        {#        else receivedBoardState.push(boardStateAsText[i - 1]);#}
-        {#    }#}
-        {# }#}
+        for (i = 0 ; i < boardStateAsText.length; i++)
+        {
+            if(boardStateAsText[i] == ",")
+            {
+                if(boardStateAsText[i - 1] ==",") receivedBoardState.push('');
+                else receivedBoardState.push(boardStateAsText[i - 1]);
+            }
+         }
         var temp = 0;
             for(j = 1; j <16; j++)
         {
@@ -2070,7 +2070,7 @@ gameSocket.onmessage = function(e)
         document.getElementById("btn").hidden = false;
         round = data['round'];
         var winner = data['Winner'];
-        if ({{ user.username }} == winner)
+        if ('{{ user.username }}' == winner)
         {
             document.getElementsByClassName("points")[0].innerText = "Miał więcej";
         }
