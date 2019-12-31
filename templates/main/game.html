@@ -2057,6 +2057,7 @@ gameSocket.onmessage = function(e)
     else if (boardState =="START")
     {
         alert("Runda się rozpoczęła");
+        round = data['round'];
         document.getElementById("btn").hidden = false;
         document.getElementById("round").innerText = "Runda: " + round;
 
