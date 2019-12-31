@@ -2067,6 +2067,7 @@ gameSocket.onmessage = function(e)
         {#var remainingLetters = data['remainingLetters'];#}
         applyReceivedData(boardState);
         document.getElementById("btn").hidden = false;
+        round = data['round']
         {#obsługa podmianki pozostalych liter, albo zmiana fillLetters, na wersję z argumentem#}
         fillLetters()
     }

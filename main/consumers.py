@@ -43,7 +43,7 @@ class GameConsumer(WebsocketConsumer):
                     {
                         'type': 'move_info',
                         'boardState': 'START',
-                        'round': round+1
+                        'round': (round + 1)
                     }
                 )
 
@@ -63,16 +63,18 @@ class GameConsumer(WebsocketConsumer):
                     self.room_group_name,
                     {
                         'type': 'move_info',
-                        'boardState': board_state
+                        'boardState': board_state,
+                        'round': (round+1)
                     }
                 )
 
     def move_info(self, event):
         board_state = event['boardState']
-
+        round = event['round']
         # Send message to WebSocket
         self.send(text_data=json.dumps({
-            'boardState': board_state
+            'boardState': board_state,
+            'round': round
         }))
 
         # self.send(text_data=json.dumps({
