@@ -293,9 +293,6 @@
                 </li>
                 <li>
                     <div class = "dropzone" id ="letter">
-                        {% for letter in letters %}
-                            <div class ="letter" id="draggable" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', null)">{{ letter }}</div>
-                        {% endfor %}
                     </div>
                 </li>
                 <li>
@@ -2077,11 +2074,20 @@ gameSocket.onmessage = function(e)
     }
     else if(boardState == "LETTERS")
     {
-        letters=data['lettersRemaining']
-        var lettersGiven = data['lettersGiven']
+        letters=data['lettersRemaining'];
+        var lettersGiven = data['lettersGiven'];
         var dropzone_div = document.getElementById("letter");
         dropzone_div.innerHTML = lettersGiven;
 
+    }
+    else if (boardState == "LETTERS_PROVIDER")
+    {
+        var lettersGiven = fillLetters();
+        gameSocket.send(JSON.stringify({
+            'boardState': 'LETTERS',
+            'lettersGiven': lettersGiven,
+            'lettersRemaining': letters
+        }))
     }
     else
     {

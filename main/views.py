@@ -43,54 +43,9 @@ def homepage(request):
     return render(request, "main/home.html")
 
 
-def game(request,gameroom_id):
-
-    if request.method == "POST":
-        wordList = request.POST['wordsList']
-        boardState = request.POST['boardState']
-        username = request.POST['username']
-        remainingLetters = request.POST['remainingLetters']
-
-        print(wordList)
-        print(boardState)
-        print(username)
-        print(remainingLetters)
-        
-        wordList = list(wordList.split(","))
-        print(wordList)
-        print(len(wordList))
-        validWordsFile = open(r"slowa.txt", "r")
-        validWords = validWordsFile.readlines()
-        guard = len(wordList)
-        for word in wordList:
-            if word.lower() + '\n' in validWords:
-                guard = guard - 1
-        if guard == 0:
-            print("no brawo jasiu")
-            lastBoardState[0] = boardState
-        else:
-            print("what is wrong with you")
-        validWordsFile.close()
-        chosen =list(remainingLetters.split(","))
-        while len(chosen) < 7 :
-            temp = random.randint(0, 99)
-            if temp not in taken:
-                chosen.append(letters[temp])
-                taken.append(temp)
-
-        return render(request, "main/game.html", {"boardState": lastBoardState,
-                                                  "letters" : chosen,
-                                                  'gameroom_id_json': mark_safe(json.dumps(gameroom_id))})
-    else:
-        chosen = []
-
-        while len(chosen) < 7 :
-            temp = random.randint(0, 99)
-            if temp not in taken:
-                chosen.append(letters[temp])
-                taken.append(temp)
-        return render(request, "main/game.html", {"letters" : chosen, "boardState": lastBoardState[0],
-                                                  'gameroom_id_json': mark_safe(json.dumps(gameroom_id))})
+def game(request, gameroom_id):
+    return render(request, "main/game.html", {"boardState": lastBoardState[0],
+                                              'gameroom_id_json': mark_safe(json.dumps(gameroom_id))})
 
 
 def login_request(request):

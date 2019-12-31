@@ -46,9 +46,11 @@ class GameConsumer(WebsocketConsumer):
                     'lettersGiven': letters_given
                 }
             )
+
         else:
             player = text_data_json['player']
             game_room = GameRooms.objects.get(pk=gameroom)
+
             if board_state == 'READY':
 
                 user = User.objects.get(username=player)
@@ -58,6 +60,9 @@ class GameConsumer(WebsocketConsumer):
                 }))
 
                 if len(Game.objects.filter(game_room=game_room)) == game_room.seats:
+                    self.send(text_data_json=json.dumps({
+                        'boardState': 'LETTERS_PROVIDER'
+                    }))
                     temp = GameRooms.objects.get(pk=gameroom)
                     temp.in_progress = True
                     temp.save()
