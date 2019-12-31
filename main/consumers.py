@@ -86,23 +86,36 @@ class GameConsumer(WebsocketConsumer):
                 moves = Move.objects.filter(game_room=game_room, round=round)
                 if len(moves) == game_room.seats:
                     winner = moves.order_by('points').last()
-                    board_state = winner.board_state
-                    round_winner = winner.player
-                    temp = Game.objects.get(user=User.objects.get(username=round_winner))
-                    points = temp.points = temp.points + winner.points
-                    temp.save()
+                    if winner.points == 0:
+                        game_winner = Game.objects.filter(game_room=game_room).order_by('points').last()
+                        async_to_sync(self.channel_layer.group_send)(
+                            self.room_group_name,
+                            {
+                                'type': 'winner_info',
+                                'boardState': 'WINNER',
+                                'round': (round + 1),
+                                'winner': game_winner,
+                                'points': game_winner.points,
+                            }
+                        )
+                    else:
+                        board_state = winner.board_state
+                        round_winner = winner.player
+                        temp = Game.objects.get(user=User.objects.get(username=round_winner))
+                        points = temp.points = temp.points + winner.points
+                        temp.save()
 
-                    async_to_sync(self.channel_layer.group_send)(
-                        self.room_group_name,
-                        {
-                            'type': 'move_info',
-                            'boardState': board_state,
-                            'round': (round+1),
-                            'Winner': round_winner,
-                            'points': points,
-                            'winnerPoints': winner.points
-                        }
-                    )
+                        async_to_sync(self.channel_layer.group_send)(
+                            self.room_group_name,
+                            {
+                                'type': 'move_info',
+                                'boardState': board_state,
+                                'round': (round+1),
+                                'Winner': round_winner,
+                                'points': points,
+                                'winnerPoints': winner.points
+                            }
+                        )
 
     def move_info(self, event):
         board_state = event['boardState']
@@ -117,6 +130,19 @@ class GameConsumer(WebsocketConsumer):
             'Winner': round_winner,
             'points': points,
             'winnerPoints': winner_points
+        }))
+
+    def move_info(self, event):
+        board_state = event['boardState']
+        round = event['round']
+        game_winner = event['winner']
+        points = event['points']
+        # Send message to WebSocket
+        self.send(text_data=json.dumps({
+            'boardState': board_state,
+            'round': round,
+            'winner': game_winner,
+            'points': points
         }))
 
     def start_info(self, event):

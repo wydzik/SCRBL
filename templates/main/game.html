@@ -2091,6 +2091,10 @@ gameSocket.onmessage = function(e)
             'round' : round
         }))
     }
+    else if (boardState == 'WINNER')
+    {
+        alert()
+    }
     else
     {
         {#var remainingLetters = data['remainingLetters'];#}
