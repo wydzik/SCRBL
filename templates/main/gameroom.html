@@ -1,16 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+{% extends "main/header.html" %}
+{% block content %}
+<main role="main" class="grid-container">
+    <div>
 {% for gameroom in gamerooms %}
     ID: {{  gameroom.id }}
     Nazwa: <a href="{% url 'main:game' gameroom.id %}">{{ gameroom.name }}</a>
     W trakcie: {{ gameroom.in_progress }}
     Miejsc przy stole: {{ gameroom.seats }}
 {% endfor %}
-
-</body>
-</html>
+</div>
+</main>
+{% endblock %}

@@ -304,7 +304,6 @@
                 </li>
                 <li>
                     <h6 class="points" id = "round">Runda: </h6>
-                    <div class="dropzone" id ="change"></div>
                 </li>
                 <li>
                     <input id="start" type="button" value="START"/>
@@ -699,8 +698,9 @@ function makeMove()
         if (boardState.length == 0) {
             var result = boardStateValidation();
             if (result == false || result == undefined) {
-                alert("Coś się zesrało")
-            } else {
+
+            }
+            else {
                 var wordList = result.newWord;
                 var wordListAsBoardState = result.wordBoardState;
                 if (wordList) {
@@ -723,7 +723,7 @@ function makeMove()
         } else {
             var result = moveValidation();
             if (result == false || result == undefined) {
-                alert("Tu też coś się zesrało")
+
             } else {
                 var wordList = result.listOfWords;
                 var wordListAsBoardState = result.listOfWordsAsBoardStates;
