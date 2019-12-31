@@ -2093,7 +2093,7 @@ gameSocket.onmessage = function(e)
         var winner = data['Winner'];
         if ('{{ user.username }}' == winner)
         {
-            document.getElementsByClassName("points")[0].innerText = "Miał więcej";
+            document.getElementsByClassName("points")[0].innerText = "Punkty: " + data['points'];
             var lettersGiven = fillLetters();
             gameSocket.send(JSON.stringify({
                 'boardState': 'LETTERS',

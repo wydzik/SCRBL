@@ -82,6 +82,9 @@ class GameConsumer(WebsocketConsumer):
                     winner = moves.order_by('points').last()
                     board_state = winner.board_state
                     round_winner = winner.player
+                    temp = Game.objects.get(user=User.objects.get(username=round_winner))
+                    points = temp.points = temp.points + winner.points
+                    temp.save()
 
                     async_to_sync(self.channel_layer.group_send)(
                         self.room_group_name,
@@ -89,7 +92,8 @@ class GameConsumer(WebsocketConsumer):
                             'type': 'move_info',
                             'boardState': board_state,
                             'round': (round+1),
-                            'Winner': round_winner
+                            'Winner': round_winner,
+                            'points': points
                         }
                     )
 
@@ -97,11 +101,13 @@ class GameConsumer(WebsocketConsumer):
         board_state = event['boardState']
         round = event['round']
         round_winner = event['Winner']
+        points = event['points']
         # Send message to WebSocket
         self.send(text_data=json.dumps({
             'boardState': board_state,
             'round': round,
-            'Winner': round_winner
+            'Winner': round_winner,
+            'points': points
         }))
 
     def start_info(self, event):

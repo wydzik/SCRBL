@@ -6,10 +6,10 @@
 </head>
 <body>
 {% for gameroom in gamerooms %}
-    {{  gameroom.id }}
-    <a href="{% url 'main:game' gameroom.id %}">{{ gameroom.name }}</a>
-    {{ gameroom.in_progress }}
-    {{ gameroom.seats }}
+    ID: {{  gameroom.id }}
+    Nazwa: <a href="{% url 'main:game' gameroom.id %}">{{ gameroom.name }}</a>
+    W trakcie: {{ gameroom.in_progress }}
+    Miejsc przy stole: {{ gameroom.seats }}
 {% endfor %}
 
 </body>
