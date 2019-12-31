@@ -299,14 +299,7 @@
                     </div>
                 </li>
                 <li>
-                    <form method="post" id="moveForm">
-                        {% csrf_token %}
-                        <input type="hidden" id="remainingLetters" name="remainingLetters" value="">
-                        <input type="hidden" id="wordList" name="wordsList" value="">
-                        <input type="hidden" id="boardState" name="boardState" value="">
-                        <input type="hidden" id="username" name="username" value="{{ user.username }}">
-                    </form>
-                    <input id="btn" type="button" value="Wykonaj" />
+                    <input type="hidden" id="btn" type="button" value="Wykonaj" />
 
                 </li>
                 <li>
@@ -2061,7 +2054,12 @@ gameSocket.onmessage = function(e)
     else if(boardState=="WAITING_FOR_START")
     {
         alert("Oczekiwanie na Start");
-        document.getElementsById("start").hidden = true;
+        document.getElementById("start").hidden = true;
+    }
+    else if (boardState =="START")
+    {
+        alert("Runda się rozpoczęła");
+        document.getElementById("btn").hidden = false;
     }
     else
     {
@@ -2096,7 +2094,8 @@ document.querySelector('#start').onclick = function(e) {
     gameSocket.send(JSON.stringify({
         'boardState' : 'READY',
         'player' : '{{user.username}}',
-        'gameroom' : roomName
+        'gameroom' : roomName,
+        'round': 0
     }));
     alert("Start wysłany");
 };

@@ -39,7 +39,7 @@ class GameRooms(models.Model):
                                                            ",,,,,,,,,,,,,,," \
                                                            ",,,,,,,,,,,,,,," \
                                                            ",,,,,,,,,,,,,,,")
-
+    seats = models.IntegerField(max_length=10,default=2)
 class Game(models.Model):
     game_room = models.ForeignKey(GameRooms, on_delete=models.CASCADE)
     user = models.ForeignKey(User,on_delete=models.CASCADE)
