@@ -41,50 +41,50 @@ class GameConsumer(WebsocketConsumer):
                     'lettersGiven': letters_given
                 }
             )
-
-        player = text_data_json['player']
-        game_room = GameRooms.objects.get(pk=gameroom)
-
-        if board_state == 'READY':
-            user = User.objects.get(username=player)
-            Game.objects.create(game_room=game_room,user=user)
-            self.send(text_data=json.dumps({
-                'boardState': 'WAITING_FOR_START'
-            }))
-
-            if len(Game.objects.filter(game_room=game_room)) == game_room.seats:
-                async_to_sync(self.channel_layer.group_send)(
-                    self.room_group_name,
-                    {
-                        'type': 'start_info',
-                        'boardState': 'START',
-                        'round': (round + 1)
-                    }
-                )
         else:
-            points = text_data_json['points']
-            Move.objects.create(game_room=game_room, player=player, points=points, board_state=board_state, round=round)
-            # tutaj trzeba zrobić jakieś casy w zależności od tego, czy wszyscy zrobili ruch, czy nie, bo nie wyobrażam sobie tego inaczej
-            # trzeba by chyba też jakiś mechanizm dołączania do gry zrobić i wtedy by się ten model Game nadał
-            self.send(text_data=json.dumps({
-                'boardState': 'NOT YET',
-                'points': points
-            }))
-            moves = Move.objects.filter(game_room=game_room, round=round)
-            if len(moves) == game_room.seats:
-                winner = moves.order_by('points').last()
-                board_state = winner.board_state
-                round_winner = winner.player
+            player = text_data_json['player']
+            game_room = GameRooms.objects.get(pk=gameroom)
+            if board_state == 'READY':
 
-                async_to_sync(self.channel_layer.group_send)(
-                    self.room_group_name,
-                    {
-                        'type': 'move_info',
-                        'boardState': board_state,
-                        'round': (round+1),
-                        'Winner': round_winner
-                    }
-                )
+                user = User.objects.get(username=player)
+                Game.objects.create(game_room=game_room,user=user)
+                self.send(text_data=json.dumps({
+                    'boardState': 'WAITING_FOR_START'
+                }))
+
+                if len(Game.objects.filter(game_room=game_room)) == game_room.seats:
+                    async_to_sync(self.channel_layer.group_send)(
+                        self.room_group_name,
+                        {
+                            'type': 'start_info',
+                            'boardState': 'START',
+                            'round': (round + 1)
+                        }
+                    )
+            else:
+                points = text_data_json['points']
+                Move.objects.create(game_room=game_room, player=player, points=points, board_state=board_state, round=round)
+                # tutaj trzeba zrobić jakieś casy w zależności od tego, czy wszyscy zrobili ruch, czy nie, bo nie wyobrażam sobie tego inaczej
+                # trzeba by chyba też jakiś mechanizm dołączania do gry zrobić i wtedy by się ten model Game nadał
+                self.send(text_data=json.dumps({
+                    'boardState': 'NOT YET',
+                    'points': points
+                }))
+                moves = Move.objects.filter(game_room=game_room, round=round)
+                if len(moves) == game_room.seats:
+                    winner = moves.order_by('points').last()
+                    board_state = winner.board_state
+                    round_winner = winner.player
+
+                    async_to_sync(self.channel_layer.group_send)(
+                        self.room_group_name,
+                        {
+                            'type': 'move_info',
+                            'boardState': board_state,
+                            'round': (round+1),
+                            'Winner': round_winner
+                        }
+                    )
 
     def move_info(self, event):
         board_state = event['boardState']
