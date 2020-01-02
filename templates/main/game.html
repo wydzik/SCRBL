@@ -760,10 +760,12 @@ function moveValidation()
                 && document.getElementById("row_" + j).children[i].children.draggable.draggable == true)
             {
                 listOfNewLetters.push(boardStateToBe.length - 1)
-                
+
             }
         }
     }
+    console.log(boardStateToBe)
+    console.log(listOfNewLetters)
     {#tutaj się musze zastanowić, czy true, czy lepiej false, żeby wymusić jakiś ruch#}
     if (listOfNewLetters.length == 0) return false;
     {#obsługa ruchu dla pojedynczej płytki#}
