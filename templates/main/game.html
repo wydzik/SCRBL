@@ -1287,7 +1287,7 @@ function moveValidation()
                     }
 					{#na górze są litery, na dole sa litery#}
                   if(boardState[listOfNewLetters[0] - 15] != ""
-                      &&  boardState[listOfNewLetters[listOfNewLetters.length - 1] + 15] != "")
+                      &&  (boardState[listOfNewLetters[listOfNewLetters.length - 1] + 15] != "" && (listOfNewLetters[listOfNewLetters - 1] + 15 < 224)))
                     {
                         var check = true;
                         var i = 15;
