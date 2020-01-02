@@ -766,7 +766,7 @@ function moveValidation()
     }
     console.log(boardStateToBe)
     console.log(listOfNewLetters)
-    
+
     {#tutaj się musze zastanowić, czy true, czy lepiej false, żeby wymusić jakiś ruch#}
     if (listOfNewLetters.length == 0) return false;
     {#obsługa ruchu dla pojedynczej płytki#}
@@ -1023,7 +1023,7 @@ function moveValidation()
                             wordBoardState.push(listOfNewLetters[i]);
                         }
                         listOfWords.push(newWord);
-                        listOfNewLetters.push(wordBoardState.sort());
+                        listOfWordsAsBoardStates.push(wordBoardState.sort());
                     }
                   {#po lewej są kafelki i po prawej są kafelki#}
                   if((boardState[listOfNewLetters[0] - 1] != "" && (listOfNewLetters[0] - 1) % 15 != 14)
