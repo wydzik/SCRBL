@@ -2139,6 +2139,8 @@ document.querySelector('#btn').onclick = function(e) {
         var remainingLetters = result.remainingLetters;
         var wordListAsBoardState = result.wordListAsBoardState;
         var points = countValue(wordList, wordListAsBoardState);
+        console.log(wordList);
+        console.log(wordListAsBoardState);
         console.log(points);
         gameSocket.send(JSON.stringify({
             'points' : points,
