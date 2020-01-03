@@ -2143,6 +2143,7 @@ document.querySelector('#btn').onclick = function(e) {
         console.log(wordListAsBoardState);
         console.log(points);
         gameSocket.send(JSON.stringify({
+            'wordList': wordList,
             'points' : points,
             'boardState': boardState,
             'player' : '{{user.username}}',
