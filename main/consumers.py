@@ -96,7 +96,7 @@ class GameConsumer(WebsocketConsumer):
                         if word.lower() + '\n' in dictionary_words:
                             guard = guard - 1
                         letter_dictionary.close()
-                        
+
                     if guard != 0:
                         points = 0
                 Move.objects.create(game_room=game_room, player=player, points=points, board_state=board_state, round=round)
