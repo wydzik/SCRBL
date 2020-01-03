@@ -79,15 +79,15 @@ class GameConsumer(WebsocketConsumer):
                 word_list = text_data_json['wordList']
                 print(word_list)
                 guard = len(word_list)
-                for word in word_list:
-                    first_letter = word[0].lower()
-                    print(word)
-                    letter_dictionary = open("./static/slowniki/"+ first_letter + ".txt", "r")
-                    dictionary_words = letter_dictionary.readlines()
-                    if word.lower() + '\n' in dictionary_words:
-                        guard = guard - 1
-                if guard != 0:
-                    points = 0
+                # for word in word_list:
+                #     first_letter = word[0].lower()
+                #     print(word)
+                #     letter_dictionary = open("./static/slowniki/"+ first_letter + ".txt", "r")
+                #     dictionary_words = letter_dictionary.readlines()
+                #     if word.lower() + '\n' in dictionary_words:
+                #         guard = guard - 1
+                # if guard != 0:
+                #     points = 0
                 Move.objects.create(game_room=game_room, player=player, points=points, board_state=board_state, round=round)
                 # tutaj trzeba zrobić jakieś casy w zależności od tego, czy wszyscy zrobili ruch, czy nie, bo nie wyobrażam sobie tego inaczej
                 # trzeba by chyba też jakiś mechanizm dołączania do gry zrobić i wtedy by się ten model Game nadał
