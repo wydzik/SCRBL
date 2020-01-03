@@ -1,0 +1,527 @@
+{##}
+{#{% extends "main/header.html" %}#}
+{#{%  block content %}#}
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+
+	 <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+{#   <link rel="stylesheet" type = "text/css" href="/static/game.css">#}
+
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+
+
+    {% if title %}
+        <title>SCRBL - {{ title }}</title>
+    {% else %}
+        <title>SCRBL</title>
+{% endif %}
+</head>
+<body>
+<div class="container">
+    <div class="board">
+        <table>
+        <tr id = "row_1">
+            <td class="dropzone" id = "tripleword"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id = "doubleletter"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id = "tripleword"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id = "doubleletter"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id = "tripleword"></td>
+        </tr>
+        <tr id = "row_2">
+            <td class="dropzone"></td>
+            <td class="dropzone" id="doubleword"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id = "tripleletter"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id = "tripleletter"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id="doubleword"></td>
+            <td class="dropzone"></td>
+        </tr>
+        <tr id = "row_3">
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id="doubleword"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id = "doubleletter"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id = "doubleletter"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id="doubleword"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+        </tr>
+        <tr id = "row_4">
+            <td class="dropzone" id = "doubleletter"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id="doubleword"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id = "doubleletter"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id="doubleword"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id = "doubleletter"></td>
+        </tr>
+        <tr id = "row_5">
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id="doubleword"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id="doubleword"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+        </tr>
+        <tr id = "row_6">
+            <td class="dropzone"></td>
+            <td class="dropzone" id = "tripleletter"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id = "tripleletter"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id = "tripleletter"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id = "tripleletter"></td>
+            <td class="dropzone"></td>
+        </tr>
+        <tr id = "row_7">
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id = "doubleletter"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id = "doubleletter"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id = "doubleletter"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id = "doubleletter"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+        </tr>
+        <tr id  = "row_8">
+            <td class="dropzone" id = "tripleword"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id = "doubleletter"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id ="doubleword"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id = "doubleletter"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id = "tripleword"></td>
+        </tr>
+        <tr id = "row_9">
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id = "doubleletter"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id = "doubleletter"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id = "doubleletter"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id = "doubleletter"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+        </tr>
+        <tr id = "row_10">
+            <td class="dropzone"></td>
+            <td class="dropzone" id = "tripleletter"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id = "tripleletter"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id = "tripleletter"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id = "tripleletter"></td>
+            <td class="dropzone"></td>
+        </tr>
+        <tr id = "row_11">
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id="doubleword"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id="doubleword"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+        </tr>
+        <tr id = "row_12">
+            <td class="dropzone" id = "doubleletter"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id="doubleword"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id = "doubleletter"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id="doubleword"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id = "doubleletter"></td>
+        </tr>
+        <tr id = "row_13">
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id="doubleword"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id = "doubleletter"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id = "doubleletter"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id="doubleword"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+        </tr>
+        <tr id = "row_14">
+            <td class="dropzone"></td>
+            <td class="dropzone" id="doubleword"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id = "tripleletter"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id = "tripleletter"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id="doubleword"></td>
+            <td class="dropzone"></td>
+        </tr>
+        <tr id = "row_15">
+            <td class="dropzone" id = "tripleword"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id = "doubleletter"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id = "tripleword"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id ="doubleletter"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone"></td>
+            <td class="dropzone" id = "tripleword" ></td>
+        </tr>
+</table>
+</div>
+      <div class="playerzone">
+              <ul class="list">
+                <li>
+
+                </li>
+                <li>
+                </li>
+                <li>
+                </li>
+                <li>
+                </li>
+                <li>
+                </li>
+                <li>
+                </li>
+                  <li>
+                      <div hidden id="receivedBoardState">{{ boardState }}</div>
+                  </li>
+              </ul>
+      </div>
+</div>
+<style>
+    table{
+    width : 664px;
+    height: 664px;
+    margin-top: 100px;
+    background: white;
+}
+th,td{
+    border: 4px solid black;
+}
+h2{
+    width: 270px;
+    font-size: 35px;
+    align-items: center;
+}
+#tripleword{
+    background: red;
+
+}
+body{
+    background: darkolivegreen;
+}
+#tripleletter{
+    background: darkblue;
+}
+#doubleword{
+    background: lightpink;
+}
+#doubleletter{
+    background: lightblue;
+}
+.container {
+  display: grid;
+  grid: 50px / auto auto auto;
+  grid-gap: 40px;
+}
+.board{
+    float:left;
+}
+.playerzone{
+    margin-top: 100px;
+    float:left;
+}
+.list{
+        background: olivedrab;
+}
+.letter{
+    border: 1px solid #466995;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+}
+#change{
+    display: inline-block;
+    width: 270px;
+    height: 80px;
+    align-content: center;
+}
+#letter {
+    display: inline-block;
+    width: 270px;
+    height: 80px;
+    align-content: center;
+
+}
+#draggable {
+  width: 35px;
+  height: 35px;
+  text-align: center;
+  background: lightyellow;
+}
+.dropzone{
+    width: 40px;
+    height: 40px;
+    padding: 0px;
+    align-items: center;
+}
+</style>
+    <script type = "text/javascript" >
+      var dragged;
+
+/* events fired on the draggable target */
+document.addEventListener("drag", function(event)
+{
+
+}, false);
+
+document.addEventListener("dragstart", function(event)
+{
+  // store a ref. on the dragged elem
+  dragged = event.target;
+  // make it half transparent
+  event.target.style.opacity = .5;
+}, false);
+
+document.addEventListener("dragend", function(event)
+{
+  // reset the transparency
+  event.target.style.opacity = "";
+}, false);
+
+/* events fired on the drop targets */
+document.addEventListener("dragover", function(event)
+{
+  // prevent default to allow drop
+  event.preventDefault();
+}, false);
+
+document.addEventListener("dragenter", function(event)
+{
+  // highlight potential drop target when the draggable element enters it
+  if (event.target.className == "dropzone") {
+    event.target.style.background = "";
+  }
+
+}, false);
+
+document.addEventListener("dragleave", function(event)
+{
+  // reset background of potential drop target when the draggable element leaves it
+  if (event.target.className == "dropzone")
+  {
+    event.target.style.background = "";
+  }
+}, false);
+
+document.addEventListener("drop", function(event)
+{
+  // prevent default action (open as link for some elements)
+  event.preventDefault();
+  // move dragged elem to the selected drop target
+  if ((event.target.className == "dropzone" && event.target.childNodes.length == 0  )
+      || (event.target.className == "dropzone" && (event.target.id == "letter" || event.target.id =="change")))
+  {
+         event.target.style.background = "";
+         dragged.parentNode.removeChild(dragged);
+         event.target.appendChild(dragged);
+         if(!boardStateValidation())
+         {
+             {#alert("Położony kafelek znajduje nie graniczy z pozostałymi.")#}
+             {#dragged.style.opacity = 1.0;#}
+             {#var newLetterContainer = document.getElementById("letter").innerHTML + dragged.outerHTML;#}
+             {#document.getElementById("letter").innerHTML = newLetterContainer;#}
+             {#event.target.removeChild(dragged);#}
+         }
+  }
+}, false);
+
+      var boardState = [];
+
+
+function applyReceivedData()
+{
+    receivedBoardState =  new Array;
+    boardStateAsText = document.getElementById("receivedBoardState");
+    if(boardStateAsText!="")
+    {
+        for (i = 0 ; i < boardStateAsText.length; i++)
+        {
+            if(boardStateAsText[i] == "\'")
+            {
+                if(boardStateAsText[i - 1] =="'")
+                {
+                    receivedBoardState.push('');
+                }
+                else if(boardStateAsText[i - 1] != " "&& boardStateAsText[i-1] != "\," && boardStateAsText[i-1] != "[")
+                {
+                    receivedBoardState.push(boardStateAsText[i - 1]);
+                }
+            }
+         }
+        var temp = 0;
+            for(j = 1; j <16; j++)
+        {
+            for(i = 0; i<15; i++)
+            {
+
+                    if (receivedBoardState[temp] == undefined)
+                    {
+                        document.getElementById("row_" + j).children[i].innerHTML = '';
+                    }
+                    else
+                    {
+                        if(receivedBoardState[temp]=='')
+                        {
+                            document.getElementById("row_" + j).children[i].innerHTML = '';
+                        }
+                        else
+                        {
+                        document.getElementById("row_" + j).children[i].innerHTML = '<div class ="letter" id="draggable" draggable="false"' +
+                            ' ondragstart="event.dataTransfer.setData(\'text/plain\',null)"> ' + receivedBoardState[temp] + '</div> ';
+                        }
+                    }
+                temp++;
+            }
+        }
+    }
+    boardState = boardStateUpdate();
+}
+function boardStateUpdate()
+{
+    newBoardState = []
+    for(j = 1; j <16; j++)
+    {
+        for(i = 0; i<15; i++)
+        {
+            newBoardState.push(document.getElementById("row_"+j).children[i].innerText);
+        }
+    }
+    return newBoardState;
+}
+
+window.onload = applyReceivedData;
+    </script>
+{#{% endblock %}#}
+
+</body>
+</html>

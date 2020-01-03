@@ -3,25 +3,10 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from django.utils.safestring import mark_safe
 from django.contrib import messages
-from .models import GameRooms
+from .models import GameRooms, Game
 from .forms import *
-import random
 import json
 
-letters = [
-    'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', chr(260),
-    'B', 'B', 'C', 'C', 'C', chr(262), 'D', 'D', 'D', 'E',
-    'E', 'E', 'E', 'E', 'E', 'E', chr(280), 'F', 'G', 'G',
-    'H', 'H', 'I', 'I', 'I', 'I', 'I', 'I', 'I', 'I',
-    'J', 'J', 'K', 'K', 'K', 'L', 'L', 'L', chr(321), chr(321),
-    'M', 'M', 'M', 'N', 'N', 'N', 'N', 'N', chr(323), 'O',
-    'O', 'O', 'O', 'O', 'O', chr(211), 'P', 'P', 'P', 'R',
-    'R', 'R', 'R', 'S', 'S', 'S', 'S', chr(346), 'T', 'T',
-    'T', 'U', 'U', 'W', 'W', 'W', 'W', 'Y', 'Y', 'Y',
-    'Y', 'Z', 'Z', 'Z', 'Z', 'Z', chr(377), chr(379)
-]
-
-taken = []
 lastBoardState = [  ",,,,,,,,,,,,,,," \
                     ",,,,,,,,,,,,,,," \
                     ",,,,,,,,,,,,,,," \
@@ -44,7 +29,13 @@ def homepage(request):
 
 
 def game(request, gameroom_id):
-    return render(request, "main/game.html", {"boardState": lastBoardState[0],
+    game_room = GameRooms.objects.get(pk=gameroom_id)
+    if len(Game.objects.filter(game_room=game_room)) == game_room.seats:
+        board_state = game_room.board_state
+        return render(request, "main/viewgame.html", {"boardState" : board_state,
+                                                     'gameroom_id_json': mark_safe(json.dumps(gameroom_id))})
+    else:
+        return render(request, "main/game.html", {"boardState": lastBoardState[0],
                                               'gameroom_id_json': mark_safe(json.dumps(gameroom_id))})
 
 
