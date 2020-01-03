@@ -79,7 +79,7 @@ class GameConsumer(WebsocketConsumer):
                 word_list = text_data_json['wordList']
                 guard = len(word_list)
                 for word in word_list:
-                    first_letter = word[0]
+                    first_letter = word[0].lower()
                     letter_dictionary = open("./static/slowniki/"+ first_letter + ".txt", "r")
                     dictionary_words = letter_dictionary.readlines()
                     if word.lower() + '\n' in dictionary_words:
