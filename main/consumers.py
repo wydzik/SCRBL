@@ -77,6 +77,7 @@ class GameConsumer(WebsocketConsumer):
             else:
                 points = text_data_json['points']
                 word_list = text_data_json['wordList']
+                print(word_list)
                 guard = len(word_list)
                 for word in word_list:
                     first_letter = word[0].lower()
