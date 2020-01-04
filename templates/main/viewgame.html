@@ -461,6 +461,7 @@ function applyReceivedData()
 {
     receivedBoardState =  new Array;
     boardStateAsText = document.getElementById("receivedBoardState");
+    alert("no jestem, jestem")
     if(boardStateAsText!="")
     {
         for (i = 0 ; i < boardStateAsText.length; i++)
@@ -520,7 +521,6 @@ function boardStateUpdate()
 
 window.onload = applyReceivedData;
     </script>
-{#{% endblock %}#}
 
 </body>
 </html>
