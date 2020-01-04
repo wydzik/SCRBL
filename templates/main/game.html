@@ -613,39 +613,34 @@ function countValue(listOfWords, listOfBoardStates)
             var wordScore = 0;
             for (j = 0; j <listOfWords[i].length ; j++)
             {
-                if(doubleLetterStates.includes(listOfBoardStates[i][j]))
+                if (doubleLetterStates.includes(listOfBoardStates[i][j]))
                 {
-                    wordScore = wordScore +  (scores.get(listOfWords[i][j]) * 2);
-                }
-                else if(tripleLetterStates.includes(listOfBoardStates[i][j]))
+                    wordScore = wordScore + (scores.get(listOfWords[i][j]) * 2);
+                } else if (tripleLetterStates.includes(listOfBoardStates[i][j]))
                 {
                     wordScore = wordScore + (scores.get(listOfWords[i][j]) * 3);
-                }
-                else if (doubleWordStates.includes(listOfBoardStates[i][j]))
+                } else if (doubleWordStates.includes(listOfBoardStates[i][j]))
                 {
                     isDouble = true;
                     wordScore = wordScore + scores.get(listOfWords[i][j]);
-                }
-                else if (tripleWordStates.includes(listOfWords[i][j]))
+                } else if (tripleWordStates.includes(listOfWords[i][j]))
                 {
                     isTriple = true;
                     wordScore = wordScore + scores.get(listOfWords[i][j]);
-                }
-                else {
+                } else
+                {
                     wordScore = wordScore + scores.get(listOfWords[i][j]);
                 }
-            }
-            if (isTriple)
-            {
-                score = score + (3 * wordScore);
-            }
-            else if (isDouble)
-            {
-                score = score + (2 * wordScore);
-            }
-            else
-            {
-                score = score + wordScore;
+                if (isTriple)
+                {
+                    score = score + (3 * wordScore);
+                } else if (isDouble)
+                {
+                    score = score + (2 * wordScore);
+                } else
+                {
+                    score = score + wordScore;
+                }
             }
         }
         return score;
