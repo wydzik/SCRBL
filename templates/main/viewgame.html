@@ -464,7 +464,6 @@ function applyReceivedData()
 
     if(boardStateAsText!="")
     {
-        alert("no jestem, jestem")
         for (i = 0 ; i < boardStateAsText.length; i++)
         {
             if(boardStateAsText[i] == "'")
@@ -476,7 +475,6 @@ function applyReceivedData()
                 else if(boardStateAsText[i - 1] != " "&& boardStateAsText[i-1] != "," && boardStateAsText[i-1] != "[")
                 {
                     receivedBoardState.push(boardStateAsText[i - 1]);
-                    alert(boardStateAsText[i - 1])
                 }
             }
          }
