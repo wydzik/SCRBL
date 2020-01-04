@@ -460,7 +460,7 @@ document.addEventListener("drop", function(event)
 function applyReceivedData()
 {
     receivedBoardState =  new Array();
-    boardStateAsText = document.getElementById("receivedBoardState");
+    boardStateAsText = document.getElementById("receivedBoardState").innerText;
 
     if(boardStateAsText!="")
     {
