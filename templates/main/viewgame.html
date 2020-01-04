@@ -467,13 +467,13 @@ function applyReceivedData()
         alert("no jestem, jestem")
         for (i = 0 ; i < boardStateAsText.length; i++)
         {
-            if(boardStateAsText[i] == "\'")
+            if(boardStateAsText[i] == "'")
             {
                 if(boardStateAsText[i - 1] =="'")
                 {
                     receivedBoardState.push('');
                 }
-                else if(boardStateAsText[i - 1] != " "&& boardStateAsText[i-1] != "\," && boardStateAsText[i-1] != "[")
+                else if(boardStateAsText[i - 1] != " "&& boardStateAsText[i-1] != "," && boardStateAsText[i-1] != "[")
                 {
                     receivedBoardState.push(boardStateAsText[i - 1]);
                     alert(boardStateAsText[i - 1])
