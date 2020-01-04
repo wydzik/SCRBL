@@ -32,6 +32,7 @@ def game(request, gameroom_id):
     game_room = GameRooms.objects.get(pk=gameroom_id)
     if len(Game.objects.filter(game_room=game_room)) == game_room.seats:
         board_state = game_room.board_state
+        print(board_state)
         return render(request, "main/viewgame.html", {"boardState" : board_state,
                                                      'gameroom_id_json': mark_safe(json.dumps(gameroom_id))})
     else:
