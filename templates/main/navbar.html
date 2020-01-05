@@ -6,7 +6,7 @@
         {% if user.is_authenticated %}
 	      <li><a href="/">Strona główna</a></li>
             <li><a href="/gameroom">Gra</a></li>
-	        <li><a href="#">{{user.username}}</a></li>
+	        <li><a href="/profile">{{user.username}}</a></li>
 	        <li><a href="/logout">Wyloguj</a></li>
         {% else %}
 	      <li><a href="/">Strona główna</a></li>

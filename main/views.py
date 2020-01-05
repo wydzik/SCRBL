@@ -99,3 +99,9 @@ def gameroom_creator(request):
     else:
         form = GameRoomCreatorForm()
     return render(request, "main/gameroom_creator.html", context={"form": form})
+
+def profile(request):
+    played_games = Game.objects.filter(user=request.user)
+    #jeszcze wyciągnij nazwy gier
+
+    return render(request,"main/profile.html", context={'playedGames' : played_games})

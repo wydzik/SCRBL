@@ -1,0 +1,26 @@
+{% extends "main/header.html" %}
+{% block content %}
+<main role="main" class="grid-container">
+    <div>
+        <table>
+            <tr id="header">
+                <td>ID Gry</td>
+                <td>Nazwa gry</td>
+                <td>Punkty zdobyte</td>
+            </tr>
+            {% for game in playedGames %}
+            <tr>
+                <td>{{ game.gameroom.id }}</td>
+                <td><a href="{% url 'main:game' gameroom.id %}">{{ game.ameroom.name }}</a></td>
+                <td>{{ game.points }}</td>
+            </tr>
+{% endfor %}
+            <tr>
+                <td><a href="{% url 'main:creator' %}">Utwórz nową grę</a></td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+</main>
+{% endblock %}
