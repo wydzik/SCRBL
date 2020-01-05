@@ -2119,7 +2119,17 @@ gameSocket.onmessage = function(e)
     }
     else if (boardState == 'WINNER')
     {
-        alert("Wygrałeś!")
+        winner = data['winner']
+        if (winner == '{{ user.username }}')
+        {
+            alert("Wygrałeś!")
+            document.getElementById("btn").hidden = true;
+        }
+        else
+        {
+            alert("Wygrał gracz " + winner + " zdobywając "+ data['winnerPoints'] + " punktów.")
+            document.getElementById("btn").hidden = true;
+        }
     }
     else
     {
