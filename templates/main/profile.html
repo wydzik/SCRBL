@@ -11,7 +11,7 @@
             {% for game in playedGames %}
             <tr>
                 <td>{{ game.gameroom.id }}</td>
-                <td><a href="{% url 'main:game' game.gameroom.id %}">{{ game.gameroom.name }}</a></td>
+                <td>{{ game.gameroom.name }}</td>
                 <td>{{ game.points }}</td>
             </tr>
 {% endfor %}
