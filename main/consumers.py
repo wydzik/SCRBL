@@ -121,14 +121,16 @@ class GameConsumer(WebsocketConsumer):
                     if winner.points == 0:
                         game_winner = Game.objects.filter(game_room=game_room)
                         game_winner = game_winner.order_by('points').last()
+                        game_winner_name = game_winner.user.username
+                        game_winner_points = game_winner.points
                         async_to_sync(self.channel_layer.group_send)(
                             self.room_group_name,
                             {
                                 'type': 'winner_info',
                                 'boardState': 'WINNER',
                                 'round': (round + 1),
-                                'winner': game_winner,
-                                'points': game_winner.points,
+                                'winner': game_winner_name,
+                                'points': game_winner_points,
                             }
                         )
                     else:
