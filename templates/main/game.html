@@ -2085,13 +2085,16 @@ gameSocket.onmessage = function(e)
             'round' : round
         }))
     }
+    else if( boardState == "DISCONNECT")
+    {
+        alert("Jeden z graczy rozłączył się")
+    }
     else if (boardState == 'WINNER')
     {
-        alert()
+        alert("Wygrałeś!")
     }
     else
     {
-        {#var remainingLetters = data['remainingLetters'];#}
         applyReceivedData(boardState);
         document.getElementById("btn").hidden = false;
         round = data['round'];
@@ -2119,17 +2122,16 @@ gameSocket.onmessage = function(e)
 };
 
 gameSocket.onclose = function(e) {
+    alert("Zostałeś rozłączony.")
     console.error('Chat socket closed unexpectedly');
 };
 
 document.querySelector('#btn').onclick = function(e) {
-
     var result = makeMove();
-    if(result == undefined)
+    if (result == undefined)
     {
         alert("Coś poszło nie tak, spróbuj wykonać ruch ponownie")
-    }
-    else
+    } else
     {
         var wordList = result.wordList;
         var remainingLetters = result.remainingLetters;
@@ -2140,11 +2142,11 @@ document.querySelector('#btn').onclick = function(e) {
         console.log(points);
         gameSocket.send(JSON.stringify({
             'wordList': wordList,
-            'points' : points,
+            'points': points,
             'boardState': boardState,
-            'player' : '{{user.username}}',
-            'gameroom' : roomName,
-            'round' : round
+            'player': '{{user.username}}',
+            'gameroom': roomName,
+            'round': round
         }));
     }
 };

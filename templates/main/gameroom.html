@@ -13,10 +13,17 @@
             <tr>
                 <td>{{ gameroom.id }}</td>
                 <td><a href="{% url 'main:game' gameroom.id %}">{{ gameroom.name }}</a></td>
-                <td>{{ gameroom.in_progress }}</td>
+                {% if gameroom.in_progress %}
+                <td>TAK</td>
+                {% elif not gameroom.in_progress %}
+                <td>NIE</td>
+                {% endif %}
                 <td>{{ gameroom.seats }}</td>
             </tr>
 {% endfor %}
+            <tr>
+                <td><a href="{% url 'main:creator' %}">Utwórz nowy pokój</a></td>
+            </tr>
         </table>
     </div>
 

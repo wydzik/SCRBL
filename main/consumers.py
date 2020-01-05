@@ -40,6 +40,14 @@ class GameConsumer(WebsocketConsumer):
             async_to_sync(self.channel_layer.group_send)(
                 self.room_group_name,
                 {
+                    'type': 'disconnect_info',
+                    'boardState': 'DISCONNECT',
+                    'round': (round + 1)
+                }
+            )
+            async_to_sync(self.channel_layer.group_send)(
+                self.room_group_name,
+                {
                     'type': 'letters_info',
                     'boardState': 'LETTERS',
                     'lettersRemaining': letters_remaining,

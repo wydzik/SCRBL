@@ -88,3 +88,14 @@ def register(request):
 def gameroom(request):
     return render(request,"main/gameroom.html",context = {"gamerooms": GameRooms.objects.all})
 
+def gameroom_creator(request):
+    if request.method == "POST":
+        form = GameRoomCreatorForm(request.POST)
+        if form.is_valid():
+            form.save()
+        else:
+            print("Błąd")
+        return redirect("main:gameroom")
+    else:
+        form = GameRoomCreatorForm()
+    return render(request, "main/gameroom_creator.html", context={"form": form})
