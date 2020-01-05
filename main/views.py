@@ -101,8 +101,8 @@ def gameroom_creator(request):
     return render(request, "main/gameroom_creator.html", context={"form": form})
 
 
-def profile(request,pk):
-    user = User.objects.get(pk=pk)
+def profile(request,user_id):
+    user = User.objects.get(pk=user_id)
     played_games = Game.objects.filter(user=user)
     #jeszcze wyciągnij nazwy gier
 
