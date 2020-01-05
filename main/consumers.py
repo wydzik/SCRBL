@@ -28,6 +28,14 @@ class GameConsumer(WebsocketConsumer):
             self.room_group_name,
             self.channel_name
         )
+        async_to_sync(self.channel_layer.group_send)(
+            self.room_group_name,
+            {
+                'type': 'disconnect_info',
+                'boardState': 'DISCONNECT',
+                'round': (round + 1)
+            }
+        )
 
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
@@ -38,14 +46,7 @@ class GameConsumer(WebsocketConsumer):
         if board_state == "LETTERS":
             letters_remaining = text_data_json['lettersRemaining']
             letters_given = text_data_json['lettersGiven']
-            async_to_sync(self.channel_layer.group_send)(
-                self.room_group_name,
-                {
-                    'type': 'disconnect_info',
-                    'boardState': 'DISCONNECT',
-                    'round': (round + 1)
-                }
-            )
+
             async_to_sync(self.channel_layer.group_send)(
                 self.room_group_name,
                 {
