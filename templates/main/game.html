@@ -1,6 +1,7 @@
 {##}
 {#{% extends "main/header.html" %}#}
 {#{%  block content %}#}
+{#{% extends "main/navbar.html" %}#}
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,6 +27,27 @@
 {% endif %}
 </head>
 <body>
+<nav>
+    <div class="nav-wrapper">
+    <div class="links">
+       <a href="/" class="brand-logo" style = "margin-left: 20px">SCRBL</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        {% if user.is_authenticated %}
+	      <li><a href="/">Strona główna</a></li>
+            <li><a href="/gameroom">Gra</a></li>
+	        <li><a href="#">{{user.username}}</a></li>
+	        <li><a href="/logout">Wyloguj</a></li>
+        {% else %}
+	      <li><a href="/">Strona główna</a></li>
+	        <li><a href="/register">Rejestracja</a></li>
+	        <li><a href="/login">Logowanie</a></li>
+        {% endif %}
+          <li><a href="#">Kontakt</a></li>
+      </ul>
+    </div>
+    </div>
+</nav>
+
 <div class="container">
     <div class="board">
         <table>
@@ -333,7 +355,11 @@ h2{
     background: red;
 
 }
+nav{
+     background: olivedrab;
+}
 body{
+    color: white;
     background: darkolivegreen;
 }
 #tripleletter{

@@ -22,6 +22,7 @@ class GameConsumer(WebsocketConsumer):
         self.room_name = self.scope['url_route']['kwargs']['gameroom_name']
         temp = GameRooms.objects.get(pk=self.room_name)
         temp.in_progress = False
+        temp.finished = True
         temp.save()
         async_to_sync(self.channel_layer.group_discard)(
             self.room_group_name,

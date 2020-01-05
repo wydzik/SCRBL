@@ -1,11 +1,11 @@
 {% extends "main/header.html" %}
 {% block content %}
 
-<h2>Stwórz nowy pokój gry!</h2>
+<h2>Stwórz nową grę!</h2>
 <form method="post">
         {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Zapisz" />
+    <input type="submit" value="Graj!" />
 </form>
 
 {% endblock %}

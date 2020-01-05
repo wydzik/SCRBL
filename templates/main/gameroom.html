@@ -4,10 +4,11 @@
     <div>
         <table>
             <tr id="header">
-                <td>ID Pokoju</td>
-                <td>Nazwa pokoju</td>
+                <td>ID Gry</td>
+                <td>Nazwa gry</td>
                 <td>W Trakcie</td>
                 <td>Miejsc przy stole</td>
+                <td>Zakończona</td>
             </tr>
             {% for gameroom in gamerooms %}
             <tr>
@@ -19,10 +20,15 @@
                 <td>NIE</td>
                 {% endif %}
                 <td>{{ gameroom.seats }}</td>
+            {% if gameroom.finished %}
+                <td>TAK</td>
+                {% elif not gameroom.finished %}
+                <td>NIE</td>
+                {% endif %}
             </tr>
 {% endfor %}
             <tr>
-                <td><a href="{% url 'main:creator' %}">Utwórz nowy pokój</a></td>
+                <td><a href="{% url 'main:creator' %}">Utwórz nową grę</a></td>
             </tr>
         </table>
     </div>
