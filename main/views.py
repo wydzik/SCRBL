@@ -103,9 +103,9 @@ def gameroom_creator(request):
 
 def profile(request,user_id):
     user = User.objects.get(pk=user_id)
-    played_games = Game.objects.filter(user=user)
-    gamerooms = GameRooms.objects.all()
+    played_games = Game.objects.filter(user=user).select_related('game_room__name')
+
+
     #jeszcze wyciągnij nazwy gier
 
-    return render(request, "main/profile.html", context={'playedGames': played_games,
-                                                         'Gameroom': gamerooms})
+    return render(request, "main/profile.html", context={'playedGames': played_games})
