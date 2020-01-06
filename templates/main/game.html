@@ -639,44 +639,38 @@ function countValue(listOfWords, listOfBoardStates)
             var isDouble = false;
             var isTriple = false;
             var wordScore = 0;
-            for (j = 0; j <listOfWords[i].length ; j++)
-            {
-                if (doubleLetterStates.includes(listOfBoardStates[i][j]))
-                {
+            for (j = 0; j <listOfWords[i].length ; j++) {
+                if (doubleLetterStates.includes(listOfBoardStates[i][j])) {
                     console.log("doubleletter")
                     wordScore = wordScore + (scores.get(listOfWords[i][j]) * 2);
-                } else if (tripleLetterStates.includes(listOfBoardStates[i][j]))
-                {
+                } else if (tripleLetterStates.includes(listOfBoardStates[i][j])) {
                     console.log("tripleletter")
                     wordScore = wordScore + (scores.get(listOfWords[i][j]) * 3);
-                } else if (doubleWordStates.includes(listOfBoardStates[i][j]))
-                {
+                } else if (doubleWordStates.includes(listOfBoardStates[i][j])) {
                     console.log("oko its double!")
                     isDouble = true;
                     wordScore = wordScore + scores.get(listOfWords[i][j]);
-                } else if (tripleWordStates.includes(listOfWords[i][j]))
-                {
+                } else if (tripleWordStates.includes(listOfWords[i][j])) {
                     console.log("its triple baby")
                     isTriple = true;
                     wordScore = wordScore + scores.get(listOfWords[i][j]);
-                } else
-                {
+                } else {
                     console.log("single")
                     wordScore = wordScore + scores.get(listOfWords[i][j]);
                 }
-                if (isTriple)
-                {
-                    console.log("tripleword here")
-                    score = score + (3 * wordScore);
-                } else if (isDouble)
-                {
-                    console.log("double word here")
-                    score = score + (2 * wordScore);
-                } else
-                {
-                    console.log("single word")
-                    score = score + wordScore;
-                }
+            }
+            if (isTriple)
+            {
+                console.log("tripleword here")
+                score = score + (3 * wordScore);
+            } else if (isDouble)
+            {
+                console.log("double word here")
+                score = score + (2 * wordScore);
+            } else
+            {
+                console.log("single word")
+                score = score + wordScore;
             }
         }
         return score;
