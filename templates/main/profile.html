@@ -10,8 +10,8 @@
             </tr>
             {% for game in playedGames %}
             <tr>
-                <td>{{ game.game_room }}</td>
-                <td>{{ game.game_room.name }}</td>
+                <td>{{ game.game_room.id }}</td>
+                <td><a href="{% url 'main:game' game.game_room.id %}">{{ game.game_room.name }}</a></td>
                 <td>{{ game.points }}</td>
             </tr>
 {% endfor %}
