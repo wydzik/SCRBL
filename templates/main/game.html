@@ -649,6 +649,7 @@ function countValue(listOfWords, listOfBoardStates)
                     wordScore = wordScore + (scores.get(listOfWords[i][j]) * 3);
                 } else if (doubleWordStates.includes(listOfBoardStates[i][j]))
                 {
+                    console.log("oko its double!")
                     isDouble = true;
                     wordScore = wordScore + scores.get(listOfWords[i][j]);
                 } else if (tripleWordStates.includes(listOfWords[i][j]))
