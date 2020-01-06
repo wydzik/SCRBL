@@ -103,7 +103,7 @@ def gameroom_creator(request):
 
 def profile(request,user_id):
     user = User.objects.get(pk=user_id)
-    played_games = Game.objects.filter(user=user).select_related('game_room__name')
+    played_games = Game.objects.filter(user=user).select_related('game_room__id')
 
 
     #jeszcze wyciągnij nazwy gier
