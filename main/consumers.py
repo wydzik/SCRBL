@@ -33,7 +33,6 @@ class GameConsumer(WebsocketConsumer):
             {
                 'type': 'disconnect_info',
                 'boardState': 'DISCONNECT',
-                'round': (round + 1)
             }
         )
 
