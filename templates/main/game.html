@@ -1016,7 +1016,7 @@ function moveValidation()
             {
                 validation = true;
             }
-            if((listOfNewLetters[i + 1]) % 15 == 0) return false;
+            {#if((listOfNewLetters[i + 1]) % 15 == 0) return false;  #}
         }
         if(!validation) return false;
             {#w poziomie, w jednym ciągu#}
