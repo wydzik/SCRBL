@@ -42,7 +42,7 @@ def game(request, gameroom_id):
 
 def login_request(request):
     if request.method == "POST":
-        form = AuthenticationForm(request, data=request.POST)  # domyślne uwierzytelnianie
+        form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
@@ -67,22 +67,21 @@ def logout_request(request):
 
 
 def register(request):
-    if request.method == "POST":  # po wciśnięciu przycisku submit
-        form = NewUserForm(request.POST)  # korzystamy z domyślnego formularza rejestracji nowego użytkownika
+    if request.method == "POST":
+        form = NewUserForm(request.POST)
         if form.is_valid():
-            user = form.save()  # tworzymy objekt, zapisujemy go w tabeli i jednocześnie przypisujemy do zmiennej user
-            username = form.cleaned_data.get('username')  # przypisujemy zmiennej username wartość 'username' obiektu
+            user = form.save()
+            username = form.cleaned_data.get('username')
             messages.success(request,
-                             f"Zarejestrowano pomyślnie")  # wyświetlanie wiadomości; po kropce występuje tag wiadomości, dzięki czemu można rozróżniać ich rodzaje i np. dla różnych wiadomości wyświetlać komunikaty w różnej formie
-            login(request, user)  # od razu po rejestrecji logujemy naszego użytkownika
+                             f"Zarejestrowano pomyślnie")
+            login(request, user)
             messages.info(request, f"Zalogowano jako: {username}")
-            return redirect("main:homepage")  # przekierowanie do strony głównej
+            return redirect("main:homepage")
         else:
             for msg in form.error_messages:
                 messages.error(request, f"{msg}: {form.error_messages[msg]}")
 
-    form = NewUserForm  # do zmiennej form przypisujemy domyślny formularz
-    # w uproszczeniu render do danego requesta przypisuje url wraz z kontekstem (w tym wypadku, w register.html form będzie przypisany do zmiennej form
+    form = NewUserForm
     return render(request, "main/register.html", context={"form": form})
 
 def gameroom(request):
@@ -104,8 +103,4 @@ def gameroom_creator(request):
 def profile(request,user_id):
     user = User.objects.get(pk=user_id)
     played_games = Game.objects.filter(user=user).select_related('game_room')
-
-
-    #jeszcze wyciągnij nazwy gier
-
     return render(request, "main/profile.html", context={'playedGames': played_games})

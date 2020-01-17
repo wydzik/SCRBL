@@ -1,52 +1,52 @@
 {##}
-{#{% extends "main/header.html" %}#}
-{#{%  block content %}#}
-{#{% extends "main/navbar.html" %}#}
-<!DOCTYPE html>
-<html>
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Bootstrap CSS -->
+{% extends "main/header.html" %}
+{%  block content %}
 
-	 <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+{#<!DOCTYPE html>#}
+{#<html>#}
+{#<head>#}
+{#    <!-- Required meta tags -->#}
+{#    <meta charset="utf-8">#}
+{#    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">#}
+{#    <!-- Bootstrap CSS -->#}
+{##}
+{#	 <!-- Compiled and minified CSS -->#}
+{#    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">#}
 {#   <link rel="stylesheet" type = "text/css" href="/static/game.css">#}
-
-
-    <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-
-
-
-    {% if title %}
-        <title>SCRBL - {{ title }}</title>
-    {% else %}
-        <title>SCRBL</title>
-{% endif %}
-</head>
-<body>
-<nav>
-    <div class="nav-wrapper">
-    <div class="links">
-       <a href="/" class="brand-logo" style = "margin-left: 20px">SCRBL</a>
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
-        {% if user.is_authenticated %}
-	      <li><a href="/">Strona główna</a></li>
-            <li><a href="/gameroom">Gra</a></li>
-	        <li><a href="#">{{user.username}}</a></li>
-	        <li><a href="/logout">Wyloguj</a></li>
-        {% else %}
-	      <li><a href="/">Strona główna</a></li>
-	        <li><a href="/register">Rejestracja</a></li>
-	        <li><a href="/login">Logowanie</a></li>
-        {% endif %}
-          <li><a href="#">Kontakt</a></li>
-      </ul>
-    </div>
-    </div>
-</nav>
+{##}
+{##}
+{#    <!-- Compiled and minified JavaScript -->#}
+{#    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>#}
+{##}
+{##}
+{##}
+{#    {% if title %}#}
+{#        <title>SCRBL - {{ title }}</title>#}
+{#    {% else %}#}
+{#        <title>SCRBL</title>#}
+{#{% endif %}#}
+{#</head>#}
+{#<body>#}
+{#<nav>#}
+{#    <div class="nav-wrapper">#}
+{#    <div class="links">#}
+{#       <a href="/" class="brand-logo" style = "margin-left: 20px">SCRBL</a>#}
+{#      <ul id="nav-mobile" class="right hide-on-med-and-down">#}
+{#        {% if user.is_authenticated %}#}
+{#	      <li><a href="/">Strona główna</a></li>#}
+{#            <li><a href="/gameroom">Gra</a></li>#}
+{#	        <li><a href="#">{{user.username}}</a></li>#}
+{#	        <li><a href="/logout">Wyloguj</a></li>#}
+{#        {% else %}#}
+{#	      <li><a href="/">Strona główna</a></li>#}
+{#	        <li><a href="/register">Rejestracja</a></li>#}
+{#	        <li><a href="/login">Logowanie</a></li>#}
+{#        {% endif %}#}
+{#          <li><a href="#">Kontakt</a></li>#}
+{#      </ul>#}
+{#    </div>#}
+{#    </div>#}
+{#</nav>#}
 
 <div class="container">
     <div class="board">
@@ -2203,7 +2203,7 @@ document.querySelector('#start').onclick = function(e) {
 
 {#window.onload = applyReceivedData;#}
     </script>
-{#{% endblock %}#}
+{% endblock %}
 
-</body>
-</html>
+{#</body>#}
+{#</html>#}
