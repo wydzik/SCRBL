@@ -55,7 +55,7 @@ def login_request(request):
                 messages.error(request, "Błędna nazwa użytkownika lub hasło")
         else:
             for msg in form.error_messages:
-                messages.error(request, f"{msg}: {form.error_messages[msg]}")
+                messages.error(request, "Błędna nazwa użytkownika lub hasło")
     form = AuthenticationForm()
     return render(request, "main/login.html", {"form": form})
 
@@ -92,6 +92,8 @@ def gameroom_creator(request):
         form = GameRoomCreatorForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request,
+                             f"Utworzono grę!")
         else:
             print("Błąd")
         return redirect("main:gameroom")
