@@ -19,23 +19,39 @@
 
 {% extends "main/header.html" %}
 {% block content %}
-<main role="main" class="grid-container">
-    <div>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-    Proin nibh augue, suscipit a, scelerisque sed, lacinia in, mi.
-    Cras vel lorem. Etiam pellentesque aliquet tellus. Phasellus pharetra nulla ac diam.
-    Quisque semper justo at risus. Donec venenatis, turpis vel hendrerit interdum,
-    dui ligula ultricies purus, sed posuere libero dui id orci. Nam congue, pede vitae dapibus aliquet,
-    elit magna vulputate arcu, vel tempus metus leo non est.
-    Etiam sit amet lectus quis est congue mollis. Phasellus congue lacus eget neque.
-    Phasellus ornare, ante vitae consectetuer consequat, purus sapien ultricies dolor,
-    et mollis pede metus eget nisi. Praesent sodales velit quis augue.
-    Cras suscipit, urna at aliquam rhoncus, urna quam viverra nisi, in interdum massa nibh nec erat.
-</div>
-<style>
-{#    body{#}
-{#    background: darkolivegreen;#}
-{#}#}
-</style>
-</main>
+ <ul class="collapsible">
+    <li class = "active">
+      <div class="collapsible-header"><i class=" material-icons">apps </i> O aplikacji</div>
+      <div class="collapsible-body">
+          <span>Aplikacja wykonana w ramach pracy inżynierskiej przez Łukasza Dawydzika,<br>
+          pod nadzorem Doktor Anny Grocholewskiej-Czuryło, na Politechnice Poznańskiej,<br>
+              w roku akademickim 2019/2020. Tematem pracy była Implementacja gry typu scrabble<br>
+              – propozycja zmodyfikowanego systemu rozgrywki. Zakres zadań stanowiło: <br>
+              1.	Implementacja aplikacji webowej umożliwiającej rozgrywkę w grę typu Scrabble.<br>
+              2.	Implementacja zmodyfikowanego systemu rozgrywki.<br>
+              3.	Implementacja systemu wieloosobowego.
+</span></div>
+    </li>
+    <li>
+        <div class="collapsible-header"><i class="material-icons">apps</i>Zasady</div>
+      <div class="collapsible-body">
+          <span>
+              1. Ady dołączyć do gry, należy wcisnąć START.<br>
+              2. Gra rozpocznie się, gdy start wciśnie tylu graczy, dla ilu przewidziana jest rozgrywka.<br>
+              3. Nie wolno wychodzić z gry, wyjście skutkuje zakończeniem rozgrywki.<br>
+              4. Każdy gracz dostaje ten sam zestaw liter i układa swoje litery w tym samym czasie.<br>
+              5. Po ułożeniu liter, należy wcisnąć WYKONAJ. <br>
+              6. Jeżeli słowo nie znajduje się w słowniku, za ruch zostanie przyznane 0 punktów. <br>
+              7. Po ułożeniu słów przez wszystkich graczy wygrywa ten, który ułożył najlepiej punktowane słowo.<br>
+              8. Jeżeli więcej graczy ułoży tak samo punktowane słowo, liczy się czas wykonania ruchu. <br>
+              9. Po każdej kolejce, wszyscy gracze otrzymują litery, gracza wygranego, a wygrane słowo pojawi się na planszy.<br>
+              10. Jeżeli żaden z graczy nie ułoży poprawnego słowa, następuje koniec gry.<br>
+              11. Wygrywa gracz z najwyższą liczbą punktów.<br>
+          </span></div>
+    </li>
+  </ul>
+<script>
+ M.AutoInit();
+</script>
+
 {% endblock %}

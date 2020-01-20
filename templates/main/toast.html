@@ -1,0 +1,5 @@
+{% if toasts %}
+    {%  for toast in toasts %}
+    <script> M.toast({html: "{{ toast }}"})</script>
+    {% endfor %}
+{% endif %}
