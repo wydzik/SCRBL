@@ -24,7 +24,7 @@ class Profile(models.Model):
 class GameRooms(models.Model):
     name = models.CharField(max_length=250, default="Too lazy to name")
     in_progress = models.BooleanField(default=False)
-    board_state = models.TextField(max_length=500, default=",,,,,,,,,,,,,,," \
+    board_state = models.CharField(max_length=500, default=",,,,,,,,,,,,,,," \
                                                            ",,,,,,,,,,,,,,," \
                                                            ",,,,,,,,,,,,,,," \
                                                            ",,,,,,,,,,,,,,," \
@@ -49,7 +49,7 @@ class Game(models.Model):
 class Move(models.Model):
     game_room = models.ForeignKey(GameRooms, on_delete=models.CASCADE)
     player = models.CharField(max_length= 500, default=None)
-    board_state = models.CharField(max_length=450, default=",,,,,,,,,,,,,,," \
+    board_state = models.CharField(max_length=500, default=",,,,,,,,,,,,,,," \
                                                            ",,,,,,,,,,,,,,," \
                                                            ",,,,,,,,,,,,,,," \
                                                            ",,,,,,,,,,,,,,," \
