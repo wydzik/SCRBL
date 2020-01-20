@@ -108,6 +108,7 @@ class GameConsumer(WebsocketConsumer):
 
                     if guard != 0:
                         points = 0
+                print(len(board_state))
                 Move.objects.create(game_room=game_room, player=player, points=points, board_state=board_state, round=round)
                 # tutaj trzeba zrobić jakieś casy w zależności od tego, czy wszyscy zrobili ruch, czy nie, bo nie wyobrażam sobie tego inaczej
                 # trzeba by chyba też jakiś mechanizm dołączania do gry zrobić i wtedy by się ten model Game nadał
