@@ -54,8 +54,7 @@ def login_request(request):
             else:
                 messages.error(request, "Błędna nazwa użytkownika lub hasło")
         else:
-            for msg in form.error_messages:
-                messages.error(request, "Błędna nazwa użytkownika lub hasło")
+            messages.error(request, "Błędna nazwa użytkownika lub hasło")
     form = AuthenticationForm()
     return render(request, "main/login.html", {"form": form})
 

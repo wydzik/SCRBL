@@ -2075,17 +2075,17 @@ gameSocket.onmessage = function(e)
     var boardState = data['boardState'];
     if(boardState == "NOT YET")
     {
-        alert("Oczekiwanie na ruch pozostałych graczy. Twoje ułożenie było warte " + data['points'] + " punktów.");
+        M.toast({html: "Oczekiwanie na ruch pozostałych graczy. Twoje ułożenie było warte " + data['points'] + " punktów."});
         document.getElementById("btn").hidden = true;
     }
     else if(boardState=="WAITING_FOR_START")
     {
-        alert("Oczekiwanie na Start");
+        M.toast({html: "Oczekiwanie na Start"});
         document.getElementById("start").hidden = true;
     }
     else if (boardState =="START")
     {
-        alert("Runda się rozpoczęła");
+        M.toast({html: "Runda się rozpoczęła"});
         round = data['round'];
         document.getElementById("btn").hidden = false;
         document.getElementById("round").innerText = "Runda: " + round;
@@ -2149,7 +2149,7 @@ gameSocket.onmessage = function(e)
         }
         else
         {
-            alert("Rundę wygrał gracz "+ winner + " zdobywając liczbę " + data['winnerPoints'] + " punktów.")
+            M.toast({html: "Rundę wygrał gracz "+ winner + " zdobywając liczbę " + data['winnerPoints'] + " punktów." })
         }
         document.getElementById("round").innerText = "Runda: " + round;
         {#obsługa podmianki pozostalych liter, albo zmiana fillLetters, na wersję z argumentem#}
@@ -2166,7 +2166,7 @@ document.querySelector('#btn').onclick = function(e) {
     var result = makeMove();
     if (result == undefined)
     {
-        alert("Coś poszło nie tak, spróbuj wykonać ruch ponownie")
+        M.toast({html: "Coś poszło nie tak, spróbuj wykonać ruch ponownie"});
     } else
     {
         var wordList = result.wordList;
