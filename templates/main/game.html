@@ -2164,8 +2164,8 @@ gameSocket.onmessage = function(e)
         else
         {
             M.toast({html: "Rundę wygrał gracz "+ winner + " zdobywając liczbę " + data['winnerPoints'] + " punktów." })
-            var oponent = document.getElementById(winner).innerHTML;
-            oponent = "<li id = '" + oponentName + "'>"+ oponentName + ": " + data['points'] + " </li >";
+            var oponent = document.getElementById(winner).innerText;
+            oponent = oponentName + ": " + data['points'];
         }
         document.getElementById("round").innerText = "Runda: " + round;
         {#obsługa podmianki pozostalych liter, albo zmiana fillLetters, na wersję z argumentem#}
