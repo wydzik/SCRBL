@@ -110,6 +110,7 @@ class GameConsumer(WebsocketConsumer):
                         points = 0
                 print(len(board_state))
                 Move.objects.create(game_room=game_room, player=player, points=points, board_state=board_state, round=round)
+                print("chillwagon")
                 # tutaj trzeba zrobić jakieś casy w zależności od tego, czy wszyscy zrobili ruch, czy nie, bo nie wyobrażam sobie tego inaczej
                 # trzeba by chyba też jakiś mechanizm dołączania do gry zrobić i wtedy by się ten model Game nadał
                 self.send(text_data=json.dumps({
