@@ -2136,10 +2136,12 @@ gameSocket.onmessage = function(e)
     }
     else if(boardState =='OPONENT')
     {
-        oponentName = data['oponentName'];
-        oponentsList = document.getElementById("oponent")
-        oponentsList.innerHTML = oponentsList.innerHTML + "<li id = '" + oponentName + "'>"+ oponentName + ": 0 </li >"
-
+        var oponentName = data['oponentName'];
+        if (oponentName != '{{ user.username }}')
+        {
+            var oponentsList = document.getElementById("oponent");
+            oponentsList.innerHTML = oponentsList.innerHTML + "<li id = '" + oponentName + "'>"+ oponentName + ": 0 </li >";
+        }
     }
     else
     {
@@ -2162,6 +2164,8 @@ gameSocket.onmessage = function(e)
         else
         {
             M.toast({html: "Rundę wygrał gracz "+ winner + " zdobywając liczbę " + data['winnerPoints'] + " punktów." })
+            var oponent = document.getElementById(winner).innerHTML;
+            oponent = "<li id = '" + oponentName + "'>"+ oponentName + ": " + data['points'] + " </li >";
         }
         document.getElementById("round").innerText = "Runda: " + round;
         {#obsługa podmianki pozostalych liter, albo zmiana fillLetters, na wersję z argumentem#}
