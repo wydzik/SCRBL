@@ -327,6 +327,13 @@
                     <input  id="start" type="button" value="START"/>
                 </li>
                   <li>
+                  <div class="oponent"> Przeciwnicy:</div>
+                      <ul id="oponent">
+
+                      </ul>
+                  </li>
+
+                  <li>
                       <div hidden id="receivedBoardState">{{ boardState }}</div>
                   </li>
               </ul>
@@ -2089,8 +2096,6 @@ gameSocket.onmessage = function(e)
         round = data['round'];
         document.getElementById("btn").hidden = false;
         document.getElementById("round").innerText = "Runda: " + round;
-
-
     }
     else if(boardState == "LETTERS")
     {
@@ -2128,6 +2133,13 @@ gameSocket.onmessage = function(e)
             alert("Wygrał gracz " + winner + " zdobywając "+ data['points'] + " punktów.")
             document.getElementById("btn").hidden = true;
         }
+    }
+    else if(boardState =='OPONENT')
+    {
+        oponentName = data['oponentName'];
+        oponentsList = document.getElementById("oponent")
+        oponentsList.innerHTML = oponentsList.innerHTML + "<li id = '" + oponentName + "'>"+ oponentName + ": 0 </li >"
+
     }
     else
     {

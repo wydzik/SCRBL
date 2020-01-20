@@ -64,6 +64,14 @@ class GameConsumer(WebsocketConsumer):
 
                 user = User.objects.get(username=player)
                 Game.objects.create(game_room=game_room,user=user)
+                async_to_sync(self.channel_layer.group_send)(
+                    self.room_group_name,
+                    {
+                        'type': 'oponent_info',
+                        'boardState': 'OPONENT',
+                        'oponentName': player
+                    }
+                )
                 self.send(text_data=json.dumps({
                     'boardState': 'WAITING_FOR_START'
                 }))
@@ -200,3 +208,11 @@ class GameConsumer(WebsocketConsumer):
             'lettersRemaining': letters_remaining,
             'lettersGiven': letters_given
         }))
+
+    def oponent_info(self, event):
+        board_state = event['boardState']
+        oponent_name = event['oponentName']
+        self.send(text_data=json.dumps(({
+            'boardState': board_state,
+            'oponentName': oponent_name
+        })))
