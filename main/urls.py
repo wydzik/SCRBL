@@ -4,6 +4,7 @@ app_name = 'main'
 
 urlpatterns = [
     path("", views.homepage, name='homepage'),
+    path("contact/",views.contact,name = 'contact'),
     path("creator/", views.gameroom_creator, name='creator'),
     path("game/<str:gameroom_id>/", views.game, name='game'),
     path("gameroom/", views.gameroom, name='gameroom'),

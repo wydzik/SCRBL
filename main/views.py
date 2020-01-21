@@ -23,6 +23,8 @@ lastBoardState = [  ",,,,,,,,,,,,,,," \
                     ",,,,,,,,,,,,,,," \
                     ",,,,,,,,,,,,,,,"]
 
+def contact(request):
+    return render(request, "main/contact.html")
 
 def homepage(request):
     return render(request, "main/home.html")
