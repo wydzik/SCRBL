@@ -687,6 +687,10 @@ function fillLetters()
 {
     var dropzone_div = document.getElementById("letter");
     var letter_string =  dropzone_div.innerHTML;
+    if (letters.length == 0 && dropzone_div.children.length ==0)
+    {
+        return false;
+    }
     if(dropzone_div.children.length < 7)
     {
         if(letters.length < (7 - dropzone_div.children.length))

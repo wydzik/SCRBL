@@ -45,16 +45,31 @@ class GameConsumer(WebsocketConsumer):
         if board_state == "LETTERS":
             letters_remaining = text_data_json['lettersRemaining']
             letters_given = text_data_json['lettersGiven']
-
-            async_to_sync(self.channel_layer.group_send)(
-                self.room_group_name,
-                {
-                    'type': 'letters_info',
-                    'boardState': 'LETTERS',
-                    'lettersRemaining': letters_remaining,
-                    'lettersGiven': letters_given
-                }
-            )
+            if not letters_given:
+                game_winner = Game.objects.filter(game_room=  GameRooms.objects.get(pk=gameroom))
+                game_winner = game_winner.order_by('points').last()
+                game_winner_name = game_winner.user.username
+                game_winner_points = game_winner.points
+                async_to_sync(self.channel_layer.group_send)(
+                    self.room_group_name,
+                    {
+                        'type': 'winner_info',
+                        'boardState': 'WINNER',
+                        'round': (round + 1),
+                        'winner': game_winner_name,
+                        'points': game_winner_points,
+                    }
+                )
+            else:
+                async_to_sync(self.channel_layer.group_send)(
+                    self.room_group_name,
+                    {
+                        'type': 'letters_info',
+                        'boardState': 'LETTERS',
+                        'lettersRemaining': letters_remaining,
+                        'lettersGiven': letters_given
+                    }
+                )
 
         else:
             player = text_data_json['player']
