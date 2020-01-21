@@ -854,7 +854,7 @@ function moveValidation()
                 listOfWordsAsBoardStates.push(wordBoardState);
             }
             {#na górze jest kafelek#}
-            if(boardState[listOfNewLetters[0] - 15] != "" && boardState[listOfNewLetters[0] + 15] == "")
+            if(boardState[listOfNewLetters[0] - 15] != "" && (listOfNewLetters[0] - 15) >=0 && boardState[listOfNewLetters[0] + 15] == "")
             {
                 var check = true;
                 var i = 15;
@@ -874,7 +874,7 @@ function moveValidation()
                 listOfWordsAsBoardStates.push(wordBoardState.sort());
             }
             {#na dole jest kafelek#}
-            if(boardState[listOfNewLetters[0] + 15] != "" && boardState[listOfNewLetters[0] - 15] == "")
+            if(boardState[listOfNewLetters[0] + 15] != "" && (listOfNewLetters[0] + 15) <= 224 && boardState[listOfNewLetters[0] - 15] == "")
             {
                 var check = true;
                 var i = 15;
@@ -895,7 +895,7 @@ function moveValidation()
             }
             {#po lewej i prawej są kafelki#}
             if((boardState[listOfNewLetters[0] + 1] != "" && ((listOfNewLetters[0] + 1) % 15 != 0))
-                && (boardState[listOfNewLetters[0] - 1] != "" && ((listOfNewLetters[0] - 1) % 15 != 15)))
+                && (boardState[listOfNewLetters[0] - 1] != "" && ((listOfNewLetters[0] - 1) % 15 != 14)))
             {
                 var check = true;
                 var i = 1;
@@ -937,7 +937,7 @@ function moveValidation()
                     newWord = newWord + boardState[listOfNewLetters[0] - i];
                     wordBoardState.push(listOfNewLetters[0] - i);
                     i++;
-                    if (boardState[listOfNewLetters[0] - i] == "" || listOfNewLetters[0]-i % 15 == 14) {
+                    if (boardState[listOfNewLetters[0] - i] == "" || listOfNewLetters[0] - i % 15 == 14) {
                         check = false;
                     }
                 }
@@ -967,7 +967,7 @@ function moveValidation()
                 listOfWordsAsBoardStates.push(wordBoardState);
             }
              {#kafelki na górze i na dole#}
-             if(boardState[listOfNewLetters[0] + 15] != "" && boardState[listOfNewLetters[0] - 15] != "")
+             if(boardState[listOfNewLetters[0] + 15] != "" && (listOfNewLetters[0] + 15) <= 224 && boardState[listOfNewLetters[0] - 15] != "" && (listOfNewLetters[0] - 15) >= 0 )
             {
                 var check = true;
                 var i = 15;
@@ -1210,7 +1210,7 @@ function moveValidation()
             for (j = 0; j < listOfNewLetters.length; j++)
               {
                   {#nad literą są płytki, pod nie ma#}
-                  if(boardState[listOfNewLetters[j] - 15] != "" && (listOfNewLetters[j] - 15) >=0 && (boardState[listOfNewLetters[j] + 15] == "" || ( listOfNewLetters[j] + 15) > 224))
+                  if(boardState[listOfNewLetters[j] - 15] != "" && (listOfNewLetters[j] - 15) >= 0 && (boardState[listOfNewLetters[j] + 15] == "" || ( listOfNewLetters[j] + 15) > 224))
                     {
                         var check = true;
                         var i = 15;
@@ -1230,7 +1230,7 @@ function moveValidation()
                         listOfWordsAsBoardStates.push(wordBoardState.sort());
                     }
                   {# i nad i pod literą płytki#}
-                  if(boardState[listOfNewLetters[j] - 15] != "" && boardState[listOfNewLetters[j] - 15] >=0 && boardState[listOfNewLetters[j] + 15] != "" && ( listOfNewLetters[j] + 15) <= 224)
+                  if(boardState[listOfNewLetters[j] - 15] != "" && (listOfNewLetters[j] - 15) >=0 && boardState[listOfNewLetters[j] + 15] != "" && ( listOfNewLetters[j] + 15) <= 224)
                     {
                         var check = true;
                         var i = 15;
@@ -1263,7 +1263,7 @@ function moveValidation()
                         listOfWordsAsBoardStates.push(wordBoardState.sort());
                     }
                   {#nad nie ma płytek, ale pod są#}
-                  if((boardState[listOfNewLetters[j] - 15] == "" || (listOfNewLetters[j] - 15) <= 0)  && boardState[listOfNewLetters[j] + 15] != "" && (listOfNewLetters[j] + 15) <= 224 )
+                  if((boardState[listOfNewLetters[j] - 15] == "" || (listOfNewLetters[j] - 15) < 0)  && boardState[listOfNewLetters[j] + 15] != "" && (listOfNewLetters[j] + 15) <= 224 )
                     {
                         var check = true;
                         var i = 15;
@@ -1291,7 +1291,7 @@ function moveValidation()
             && listOfNewLetters.length == ((listOfNewLetters[listOfNewLetters.length - 1] - listOfNewLetters[0]) / 15) + 1)
         {
                     {#na górze są litery, na dole nie ma#}
-					if(boardState[listOfNewLetters[0] - 15] != ""
+					if(boardState[listOfNewLetters[0] - 15] != "" && (listOfNewLetters[0] - 15) >=0
                       && (boardState[listOfNewLetters[listOfNewLetters.length - 1] + 15] == ""
                             || (listOfNewLetters[listOfNewLetters.length - 1] + 15) >= 224))
                     {
@@ -1361,7 +1361,7 @@ function moveValidation()
                     }
                   {#na górze nie ma, na dole są płytki#}
                   if((boardState[listOfNewLetters[0] - 15] == "" || listOfNewLetters[0] - 15 <= 0)
-                      &&  boardState[listOfNewLetters[listOfNewLetters.length - 1] + 15] != "")
+                      &&  boardState[listOfNewLetters[listOfNewLetters.length - 1] + 15] != "" && (listOfNewLetters[listOfNewLetters.length - 1] + 15) <= 224)
                     {
                         var newWord = new String(boardStateToBe[listOfNewLetters[0]].innerText);
                         var wordBoardState = [listOfNewLetters[0]];
@@ -1386,8 +1386,8 @@ function moveValidation()
                         listOfWordsAsBoardStates.push(wordBoardState.sort());
                     }
                   {#nie ma ani na górze, ani na dole#}
-                  if (boardState[listOfNewLetters[0] - 15] == ""
-                      && boardState[listOfNewLetters[listOfNewLetters.length - 1] + 15] == "")
+                  if ((boardState[listOfNewLetters[0] - 15] == "" || (listOfNewLetters[0] - 15) < 0)
+                      && (boardState[listOfNewLetters[listOfNewLetters.length - 1] + 15] == "" || (listOfNewLetters[listOfNewLetters.length - 1] + 15) >224) )
                   {
                         var newWord = new String(boardStateToBe[listOfNewLetters[0]].innerText);
                         var wordBoardState = [listOfNewLetters[0]];
@@ -1727,7 +1727,7 @@ function moveValidation()
             for (j = 0; j < listOfNewLetters.length; j++)
               {
                   {#nad literą są płytki, pod nie ma#}
-                  if(boardState[listOfNewLetters[j] - 15] != "" && (boardState[listOfNewLetters[j] + 15] == "" || (listOfNewLetters[j] + 15) > 224))
+                  if(boardState[listOfNewLetters[j] - 15] != "" && (listOfNewLetters[j] - 15) >= 0 && (boardState[listOfNewLetters[j] + 15] == "" || (listOfNewLetters[j] + 15) > 224))
                     {
                         var check = true;
                         var i = 15;
@@ -1747,7 +1747,7 @@ function moveValidation()
                         listOfWordsAsBoardStates.push(wordBoardState.sort());
                     }
                   {# i nad i pod literą płytki#}
-                  if(boardState[listOfNewLetters[j] - 15] != "" && boardState[listOfNewLetters[j] + 15] != "")
+                  if(boardState[listOfNewLetters[j] - 15] != "" && (listOfNewLetters[j] - 15) >= 0 && boardState[listOfNewLetters[j] + 15] != "" &&(listOfNewLetters[j] + 15) <= 224)
                     {
                         var check = true;
                         var i = 15;
@@ -1780,7 +1780,7 @@ function moveValidation()
                         listOfWordsAsBoardStates.push(wordBoardState.sort());
                     }
                   {#nad nie ma płytek, ale pod są#}
-                  if((boardState[listOfNewLetters[j] - 15] == "" || (listOfNewLetters[j] - 15) < 0) && boardState[listOfNewLetters[j] + 15] != "")
+                  if((boardState[listOfNewLetters[j] - 15] == "" || (listOfNewLetters[j] - 15) < 0) && boardState[listOfNewLetters[j] + 15] != "" && (listOfNewLetters[j] + 15) <= 224)
                     {
                         var check = true;
                         var i = 15;
@@ -1803,6 +1803,7 @@ function moveValidation()
                 return {listOfWords : listOfWords,
                         listOfWordsAsBoardStates : listOfWordsAsBoardStates};
             }
+            {#pionowe z przerwą#}
             else if ((listOfNewLetters[1] - listOfNewLetters[0]) % 15 == 0)
             {
                 {#walidacja#}
@@ -1814,7 +1815,7 @@ function moveValidation()
                     }
                 }
                 {#na górze są litery, na dole sa litery#}
-                  if((boardState[listOfNewLetters[0] - 15] != "" && (listOfNewLetters[0] - 15) >=0)
+                  if((boardState[listOfNewLetters[0] - 15] != "" && (listOfNewLetters[0] - 15) >= 0)
                       &&  (boardState[listOfNewLetters[listOfNewLetters.length - 1] + 15] != "" && (listOfNewLetters[listOfNewLetters.length - 1] + 15) <= 224))
                     {
                         var check = true;
@@ -1854,8 +1855,8 @@ function moveValidation()
                         listOfWordsAsBoardStates.push(wordBoardState.sort());
                     }
                 {#na górze są litery, na dole brak liter#}
-                    if(boardState[listOfNewLetters[0] - 15] != ""
-                      &&  (boardState[listOfNewLetters[listOfNewLetters.length - 1] + 15] == "" || (listOfNewLetters[listOfNewLetters.length - 1] + 15) >= 224))
+                    if(boardState[listOfNewLetters[0] - 15] != "" && (listOfNewLetters[0] - 15) >= 0
+                      &&  (boardState[listOfNewLetters[listOfNewLetters.length - 1] + 15] == "" || (listOfNewLetters[listOfNewLetters.length - 1] + 15) > 224))
                     {
                         var check = true;
                         var i = 15;
@@ -1881,7 +1882,7 @@ function moveValidation()
                         listOfWordsAsBoardStates.push(wordBoardState.sort());
                     }
                 {#na górze brak liter, na dole sa litery#}
-                  if((boardState[listOfNewLetters[0] - 15] == "" || (listOfNewLetters[0] - 15) <= 0)
+                  if((boardState[listOfNewLetters[0] - 15] == "" || (listOfNewLetters[0] - 15) < 0)
                       &&  boardState[listOfNewLetters[listOfNewLetters.length - 1] + 15] != "" && (listOfNewLetters[listOfNewLetters.length - 1] + 15) <= 224)
                     {
                         var newWord = new String(boardStateToBe[listOfNewLetters[0]].innerText);
