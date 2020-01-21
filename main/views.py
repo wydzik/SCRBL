@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from django.utils.safestring import mark_safe
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import GameRooms, Game
 from .forms import *
@@ -23,13 +24,16 @@ lastBoardState = [  ",,,,,,,,,,,,,,," \
                     ",,,,,,,,,,,,,,," \
                     ",,,,,,,,,,,,,,,"]
 
+
 def contact(request):
     return render(request, "main/contact.html")
+
 
 def homepage(request):
     return render(request, "main/home.html")
 
 
+@login_required
 def game(request, gameroom_id):
     game_room = GameRooms.objects.get(pk=gameroom_id)
     if len(Game.objects.filter(game_room=game_room)) == game_room.seats:
@@ -85,9 +89,13 @@ def register(request):
     form = NewUserForm
     return render(request, "main/register.html", context={"form": form})
 
+
+@login_required
 def gameroom(request):
     return render(request,"main/gameroom.html",context = {"gamerooms": GameRooms.objects.all})
 
+
+@login_required
 def gameroom_creator(request):
     if request.method == "POST":
         form = GameRoomCreatorForm(request.POST)
@@ -103,6 +111,7 @@ def gameroom_creator(request):
     return render(request, "main/gameroom_creator.html", context={"form": form})
 
 
+@login_required
 def profile(request,user_id):
     user = User.objects.get(pk=user_id)
     played_games = Game.objects.filter(user=user).select_related('game_room')
