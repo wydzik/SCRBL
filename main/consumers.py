@@ -141,7 +141,7 @@ class GameConsumer(WebsocketConsumer):
                 }))
                 moves = Move.objects.filter(game_room=game_room, round=round)
                 if len(moves) == game_room.seats:
-                    winner = moves.order_by('points','pk').last()
+                    winner = moves.order_by('points','-pk').last()
                     if winner.points == 0:
                         game_winner = Game.objects.filter(game_room=game_room)
                         game_winner = game_winner.order_by('points').last()
