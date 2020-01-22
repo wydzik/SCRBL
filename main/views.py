@@ -92,7 +92,7 @@ def register(request):
 
 @login_required
 def gameroom(request):
-    return render(request,"main/gameroom.html",context = {"gamerooms": GameRooms.objects.all})
+    return render(request,"main/gameroom.html",context = {"gamerooms": GameRooms.objects.all().order_by('pk')})
 
 
 @login_required
