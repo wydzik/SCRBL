@@ -74,8 +74,6 @@ def logout_request(request):
 def register(request):
     if request.method == "POST":
         form = NewUserForm(request.POST)
-        password1 = form.cleaned_data.get('password1')
-        password2 = form.cleaned_data.get('password2')
         if form.is_valid():
             user = form.save()
             username = form.cleaned_data.get('username')
@@ -88,7 +86,7 @@ def register(request):
             for msg in form.errors:
                 messages.error(request, f"{msg}: {form.errors[msg]}")
 
-    form = NewUserForm
+    form = NewUserForm()
     return render(request, "main/register.html", context={"form": form})
 
 
