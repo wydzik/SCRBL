@@ -83,8 +83,7 @@ def register(request):
             messages.info(request, f"Zalogowano jako: {username}")
             return redirect("main:homepage")
         else:
-            for msg in form.errors:
-                messages.error(request, f"{form.errors}")
+            messages.error(request,  {form.errors} )
 
     form = NewUserForm()
     return render(request, "main/register.html", context={"form": form})
