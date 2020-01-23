@@ -83,6 +83,7 @@ def register(request):
             messages.info(request, f"Zalogowano jako: {username}")
             return redirect("main:homepage")
         else:
+            print(form.errors)
             for msg in form.errors:
                 messages.info(request, f" {form.errors[msg]} ")
 
