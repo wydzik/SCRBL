@@ -85,7 +85,7 @@ def register(request):
         else:
             for msg in form.errors:
                 for x in form.errors[msg]:
-                    messages.error(request, f"{msg}: {x} ")
+                    messages.error(request, f" {x} ")
 
     form = NewUserForm
     return render(request, "main/register.html", context={"form": form})
