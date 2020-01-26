@@ -516,7 +516,7 @@ document.addEventListener("drop", function(event)
       var doubleWordStates = [16,28,32,42,48,56,64,70,112,154,160,168,176,182,192,196,208];
       var doubleLetterStates = [3,11,36,38,45,52,59,92,96,98,102,108,116,122,126,128,132,165,172,179,186,188,213,221];
       var tripleWordStates = [0,7,14,105,119,210,217,224];
-      var tripleLetterStates = [20,24,76,80,84,88,136,140,144,148,200,204]
+      var tripleLetterStates = [20,24,76,80,84,88,105,136,140,144,148,200,204]
 
 
 
@@ -725,6 +725,7 @@ function fillLetters()
     }
     return letter_string;
 }
+
 function makeMove()
 {
     if (boardState.length == 0) {
@@ -2074,6 +2075,71 @@ function replaceLetters()
         alert("Nie dodano żadnych płytek do wymiany")
     }
 }
+{#function testBoardStateUpdate(d,x) {#}
+{#    newBoardState = []#}
+{#    document.getElementById("row_" + x).children[d].innerText = "D";#}
+{#    document.getElementById("row_" + (x + 1)).children[d].innerText = "O";#}
+{#    document.getElementById("row_" + (x + 2)).children[d].innerText = "M";#}
+{#    for(j = 1; j <16; j++)#}
+{#    {#}
+{#        for(i = 0; i<15; i++)#}
+{#        {#}
+{#            newBoardState.push(document.getElementById("row_"+j).children[i].innerText);#}
+{#        }#}
+{#    }#}
+{#    return newBoardState;#}
+{#}#}
+{#function testPattern() {#}
+{#    var points = new Array();#}
+{#    var words = new Array();#}
+{#    var bs = new Array();#}
+{#    for(d = 1; d <= 13; d++) {#}
+{#        for (x = 0; x <= 14; x++) {#}
+{#            var newBoardState = testBoardStateUpdate(x, d);#}
+{#            var newWord = new String();#}
+{#            var wordBoardState = [];#}
+{#            var counter = 0;#}
+{#            for (a = 0; a < newBoardState.length; a++) {#}
+{#                if (newBoardState[a] != "") {#}
+{#                    counter++;#}
+{#                }#}
+{#            }#}
+{#            if (counter > 1) {#}
+                {#for (i = 0; i < newBoardState.length; i++)#}
+                {#{#}
+                {#    console.log("I");#}
+                {#    if (newBoardState[i] != ""#}
+                {#        && (((newBoardState[i - 1] == "") || ((i - 1) % 15 == 0) || (i - 1 < 0))#}
+                {#            && ((newBoardState[i + 1] == "") || ((i + 1) % 15 == 1) || (i + 1 > 254))#}
+                {#            && ((newBoardState[i - 15] == "") || (i - 15 < 0))#}
+                {#            && ((newBoardState[i + 15] == "") || (i + 15 > 254))))#}
+                {#    {#}
+                {#        console.log("chuj");#}
+                {#        return false;#}
+                {#    }#}
+                {#}#}
+{#                for (w = 0; w < newBoardState.length; w++) {#}
+{#                    if (newBoardState[w] != "") {#}
+{#                        newWord = newWord + newBoardState[w];#}
+{#                        wordBoardState.push(w);#}
+{#                    }#}
+{#                }#}
+{#            }#}
+{#            var value = countValue([newWord], [wordBoardState]);#}
+{#            points.push(value);#}
+{#            words.push(newWord);#}
+{#            bs.push(wordBoardState);#}
+{#            document.getElementById("row_" + d).children[x].innerText = "";#}
+{#            document.getElementById("row_" + (d+1)).children[x].innerText = "";#}
+{#            document.getElementById("row_" + (d+2)).children[x].innerText = "";#}
+{#        }#}
+{##}
+{#    }#}
+{#        console.log(points);#}
+{#        console.log(words);#}
+{#        console.log(bs);#}
+{#    console.log("KONIEC");#}
+{#}#}
 
 var roomName = {{ gameroom_id_json }};
 var round = 0;
@@ -2101,6 +2167,16 @@ gameSocket.onmessage = function(e)
         round = data['round'];
         document.getElementById("btn").hidden = false;
         document.getElementById("round").innerText = "Runda: " + round;
+        var oponentName = data['playersList'];
+        var oponentsList = document.getElementById("oponent");
+        for(i = 0; i < oponentName.length; i++)
+        {
+            if (oponentName[i] != '{{ user.username }}')
+            {
+                oponentsList.innerHTML = oponentsList.innerHTML + "<li id = '" + oponentName[i] + "'>"+ oponentName[i] + ": 0 </li >";
+            }
+        }
+    }
     }
     else if(boardState == "LETTERS")
     {
@@ -2141,12 +2217,7 @@ gameSocket.onmessage = function(e)
     }
     else if(boardState =='OPONENT')
     {
-        var oponentName = data['oponentName'];
-        if (oponentName != '{{ user.username }}')
-        {
-            var oponentsList = document.getElementById("oponent");
-            oponentsList.innerHTML = oponentsList.innerHTML + "<li id = '" + oponentName + "'>"+ oponentName + ": 0 </li >";
-        }
+
     }
     else
     {
@@ -2173,7 +2244,7 @@ gameSocket.onmessage = function(e)
             oponent.innerHTML = winner + ": " + data['points'];
         }
         document.getElementById("round").innerText = "Runda: " + round;
-        {#obsługa podmianki pozostalych liter, albo zmiana fillLetters, na wersję z argumentem#}
+        obsługa podmianki pozostalych liter, albo zmiana fillLetters, na wersję z argumentem
 
     }
 };

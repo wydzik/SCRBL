@@ -79,14 +79,14 @@ class GameConsumer(WebsocketConsumer):
 
                 user = User.objects.get(username=player)
                 Game.objects.create(game_room=game_room,user=user)
-                async_to_sync(self.channel_layer.group_send)(
-                    self.room_group_name,
-                    {
-                        'type': 'oponent_info',
-                        'boardState': 'OPONENT',
-                        'oponentName': player
-                    }
-                )
+                # async_to_sync(self.channel_layer.group_send)(
+                #     self.room_group_name,
+                #     {
+                #         'type': 'oponent_info',
+                #         'boardState': 'OPONENT',
+                #         'oponentName': player
+                #     }
+                # )
                 self.send(text_data=json.dumps({
                     'boardState': 'WAITING_FOR_START'
                 }))
@@ -98,12 +98,17 @@ class GameConsumer(WebsocketConsumer):
                     temp = GameRooms.objects.get(pk=gameroom)
                     temp.in_progress = True
                     temp.save()
+                    players = Game.objects.filter(game_room=game_room).select_related("user_id")
+                    players_list = []
+                    for player in players:
+                        players_list.append(player.username)
                     async_to_sync(self.channel_layer.group_send)(
                         self.room_group_name,
                         {
                             'type': 'start_info',
                             'boardState': 'START',
-                            'round': (round + 1)
+                            'round': (round + 1),
+                            'players_list': players_list
                         }
                     )
             else:
@@ -209,9 +214,11 @@ class GameConsumer(WebsocketConsumer):
     def start_info(self, event):
         board_state = event['boardState']
         round = event['round']
+        players_list = event['players_list']
         self.send(text_data=json.dumps({
             'boardState': board_state,
-            'round': round
+            'round': round,
+            'playersList': players_list
         }))
 
     def letters_info(self, event):
