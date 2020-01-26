@@ -101,7 +101,7 @@ class GameConsumer(WebsocketConsumer):
                     players = Game.objects.filter(game_room=game_room).select_related("user")
                     players_list = []
                     for player in players:
-                        players_list.append(player.username)
+                        players_list.append(player.user.username)
                     async_to_sync(self.channel_layer.group_send)(
                         self.room_group_name,
                         {
