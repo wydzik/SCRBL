@@ -2075,71 +2075,71 @@ function replaceLetters()
         alert("Nie dodano żadnych płytek do wymiany")
     }
 }
-{#function testBoardStateUpdate(d,x) {#}
-{#    newBoardState = []#}
-{#    document.getElementById("row_" + x).children[d].innerText = "D";#}
-{#    document.getElementById("row_" + (x + 1)).children[d].innerText = "O";#}
-{#    document.getElementById("row_" + (x + 2)).children[d].innerText = "M";#}
-{#    for(j = 1; j <16; j++)#}
-{#    {#}
-{#        for(i = 0; i<15; i++)#}
-{#        {#}
-{#            newBoardState.push(document.getElementById("row_"+j).children[i].innerText);#}
-{#        }#}
-{#    }#}
-{#    return newBoardState;#}
-{#}#}
-{#function testPattern() {#}
-{#    var points = new Array();#}
-{#    var words = new Array();#}
-{#    var bs = new Array();#}
-{#    for(d = 1; d <= 13; d++) {#}
-{#        for (x = 0; x <= 14; x++) {#}
-{#            var newBoardState = testBoardStateUpdate(x, d);#}
-{#            var newWord = new String();#}
-{#            var wordBoardState = [];#}
-{#            var counter = 0;#}
-{#            for (a = 0; a < newBoardState.length; a++) {#}
-{#                if (newBoardState[a] != "") {#}
-{#                    counter++;#}
-{#                }#}
-{#            }#}
-{#            if (counter > 1) {#}
-                {#for (i = 0; i < newBoardState.length; i++)#}
-                {#{#}
-                {#    console.log("I");#}
-                {#    if (newBoardState[i] != ""#}
-                {#        && (((newBoardState[i - 1] == "") || ((i - 1) % 15 == 0) || (i - 1 < 0))#}
-                {#            && ((newBoardState[i + 1] == "") || ((i + 1) % 15 == 1) || (i + 1 > 254))#}
-                {#            && ((newBoardState[i - 15] == "") || (i - 15 < 0))#}
-                {#            && ((newBoardState[i + 15] == "") || (i + 15 > 254))))#}
-                {#    {#}
-                {#        console.log("chuj");#}
-                {#        return false;#}
-                {#    }#}
-                {#}#}
-{#                for (w = 0; w < newBoardState.length; w++) {#}
-{#                    if (newBoardState[w] != "") {#}
-{#                        newWord = newWord + newBoardState[w];#}
-{#                        wordBoardState.push(w);#}
-{#                    }#}
-{#                }#}
-{#            }#}
-{#            var value = countValue([newWord], [wordBoardState]);#}
-{#            points.push(value);#}
-{#            words.push(newWord);#}
-{#            bs.push(wordBoardState);#}
-{#            document.getElementById("row_" + d).children[x].innerText = "";#}
-{#            document.getElementById("row_" + (d+1)).children[x].innerText = "";#}
-{#            document.getElementById("row_" + (d+2)).children[x].innerText = "";#}
-{#        }#}
-{##}
-{#    }#}
-{#        console.log(points);#}
-{#        console.log(words);#}
-{#        console.log(bs);#}
-{#    console.log("KONIEC");#}
-{#}#}
+function testBoardStateUpdate(d,x) {
+    newBoardState = []
+    document.getElementById("row_" + x).children[d].innerText = "D";
+    document.getElementById("row_" + (x + 1)).children[d].innerText = "O";
+    document.getElementById("row_" + (x + 2)).children[d].innerText = "M";
+    for(j = 1; j <16; j++)
+    {
+        for(i = 0; i<15; i++)
+        {
+            newBoardState.push(document.getElementById("row_"+j).children[i].innerText);
+        }
+    }
+    return newBoardState;
+}
+function testPattern() {
+    var points = new Array();
+    var words = new Array();
+    var bs = new Array();
+    for(d = 1; d <= 13; d++) {
+        for (x = 0; x <= 14; x++) {
+            var newBoardState = testBoardStateUpdate(x, d);
+            var newWord = new String();
+            var wordBoardState = [];
+            var counter = 0;
+            for (a = 0; a < newBoardState.length; a++) {
+                if (newBoardState[a] != "") {
+                    counter++;
+                }
+            }
+            if (counter > 1) {
+                for (i = 0; i < newBoardState.length; i++)
+                {
+                    console.log("I");
+                    if (newBoardState[i] != ""
+                        && (((newBoardState[i - 1] == "") || ((i - 1) % 15 == 0) || (i - 1 < 0))
+                            && ((newBoardState[i + 1] == "") || ((i + 1) % 15 == 1) || (i + 1 > 254))
+                            && ((newBoardState[i - 15] == "") || (i - 15 < 0))
+                            && ((newBoardState[i + 15] == "") || (i + 15 > 254))))
+                    {
+                        console.log("chuj");
+                        return false;
+                    }
+                }
+                for (w = 0; w < newBoardState.length; w++) {
+                    if (newBoardState[w] != "") {
+                        newWord = newWord + newBoardState[w];
+                        wordBoardState.push(w);
+                    }
+                }
+            }
+            var value = countValue([newWord], [wordBoardState]);
+            points.push(value);
+            words.push(newWord);
+            bs.push(wordBoardState);
+            document.getElementById("row_" + d).children[x].innerText = "";
+            document.getElementById("row_" + (d+1)).children[x].innerText = "";
+            document.getElementById("row_" + (d+2)).children[x].innerText = "";
+        }
+
+    }
+        console.log(points);
+        console.log(words);
+        console.log(bs);
+    console.log("KONIEC");
+}
 
 var roomName = {{ gameroom_id_json }};
 var round = 0;
