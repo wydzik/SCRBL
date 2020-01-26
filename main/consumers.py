@@ -98,7 +98,7 @@ class GameConsumer(WebsocketConsumer):
                     temp = GameRooms.objects.get(pk=gameroom)
                     temp.in_progress = True
                     temp.save()
-                    players = Game.objects.filter(game_room=game_room).select_related("user_id")
+                    players = Game.objects.filter(game_room=game_room).select_related("user")
                     players_list = []
                     for player in players:
                         players_list.append(player.username)
